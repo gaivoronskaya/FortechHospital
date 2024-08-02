@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
-import RegistrationForm from "../../components/RegistrationForm";
+import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
 import Message from "../../components/Message";
 import addNewUser from "../../store/action-creators/task";
@@ -52,7 +52,7 @@ const RegistrationPage = () => {
   return (
     <>
       <Header title="Зарегистрироваться в системе" />
-      <RegistrationForm
+      <Form
         title="Регистрация"
         handleSubmit={validateRegistration}
         handleChange={handleChange}
@@ -84,7 +84,7 @@ const RegistrationPage = () => {
           value={info.repeatPassword}
           onChange={handleChange}
         />
-      </RegistrationForm>
+      </Form>
     </>
   );
 };
