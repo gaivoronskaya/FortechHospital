@@ -1,14 +1,14 @@
-import { CustomButtonStyle } from "./style";
+import { StyledCustomButton } from "./style";
 
 const CustomButton = ({ children, nameButton, typeButton, valueButton }) => {
   return (
-    <CustomButtonStyle
+    <StyledCustomButton
       type={typeButton}
       name={nameButton}
       value={valueButton}
     >
       {children}
-    </CustomButtonStyle>
+    </StyledCustomButton>
   );
 };
 

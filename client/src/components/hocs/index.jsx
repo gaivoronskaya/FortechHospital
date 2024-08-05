@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 const withServerResponseHandler = (WrappedComponent) => {
   return (props) => {
     const navigate = useNavigate();
-    const { error, response } = useSelector((state) => state.user);
+    const { error, newUser } = useSelector((state) => state.user);
 
       useEffect(() => {
-      console.log(response)
-      if (response) {
+      console.log(newUser)
+      if (newUser) {
         navigate('/main');
       }
-    }, [response, navigate]);
+    }, [newUser, navigate]);
 
     return <WrappedComponent {...props} error={error} />;
   };

@@ -1,4 +1,4 @@
-import taskEnums from "../enums/task";
+import taskEnums from "../enums/users";
 
 export const startAddUser = (payload) => {
   return {

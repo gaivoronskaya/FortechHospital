@@ -1,9 +1,10 @@
-import taskEnums from "../enums/task";
+import taskEnums from "../enums/users";
 
 const initialState = {
-  users: [],
+  users: "",
   error: null,
-  response: null,
+  newUser: null,
+  isAuth: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -12,20 +13,30 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        response: null,
+        newUser: null,
       };
     case taskEnums.ADD_USER_SUCCESS:
+      if (state.users === action.payload.name) {
+        return {
+          ...state,
+          error: "User already exists",
+          newUser: null,
+          isAuth: false,
+        };
+      }
       return {
         ...state,
-        users: [...state.users, action.payload],
+        users: action.payload.name,
         error: null,
-        response: action.payload,
+        newUser: action.payload,
+        isAuth: true,
       };
     case taskEnums.ADD_USER_ERROR:
       return {
         ...state,
         error: action.error,
-        response: null,
+        newUser: null,
+        isAuth: false,
       };
     default:
       return state;

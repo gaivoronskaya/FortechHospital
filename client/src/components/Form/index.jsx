@@ -1,36 +1,36 @@
-  import CustomButton from "../UI/CustomButton";
-  import {
-    FormContainer,
-    FormTitle,
-    FormLink,
-    FormEntrance,
-    FormContent,
-    FormContainergtoundImage,
-    FormWrapper,
-  } from "./style";
+import CustomButton from "../UI/CustomButton";
+import {
+  StyledFormContainer,
+  StyledFormTitle,
+  StyledFormLink,
+  StyledFormEntrance,
+  StyledFormContent,
+  StyledFormImage,
+  StyledFormWrapper,
+} from "./style";
 
-  const Form = ({ title, handleSubmit, children, buttonInfo }) => {
-    return (
-      <FormWrapper>
-        <FormContainergtoundImage />
-        <FormContainer onSubmit={handleSubmit}>
-          <FormContent>
-            <FormTitle>{title}</FormTitle>
-            {children}
-            <FormEntrance>
-              <CustomButton
-                typeButton="submit"
-                nameButton="registrationButton"
-                valueButton="register"
-              >
-                {buttonInfo}
-              </CustomButton>
-              <FormLink href="#">Авторизоваться</FormLink>
-            </FormEntrance>
-          </FormContent>
-        </FormContainer>
-      </FormWrapper>
-    );
-  };
+const Form = ({ title, handleSubmit, children, buttonInfo }) => {
+  return (
+    <StyledFormWrapper>
+      <StyledFormImage />
+      <StyledFormContainer onSubmit={handleSubmit}>
+        <StyledFormContent>
+          <StyledFormTitle>{title}</StyledFormTitle>
+          {children}
+          <StyledFormEntrance>
+            <CustomButton
+              typeButton="submit"
+              nameButton="registrationButton"
+              valueButton="register"
+            >
+              {buttonInfo}
+            </CustomButton>
+            <StyledFormLink href="#">Авторизоваться</StyledFormLink>
+          </StyledFormEntrance>
+        </StyledFormContent>
+      </StyledFormContainer>
+    </StyledFormWrapper>
+  );
+};
 
-  export default Form;
+export default Form;
