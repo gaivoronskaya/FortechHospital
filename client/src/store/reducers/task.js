@@ -27,6 +27,24 @@ const userReducer = (state = initialState, action) => {
         error: action.error,
         response: null,
       };
+    case taskEnums.LOGIN_USER:
+      return {
+        ...state,
+        error: null,
+        response: null,
+      }
+      case taskEnums.LOGIN_USER_SUCCESS:
+        return {
+          ...state,
+          error: null,
+          response: action.payload,
+        };
+      case taskEnums.LOGIN_USER_ERROR:
+        return {
+          ...state,
+          error: action.error,
+          response: null,
+        };
     default:
       return state;
   }

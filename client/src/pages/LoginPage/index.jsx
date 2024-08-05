@@ -5,14 +5,13 @@ import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
 import Message from "../../components/Message";
-import { addNewUser } from "../../store/action-creators/task";
 import withServerResponseHandler from "../../components/hocs";
+import { loginUserAction } from "../../store/action-creators/task";
 
-const RegistrationPage = () => {
+const LoginPage = () => {
   const [info, setInfo] = useState({
     login: "",
     password: "",
-    repeatPassword: "",
   });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -28,58 +27,46 @@ const RegistrationPage = () => {
     }
   }, [message]);
 
-  const validateRegistration = (event) => {
+  const validateLogin = (event) => {
     event.preventDefault();
-    const { login, password, repeatPassword } = info;
+    const { login, password } = info;
 
-    if (!login.trim() || !password.trim() || !repeatPassword.trim()) {
+    if (!login.trim() || !password.trim()) {
       setMessage("Поля не могут быть пустыми");
 
       return;
     }
-    if (login.length < 6 || password.length < 6 || repeatPassword.length < 6) {
-      setMessage("Поля не могут содержать меньше 6 символов");
-
-      return;
-    }
-    if (!/\d/.test(login) || !/\d/.test(password)) {
-      setMessage("Логин и пароль должны содержать хотя бы одну цифру");
-
-      return;
-    }
-    if (password !== repeatPassword) {
-      setMessage("Пароли должны совпадать");
-
-      return;
-    }
-    dispatch(addNewUser(info));
+    dispatch(loginUserAction(info));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+    setInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value,
+    }));
   };
 
   const handleNavigation = (event) => {
     event.preventDefault();
-    navigate("/login");
+    navigate("/registration");
   };
 
   return (
     <>
-      <Header title="Зарегистрироваться в системе" />
+      <Header title="Вход в систему" />
       <Form
-        title="Регистрация"
-        handleSubmit={validateRegistration}
+        title="Вход"
+        handleSubmit={validateLogin}
         handleChange={handleChange}
         info={info}
-        buttonInfo={"Зарегистрироваться"}
-        linkTitle={"Авторизоваться"}
+        buttonInfo={"Войти"}
+        linkTitle={"Зарегистрироваться"}
         handleNavigation={handleNavigation}
       >
         <Message message={message} />
         <CustomInput
+          onFocus={true}
           label="Логин:"
           placeholder="Логин"
           typeInput="text"
@@ -95,17 +82,9 @@ const RegistrationPage = () => {
           value={info.password}
           onChange={handleChange}
         />
-        <CustomInput
-          label="Повторите пароль:"
-          placeholder="Пароль"
-          typeInput="password"
-          nameInput="repeatPassword"
-          value={info.repeatPassword}
-          onChange={handleChange}
-        />
       </Form>
     </>
   );
 };
 
-export default withServerResponseHandler(RegistrationPage);
+export default withServerResponseHandler(LoginPage);

@@ -1,7 +1,14 @@
-import { createNewUser } from "../../services";
-import { startAddUser, successAddUser, errorAddUser } from "../actions/tasks";
+import { createNewUser, loginUser } from "../../services";
+import {
+  startAddUser,
+  successAddUser,
+  errorAddUser,
+  startLoginUser,
+  successLoginUser,
+  errorLoginUser,
+} from "../actions/tasks";
 
-const addNewUser = (user) => {
+export const addNewUser = (user) => {
   return async (dispatch) => {
     try {
       dispatch(startAddUser());
@@ -19,4 +26,19 @@ const addNewUser = (user) => {
   };
 };
 
-export default addNewUser;
+export const loginUserAction = (user) => {
+  return async (dispatch) => {
+    try {
+      dispatch(startLoginUser());
+      const response = await loginUser(user);
+      
+      dispatch(successLoginUser(response));
+      console.log("Вход успешный");
+    } catch (error) {
+      const errorText = error.response
+        ? error.response.data.message
+        : error.message;
+      dispatch(errorLoginUser(errorText));
+    }
+  };
+};
