@@ -18,4 +18,4 @@ export const CustomInputStyle = styled.input`
   padding-left: 10px; 
   background-color: #ffffff;
 `;
-
+  

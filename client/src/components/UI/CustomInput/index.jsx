@@ -7,11 +7,12 @@ const CustomInput = ({
   value,
   nameInput,
   onChange,
+  as: AsComponent = CustomInputStyle
 }) => {
   return (
     <InputContainer>
       {label && <Label>{label}</Label>}
-      <CustomInputStyle
+      <AsComponent
         placeholder={placeholder}
         type={typeInput}
         value={value}

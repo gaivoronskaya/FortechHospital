@@ -2,11 +2,13 @@ import styled from "styled-components";
 import icon from "../../images/icon.svg";
 
 export const HeaderContainer = styled.header`
-  width: 100%;
+  width: 989px;
   height: 117px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.20);
 `;
 
 export const HeaderImage = styled.div`
@@ -16,10 +18,9 @@ export const HeaderImage = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   margin-left: 50px;
-  position: absolute;
 `;
 
 export const HeaderTitle = styled.h1`
   font-size: 36px;
-  margin: auto;
+  margin-left: 30px;
 `;
