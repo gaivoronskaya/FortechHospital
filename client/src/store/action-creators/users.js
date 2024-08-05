@@ -7,7 +7,6 @@ const addNewUser = (user) => {
       dispatch(startAddUser());
       const newUser = await createNewUser(user);
 
-      console.log("Пользователь добавлен успешно!");
       dispatch(successAddUser(newUser));
     } catch (error) {
       console.error("Error object:", error);

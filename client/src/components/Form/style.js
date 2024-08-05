@@ -10,7 +10,7 @@ export const StyledFormWrapper = styled.div`
 
 export const StyledFormContainer = styled.div`
   width: 400px;
-  height: 453px;
+  height: 490px;
   background-color: #ffffff;
 `;
 

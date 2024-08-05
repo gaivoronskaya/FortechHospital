@@ -9,4 +9,4 @@ export const createNewUser = async (user) => {
   const newUser = await api.post("/users/signup", user);
 
   return newUser.data;
-};  
+};

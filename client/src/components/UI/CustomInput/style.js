@@ -15,7 +15,12 @@ export const StyledCustomInput = styled.input`
   height: 40px;
   border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 4px;
-  padding-left: 10px; 
+  padding-left: 10px;
   background-color: #ffffff;
 `;
 
+export const StyledErrorText = styled.p`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+`;

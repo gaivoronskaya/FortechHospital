@@ -1,4 +1,9 @@
-import { StyledCustomInput, StyledLabel, StyledInputContainer } from "./style.js";
+import {
+  StyledCustomInput,
+  StyledLabel,
+  StyledInputContainer,
+  StyledErrorText,
+} from "./style.js";
 
 const CustomInput = ({
   placeholder,
@@ -7,6 +12,7 @@ const CustomInput = ({
   valueInput,
   nameInput,
   handleChangeInput,
+  error,
 }) => {
   const inputId = `input_${nameInput}`;
   return (
@@ -19,6 +25,7 @@ const CustomInput = ({
         name={nameInput}
         onChange={handleChangeInput}
       />
+      {error && <StyledErrorText>{error}</StyledErrorText>}
     </StyledInputContainer>
   );
 };
