@@ -11,7 +11,7 @@ import {
   StyledButtons,
 } from "./style";
 
-const TableTechniques = () => {
+const TableTechniques = ({ techniques }) => {
   return (
     <StyledTable>
       <StyledLine>
@@ -22,18 +22,20 @@ const TableTechniques = () => {
         <StyledTitle></StyledTitle>
       </StyledLine>
       <StyledCellsBody>
-        <StyledLineCell>
-          <StyledCell>Иванов Иван Иванович</StyledCell>
-          <StyledCell>Иванов Иван Иванович</StyledCell>
-          <StyledCell>02.01.2020</StyledCell>
-          <StyledCell>Текст с жалобами пользователя на приеме</StyledCell>
-          <StyledCell>
-            <StyledButtons>
-              <CustomButton as={StyledButtonDelete} />
-              <CustomButton as={StyledButtonRename} />
-            </StyledButtons>
-          </StyledCell>
-        </StyledLineCell>
+        {techniques.map((technique, index) => (
+          <StyledLineCell>
+            <StyledCell key={index}>{technique.name}</StyledCell>
+            <StyledCell>{technique.doctor}</StyledCell>
+            <StyledCell>{technique.date}</StyledCell>
+            <StyledCell>{technique.complaint}</StyledCell>
+            <StyledCell>
+              <StyledButtons>
+                <CustomButton as={StyledButtonDelete} />
+                <CustomButton as={StyledButtonRename} />
+              </StyledButtons>
+            </StyledCell>
+          </StyledLineCell>
+        ))}
       </StyledCellsBody>
     </StyledTable>
   );

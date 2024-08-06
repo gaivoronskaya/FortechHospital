@@ -6,3 +6,5 @@ export const ButtonExit = styled.button`
   font-size: 24px;
   margin-left: auto;
 `;
+
+export const StyledContainer = styled.div``;

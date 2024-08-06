@@ -16,6 +16,7 @@ export const StyledTechniquesInput = styled.input`
   width: 188px;
   height: 45px;
   border: 1px solid rgb(0, 0, 0, 0.2);
+  padding-left: 10px;
 `;
 
 export const StyledTechniquesButton = styled.button`

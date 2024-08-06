@@ -1,25 +1,33 @@
-import { CustomInputStyle, Label, InputContainer } from "./style.js";
+import {
+  StyledCustomInput,
+  StyledLabel,
+  StyledInputContainer,
+  StyledErrorText,
+} from "./style.js";
 
 const CustomInput = ({
   placeholder,
   label,
   typeInput,
-  value,
+  valueInput,
   nameInput,
-  onChange,
-  as: AsComponent = CustomInputStyle
+  handleChangeInput,
+  error,
+  as: AsComponent = StyledCustomInput,
 }) => {
+  const inputId = `input_${nameInput}`;
   return (
-    <InputContainer>
-      {label && <Label>{label}</Label>}
+    <StyledInputContainer>
+      {label && <StyledLabel htmlFor={inputId}>{label}</StyledLabel>}
       <AsComponent
         placeholder={placeholder}
         type={typeInput}
-        value={value}
+        value={valueInput}
         name={nameInput}
-        onChange={onChange}
+        onChange={handleChangeInput}
       />
-    </InputContainer>
+      {error && <StyledErrorText>{error}</StyledErrorText>}
+    </StyledInputContainer>
   );
 };
 
