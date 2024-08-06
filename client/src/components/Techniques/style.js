@@ -1,9 +1,6 @@
 import styled from "styled-components";
-import CustomInput from "../UI/CustomInput";
-import { CustomInputStyle } from "../UI/CustomInput/style";
-import { CustomButtonStyle } from "../UI/CustomButton/style";
 
-export const TechniquesContainer = styled.div`
+export const StyledTechniquesContainer = styled.div`
   width: 989px;
   height: 122px;
   margin-left: auto;
@@ -15,13 +12,17 @@ export const TechniquesContainer = styled.div`
   box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.20);
 `;
 
-export const TechniquesInput = styled.input`
+export const StyledTechniquesInput = styled.input`
   width: 188px;
   height: 45px;
+  border: 1px solid rgb(0, 0, 0, 0.2);
 `;
 
-export const TechniquesButton = styled(CustomButtonStyle)`
+export const StyledTechniquesButton = styled.button`
   width: 131px;
   height: 45px;
-
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  margin-top: 10px;
 `;

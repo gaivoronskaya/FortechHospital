@@ -1,19 +1,20 @@
 import {
-  TechniquesContainer,
-  TechniquesInput,
-  TechniquesButton,
+  StyledTechniquesContainer,
+  StyledTechniquesInput,
+  StyledTechniquesButton,
 } from "./style";
 import CustomInput from "../UI/CustomInput";
+import CustomButton from "../UI/CustomButton";
 
 const Techniques = () => {
   return (
-    <TechniquesContainer>
-      <CustomInput label="Имя:" as={TechniquesInput}/>
-      <CustomInput label="Имя:" as={TechniquesInput}/>
-      <CustomInput label="Имя:" as={TechniquesInput}/>
-      <CustomInput label="Имя:" as={TechniquesInput}/>
-      <TechniquesButton>Добавить</TechniquesButton>
-    </TechniquesContainer>
+    <StyledTechniquesContainer>
+      <CustomInput label="Имя:" as={StyledTechniquesInput}/>
+      <CustomInput label="Имя:" as={StyledTechniquesInput}/>
+      <CustomInput label="Имя:" as={StyledTechniquesInput}/>
+      <CustomInput label="Имя:" as={StyledTechniquesInput}/>
+      <CustomButton as={StyledTechniquesButton}>Добавить</CustomButton>
+    </StyledTechniquesContainer>
   );
 };
 

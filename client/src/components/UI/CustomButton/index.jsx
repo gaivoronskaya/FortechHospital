@@ -1,14 +1,16 @@
 import { CustomButtonStyle } from "./style";
 
-const CustomButton = ({ children, nameButton, typeButton, valueButton }) => {
+const CustomButton = ({
+  children,
+  nameButton,
+  typeButton,
+  valueButton,
+  as: AsComponent = CustomButtonStyle,
+}) => {
   return (
-    <CustomButtonStyle
-      type={typeButton}
-      name={nameButton}
-      value={valueButton}
-    >
+    <AsComponent type={typeButton} name={nameButton} value={valueButton}>
       {children}
-    </CustomButtonStyle>
+    </AsComponent>
   );
 };
 

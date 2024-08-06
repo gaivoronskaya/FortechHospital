@@ -1,40 +1,41 @@
+import CustomButton from "../UI/CustomButton";
 import {
-  Table,
-  Line,
-  Cell,
-  Title,
-  CellsBody,
-  ButtonRename,
-  ButtonDelete,
-  LineCell,
-  Buttons,
+  StyledTable,
+  StyledLine,
+  StyledCell,
+  StyledTitle,
+  StyledCellsBody,
+  StyledButtonRename,
+  StyledButtonDelete,
+  StyledLineCell,
+  StyledButtons,
 } from "./style";
 
 const TableTechniques = () => {
   return (
-    <Table>
-      <Line>
-        <Title>Имя</Title>
-        <Title>Врач</Title>
-        <Title>Дата</Title>
-        <Title>Жалобы</Title>
-        <Title></Title>
-      </Line>
-      <CellsBody>
-        <LineCell>
-          <Cell>Иванов Иван Иванович</Cell>
-          <Cell>Иванов Иван Иванович</Cell>
-          <Cell>02.01.2020</Cell>
-          <Cell>Текст с жалобами пользователя на приеме</Cell>
-          <Cell>
-            <Buttons>
-              <ButtonDelete />
-              <ButtonRename />
-            </Buttons>
-          </Cell>
-        </LineCell>
-      </CellsBody>
-    </Table>
+    <StyledTable>
+      <StyledLine>
+        <StyledTitle>Имя</StyledTitle>
+        <StyledTitle>Врач</StyledTitle>
+        <StyledTitle>Дата</StyledTitle>
+        <StyledTitle>Жалобы</StyledTitle>
+        <StyledTitle></StyledTitle>
+      </StyledLine>
+      <StyledCellsBody>
+        <StyledLineCell>
+          <StyledCell>Иванов Иван Иванович</StyledCell>
+          <StyledCell>Иванов Иван Иванович</StyledCell>
+          <StyledCell>02.01.2020</StyledCell>
+          <StyledCell>Текст с жалобами пользователя на приеме</StyledCell>
+          <StyledCell>
+            <StyledButtons>
+              <CustomButton as={StyledButtonDelete} />
+              <CustomButton as={StyledButtonRename} />
+            </StyledButtons>
+          </StyledCell>
+        </StyledLineCell>
+      </StyledCellsBody>
+    </StyledTable>
   );
 };
 

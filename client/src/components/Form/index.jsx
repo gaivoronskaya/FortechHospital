@@ -11,7 +11,7 @@ import {
 } from "./style";
 
 const Form = ({
-  title,
+  StyledTitle,
   handleSubmit,
   children,
   buttonInfo,
@@ -23,7 +23,7 @@ const Form = ({
       <FormContainergtoundImage />
       <FormContainer onSubmit={handleSubmit}>
         <FormContent>
-          <FormTitle>{title}</FormTitle>
+          <FormTitle>{StyledTitle}</FormTitle>
           {children}
           <FormEntrance>
             <CustomButton

@@ -54,9 +54,9 @@ const LoginPage = () => {
 
   return (
     <>
-      <Header title="Вход в систему" />
+      <Header StyledTitle="Вход в систему" />
       <Form
-        title="Вход"
+        StyledTitle="Вход"
         handleSubmit={validateLogin}
         handleChange={handleChange}
         info={info}

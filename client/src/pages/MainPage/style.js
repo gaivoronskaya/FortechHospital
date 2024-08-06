@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { CustomButtonStyle } from "../../components/UI/CustomButton/style";
 
-export const ButtonExit = styled(CustomButtonStyle)`
+export const ButtonExit = styled.button`
   width: 150px;
   height: 45px;
   font-size: 24px;

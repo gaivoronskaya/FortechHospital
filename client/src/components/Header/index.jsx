@@ -1,10 +1,10 @@
 import { HeaderContainer, HeaderImage, HeaderTitle } from "./style.js";
 
-const Header = ({ title,children }) => {
+const Header = ({ StyledTitle,children }) => {
   return (
     <HeaderContainer>
       <HeaderImage />
-      <HeaderTitle>{title}</HeaderTitle>
+      <HeaderTitle>{StyledTitle}</HeaderTitle>
       {children}
     </HeaderContainer>
   );

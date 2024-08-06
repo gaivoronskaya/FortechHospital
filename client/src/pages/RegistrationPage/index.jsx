@@ -68,9 +68,9 @@ const RegistrationPage = () => {
 
   return (
     <>
-      <Header title="Зарегистрироваться в системе" />
+      <Header StyledTitle="Зарегистрироваться в системе" />
       <Form
-        title="Регистрация"
+        StyledTitle="Регистрация"
         handleSubmit={validateRegistration}
         handleChange={handleChange}
         info={info}

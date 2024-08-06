@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { CustomButtonStyle } from "../UI/CustomButton/style";
+import rename from "../../images/rename.svg";
+import del from "../../images/delete.svg";
 
-export const Table = styled.table`
+export const StyledTable = styled.table`
   border-collapse: collapse;
   margin-top: 40px;
   width: 989px;
@@ -10,41 +11,45 @@ export const Table = styled.table`
   background-color: #fff;
 `;
 
-export const Line = styled.tr`
+export const StyledLine = styled.tr`
   text-align: center;
   background-color: #c4c4c4;
 `;
 
-export const LineCell = styled.tr`
+export const StyledLineCell = styled.tr`
   text-align: center;
 `;
 
-export const Cell = styled.td`
+export const StyledCell = styled.td`
   padding: 12px 15px;
   border-right: 1px solid #000;
 `;
 
-export const Title = styled.td`
+export const StyledTitle = styled.td`
   padding: 12px 15px;
 `;
 
-export const CellsBody = styled.tbody`
+export const StyledCellsBody = styled.tbody`
   border: 1px solid #000;
 `;
 
-export const ButtonDelete = styled(CustomButtonStyle)`
+export const StyledButtonDelete = styled.button`
   width: 24px;
   height: 24px;
-  background-image: url(../../images/delete.svg);
+  background-color: #fff;
+  border: none;
+  background-image: url(${del});
 `;
 
-export const ButtonRename = styled(CustomButtonStyle)`
+export const StyledButtonRename = styled.button`
   width: 24px;
   height: 24px;
-  background-image: url(../../images/rename.svg);
+  background-color: #fff;
+  border: none;
+  background-image: url(${rename});
 `;
 
-export const Buttons = styled.div`
+export const StyledButtons = styled.div`
   display: flex;
   gap: 5px;
 `;
