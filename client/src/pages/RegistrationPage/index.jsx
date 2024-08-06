@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
-import addNewUser from "../../store/action-creators/users";
-// import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
+import { StyledAlert, StyledContainer } from "./style";
+import useActions from "../../hooks/useActions";
 
 const RegistrationPage = () => {
   const [userData, setUserData] = useState({
@@ -18,15 +19,9 @@ const RegistrationPage = () => {
     password: "",
     repeatPassword: "",
   });
-  const dispatch = useDispatch();
+  const { addNewUser } = useActions();
   const navigate = useNavigate();
-  const { error, newUser } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (newUser) {
-      navigate("/main");
-    }
-  }, [newUser, navigate]);
+  const { error, isAuth } = useSelector((state) => state.user);
 
   const validateRegistration = (event) => {
     event.preventDefault();
@@ -35,41 +30,39 @@ const RegistrationPage = () => {
 
     if (!login.trim()) {
       newErrors.login = "Поле не может быть пустым";
-    } else if (login.length < 6) {
-      newErrors.login = "Поле не может содержать меньше 6 символов";
-    } else if (!/\d/.test(login)) {
-      newErrors.login = "Логин должен содержать хотя бы одну цифру";
+    } else if (login.length < 6 && !/\d/.test(login)) {
+      newErrors.login =
+        "Поле не может содержать меньше 6 символов или меньше 1 цифры";
     }
 
     if (!password.trim()) {
       newErrors.password = "Поле не может быть пустым";
-    } else if (password.length < 6) {
-      newErrors.password = "Поле не может содержать меньше 6 символов";
-    } else if (!/\d/.test(password)) {
-      newErrors.password = "Пароль должен содержать хотя бы одну цифру";
+    } else if (password.length < 6 && !/\d/.test(password)) {
+      newErrors.login =
+        "Поле не может содержать меньше 6 символов или меньше 1 цифры";
     }
 
     if (!repeatPassword.trim()) {
       newErrors.repeatPassword = "Поле не может быть пустым";
-    } else if (repeatPassword.length < 6) {
-      newErrors.repeatPassword = "Поле не может содержать меньше 6 символов";
     } else if (password !== repeatPassword) {
       newErrors.repeatPassword = "Пароли должны совпадать";
     }
 
     setLocalError(newErrors);
-    dispatch(addNewUser(userData));
+    addNewUser(userData);
   };
 
   useEffect(() => {
-    if (localError) {
+    if (isAuth) {
+      navigate("/main");
+    } else if (error) {
       const timer = setTimeout(() => {
         setLocalError("");
       }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, [localError]);
+  }, [isAuth, navigate, error]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,8 +71,10 @@ const RegistrationPage = () => {
   };
 
   return (
-    <>
-      {/* {error && <Alert severity="error">{error}</Alert>} */}
+    <StyledContainer>
+      <StyledAlert>
+        {error && <Alert severity="error">{error}</Alert>}
+      </StyledAlert>
       <Header title="Зарегистрироваться в системе" />
       <Form
         title="Регистрация"
@@ -116,7 +111,7 @@ const RegistrationPage = () => {
           error={localError.repeatPassword}
         />
       </Form>
-    </>
+    </StyledContainer>
   );
 };
 

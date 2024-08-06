@@ -8,7 +8,7 @@ export const StyledHeaderContainer = styled.header`
   margin-right: auto;
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.20);
+  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.2);
 `;
 
 export const StyledHeaderImage = styled.div`

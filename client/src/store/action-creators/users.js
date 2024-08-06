@@ -1,12 +1,11 @@
 import { createNewUser } from "../../services/users";
 import { startAddUser, successAddUser, errorAddUser } from "../actions/users";
 
-const addNewUser = (user) => {
+export const addNewUser = (user) => {
   return async (dispatch) => {
     try {
       dispatch(startAddUser());
       const newUser = await createNewUser(user);
-
       dispatch(successAddUser(newUser));
     } catch (error) {
       console.error("Error object:", error);
@@ -17,5 +16,3 @@ const addNewUser = (user) => {
     }
   };
 };
-
-export default addNewUser;
