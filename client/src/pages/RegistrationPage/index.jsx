@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
@@ -21,7 +20,6 @@ const RegistrationPage = () => {
     repeatPassword: "",
   });
   const { addNewUser } = useActions();
-  const navigate = useNavigate();
   const { error } = useSelector((state) => state.user);
 
   const validateRegistration = (event) => {
@@ -53,11 +51,6 @@ const RegistrationPage = () => {
     setUserData((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
-  const handleNavigation = (event) => {
-    event.preventDefault();
-    navigate("/login");
-  };
-
   return (
     <StyledContainer>
       <Snackbar
@@ -74,7 +67,7 @@ const RegistrationPage = () => {
         handleChange={handleChange}
         userData={userData}
         linkTitle="Зарегистрироваться"
-        handleNavigation={handleNavigation}
+        handleNavigation="/login"
       >
         <CustomInput
           label="Логин:"

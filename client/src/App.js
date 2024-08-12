@@ -1,7 +1,13 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import RegistrationPage from "./pages/RegistrationPage";
 import TestPage from "./pages/TestPage";
-import ProtectedRoute from "./components/ProtectedRoute";
+
+const ProtectedRoute = ({ element }) => {
+  const isAuth = useSelector((state) => state.user.isAuth);
+
+  return isAuth ? element : <Navigate to="/login" />;
+};
 
 const App = () => {
   return (

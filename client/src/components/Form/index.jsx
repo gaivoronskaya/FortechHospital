@@ -1,5 +1,4 @@
 import CustomButton from "../UI/CustomButton";
-import { Link } from "react-router-dom";
 import {
   StyledFormContainer,
   StyledFormTitle,
@@ -32,9 +31,7 @@ const Form = ({
             >
               {linkTitle}
             </CustomButton>
-            <StyledFormLink>
-              <Link onClick={handleNavigation}>{linkTitle}</Link>
-            </StyledFormLink>
+            <StyledFormLink href={handleNavigation}>{linkTitle}</StyledFormLink>
           </StyledFormEntrance>
         </StyledFormContent>
       </StyledFormContainer>
