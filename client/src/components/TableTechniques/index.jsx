@@ -22,9 +22,9 @@ const TableTechniques = ({ techniques }) => {
         <StyledTitle></StyledTitle>
       </StyledLine>
       <StyledCellsBody>
-        {techniques.map((technique, index) => (
+        {techniques.map((technique) => (
           <StyledLineCell>
-            <StyledCell key={index}>{technique.name}</StyledCell>
+            <StyledCell key={technique._id}>{technique.name}</StyledCell>
             <StyledCell>{technique.doctor}</StyledCell>
             <StyledCell>{technique.date}</StyledCell>
             <StyledCell>{technique.complaint}</StyledCell>

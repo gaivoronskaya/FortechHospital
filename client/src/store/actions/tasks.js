@@ -42,6 +42,27 @@ export const errorLoginUser = (payload) => {
   };
 };
 
+export const startGetAppointment = (playload) => {
+  return {
+    type: taskEnums.GET_APPOINTMENT,
+    playload,
+  };
+};
+
+export const successGetAppointment = (playload) => {
+  return {
+    type: taskEnums.GET_APPOINTMENT_SUCCESS,
+    playload,
+  };
+};
+
+export const errorGetAppointment = (playload) => {
+  return {
+    type: taskEnums.GET_APPOINTMENT_ERROR,
+    playload,
+  };
+};
+
 export const startSendAppointment = (playload) => {
   return {
     type: taskEnums.SEND_APPOINTMENT,

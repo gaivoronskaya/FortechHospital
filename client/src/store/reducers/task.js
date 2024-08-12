@@ -2,6 +2,8 @@ import taskEnums from "../enums/task";
 
 const initialState = {
   users: [],
+  appointments: [],
+  userId: null,
   error: null,
   response: null,
 };
@@ -40,11 +42,34 @@ const userReducer = (state = initialState, action) => {
     case taskEnums.LOGIN_USER_SUCCESS:
       return {
         ...state,
+        userId: action.payload.userId, 
         error: null,
         response: action.payload,
       };
 
     case taskEnums.LOGIN_USER_ERROR:
+      return {
+        ...state,
+        error: action.error,
+        response: null,
+      };
+
+    case taskEnums.GET_APPOINTMENT:
+      return {
+        ...state,
+        error: null,
+        response: null,
+      };
+
+    case taskEnums.GET_APPOINTMENT_SUCCESS:
+      return {
+        ...state,
+        appointments: action.payload,
+        error: action.error,
+        response: action.payload,
+      };
+
+    case taskEnums.GET_APPOINTMENT_ERROR:
       return {
         ...state,
         error: action.error,
@@ -73,21 +98,23 @@ const userReducer = (state = initialState, action) => {
         response: null,
       };
 
-      case taskEnums.RENAME_APPOINTMENT:
+    case taskEnums.RENAME_APPOINTMENT:
       return {
         ...state,
         error: null,
         response: null,
       };
+
     case taskEnums.RENAME_APPOINTMENT_SUCCESS:
       return {
         ...state,
-        users: state.users.map(user =>
+        users: state.users.map((user) =>
           user.id === action.payload.id ? action.payload : user
         ),
         error: null,
         response: action.payload,
       };
+
     case taskEnums.RENAME_APPOINTMENT_ERROR:
       return {
         ...state,
@@ -101,13 +128,15 @@ const userReducer = (state = initialState, action) => {
         error: null,
         response: null,
       };
+
     case taskEnums.DELETE_APPOINTMENT_SUCCESS:
       return {
         ...state,
-        users: state.users.filter(user => user.id !== action.payload.id),
+        users: state.users.filter((user) => user.id !== action.payload.id),
         error: null,
         response: action.payload,
       };
+
     case taskEnums.DELETE_APPOINTMENT_ERROR:
       return {
         ...state,

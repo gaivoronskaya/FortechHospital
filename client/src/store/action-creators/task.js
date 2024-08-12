@@ -4,6 +4,7 @@ import {
   createAppointment,
   updateAppointment,
   deleteAppointment,
+  getAppointments,
 } from "../../services";
 import {
   startAddUser,
@@ -12,6 +13,9 @@ import {
   startLoginUser,
   successLoginUser,
   errorLoginUser,
+  startGetAppointment,
+  successGetAppointment,
+  errorGetAppointment,
   startRenameAppointment,
   successSendAppointment,
   errorSendAppointment,
@@ -46,14 +50,36 @@ export const loginUserAction = (user) => {
     try {
       dispatch(startLoginUser());
       const response = await loginUser(user);
-
       dispatch(successLoginUser(response));
+      
+      dispatch(getAppointment());
       console.log("Вход успешный");
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message
         : error.message;
       dispatch(errorLoginUser(errorText));
+    }
+  };
+};
+
+export const getAppointment = () => {
+  return async (dispatch, getState) => {
+    const { userId } = getState().user;
+    if (!userId) {
+      console.error("User ID не найден в состоянии Redux");
+      return;
+    }
+    try {
+      dispatch(startGetAppointment());
+      const response = await getAppointments(userId);
+      dispatch(successGetAppointment(response));
+    } catch (error) {
+      const errorText = error.response
+        ? error.response.data.message
+        : error.message;
+      console.error("Ошибка при загрузке приемов:", errorText);
+      dispatch(errorGetAppointment(errorText));
     }
   };
 };

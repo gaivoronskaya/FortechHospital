@@ -4,9 +4,12 @@ import Techniques from "../../components/Techniques";
 import TableTechniques from "../../components/TableTechniques";
 import { CustomButtonStyle } from "../../components/UI/CustomButton/style";
 import { ButtonExit, StyledContainer } from "./style";
-import { getAppointments } from "../../services";
+import { getAppointment, sendAppointment } from "../../store/action-creators/task";
+import { useDispatch, useSelector } from "react-redux";
 
 const MainPage = () => {
+  const dispatch = useDispatch();
+  const { appointments, userId } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     name: "",
     doctor: "",
@@ -19,7 +22,6 @@ const MainPage = () => {
     date: "",
     complaints: "",
   });
-  const [techniques, setTechniques] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +49,7 @@ const MainPage = () => {
 
   const handleAdd = () => {
     if (validateForm()) {
-      setTechniques((prevTechniques) => [...prevTechniques, formData]);
+      dispatch(sendAppointment(formData));
       setFormData({
         name: "",
         doctor: "",
@@ -58,19 +60,10 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    getTechniques();
-  }, []);
-
-  
-  const getTechniques = async () => {
-    try {
-      const technique = await getAppointments();
-
-      setTechniques(technique);
-    } catch (error) {
-      console.log("лох")
+    if (userId) {
+      dispatch(getAppointment());
     }
-  };
+  }, [userId, dispatch]);
 
   return (
     <StyledContainer>
@@ -83,7 +76,7 @@ const MainPage = () => {
         handleActionButton={handleAdd}
         error={localError}
       ></Techniques>
-      <TableTechniques techniques={techniques}></TableTechniques>
+      <TableTechniques techniques={appointments}></TableTechniques>
     </StyledContainer>
   );
 };

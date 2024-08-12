@@ -45,6 +45,7 @@ const LoginPage = () => {
       ...prevInfo,
       [name]: value,
     }));
+    console.log(`Field ${name} updated to: ${value}`);
   };
 
   const handleNavigation = (event) => {
@@ -71,16 +72,16 @@ const LoginPage = () => {
           placeholder="Логин"
           typeInput="text"
           nameInput="login"
-          value={info.login}
-          onChange={handleChange}
+          valueInput={info.login}
+          handleChangeInput={handleChange}
         />
         <CustomInput
           label="Пароль:"
           placeholder="Пароль"
           typeInput="password"
           nameInput="password"
-          value={info.password}
-          onChange={handleChange}
+          valueInput={info.password}
+          handleChangeInput={handleChange}
         />
       </Form>
     </>

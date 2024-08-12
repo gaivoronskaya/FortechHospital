@@ -17,26 +17,26 @@ export const loginUser = async (user) => {
   return response.data;
 };
 
-export const getAppointments = async () => {
-  const response = await api.get("/");
+export const getAppointments = async (userId) => {
+  const response = await api.get(`/appointments?userId=${userId}`);
 
   return response.data;
 };
 
 export const createAppointment = async (appointments) => {
-  const response = await api.post("/", appointments);
+  const response = await api.post("/appointments", appointments);
 
   return response.data;
 };
 
 export const updateAppointment = async (appointmentId) => {
-  const response = await api.patch(`/:${appointmentId}`);
+  const response = await api.patch(`/appointments:${appointmentId}`);
 
   return response.data;
 };
 
 export const deleteAppointment = async (appointmentId) => {
-  const response = await api.delete(`/:${appointmentId}`);
+  const response = await api.delete(`/appointments:${appointmentId}`);
 
   return response.data;
 };

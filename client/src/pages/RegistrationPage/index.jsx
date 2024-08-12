@@ -84,24 +84,24 @@ const RegistrationPage = () => {
           placeholder="Логин"
           typeInput="text"
           nameInput="login"
-          value={info.login}
-          onChange={handleChange}
+          valueInput={info.login}
+          handleChangeInput={handleChange}
         />
         <CustomInput
           label="Пароль:"
           placeholder="Пароль"
           typeInput="password"
           nameInput="password"
-          value={info.password}
-          onChange={handleChange}
+          valueInput={info.password}
+          handleChangeInput={handleChange}
         />
         <CustomInput
           label="Повторите пароль:"
           placeholder="Пароль"
           typeInput="password"
           nameInput="repeatPassword"
-          value={info.repeatPassword}
-          onChange={handleChange}
+          valueInput={info.repeatPassword}
+          handleChangeInput={handleChange}
         />
       </Form>
     </>
