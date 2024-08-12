@@ -1,90 +1,97 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
-import Message from "../../components/Message";
-import withServerResponseHandler from "../../components/hocs";
-import { loginUserAction } from "../../store/action-creators/task";
+import Alert from "@mui/material/Alert";
+import { StyledAlert, StyledContainer } from "./style";
+import useActions from "../../hooks/useActions";
 
 const LoginPage = () => {
-  const [info, setInfo] = useState({
+  const [userData, setUserData] = useState({
     login: "",
     password: "",
+    repeatPassword: "",
   });
-  const [message, setMessage] = useState("");
+  const [localError, setLocalError] = useState({
+    login: "",
+    password: "",
+    repeatPassword: "",
+  });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { error, isAuth } = useSelector((state) => state.user);
+  const { loginUserAction } = useActions();
 
   useEffect(() => {
-    if (message) {
+    if (isAuth) {
+      navigate("/main");
+    } else if (error) {
       const timer = setTimeout(() => {
-        setMessage("");
+        setLocalError("");
       }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, [message]);
+  }, [isAuth, navigate, error]);
 
   const validateLogin = (event) => {
     event.preventDefault();
-    const { login, password } = info;
+    const { login, password } = userData;
+    const newErrors = {};
 
-    if (!login.trim() || !password.trim()) {
-      setMessage("Поля не могут быть пустыми");
-
-      return;
+    if (!login.trim()) {
+      newErrors.password = "Поле не может быть пустым";
+    } else if (!password.trim()) {
+      newErrors.login = "Поле не может быть пустым";
     }
-    dispatch(loginUserAction(info));
+
+    setLocalError(newErrors);
+    loginUserAction(userData);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInfo((prevInfo) => ({
+    setUserData((prevInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
   };
 
-  const handleNavigation = (event) => {
-    event.preventDefault();
-    navigate("/registration");
-  };
-
   return (
-    <>
+    <StyledContainer>
+      <StyledAlert>
+        {error && <Alert severity="error">{error}</Alert>}
+      </StyledAlert>
       <Header title="Вход в систему" />
       <Form
         title="Вход"
         handleSubmit={validateLogin}
         handleChange={handleChange}
-        info={info}
-        buttonInfo={"Войти"}
-        linkTitle={"Зарегистрироваться"}
-        handleNavigation={handleNavigation}
+        info={userData}
+        buttonInfo="Войти"
       >
-        <Message message={message} />
         <CustomInput
-          onFocus={true}
           label="Логин:"
           placeholder="Логин"
           typeInput="text"
           nameInput="login"
-          value={info.login}
-          onChange={handleChange}
+          valueInput={userData.login}
+          handleChangeInput={handleChange}
+          error={localError.login}
         />
         <CustomInput
           label="Пароль:"
           placeholder="Пароль"
           typeInput="password"
           nameInput="password"
-          value={info.password}
-          onChange={handleChange}
+          valueInput={userData.password}
+          handleChangeInput={handleChange}
+          error={localError.password}
         />
       </Form>
-    </>
+    </StyledContainer>
   );
 };
 
-export default withServerResponseHandler(LoginPage);
+export default LoginPage;

@@ -1,4 +1,4 @@
-import taskEnums from "../enums/task";
+import taskEnums from "../enums/users";
 
 export const startAddUser = (payload) => {
   return {
@@ -35,9 +35,9 @@ export const successLoginUser = (payload) => {
   };
 };
 
-export const errorLoginUser = (payload) => {
+export const errorLoginUser = (error) => {
   return {
     type: taskEnums.LOGIN_USER_ERROR,
-    payload,
+    error,
   };
 };

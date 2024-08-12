@@ -1,111 +1,118 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
-import Message from "../../components/Message";
-import { addNewUser } from "../../store/action-creators/task";
-import withServerResponseHandler from "../../components/hocs";
+import Alert from "@mui/material/Alert";
+import { StyledAlert, StyledContainer } from "./style";
+import useActions from "../../hooks/useActions";
 
 const RegistrationPage = () => {
-  const [info, setInfo] = useState({
+  const [userData, setUserData] = useState({
     login: "",
     password: "",
     repeatPassword: "",
   });
-  const [message, setMessage] = useState("");
+  const [localError, setLocalError] = useState({
+    login: "",
+    password: "",
+    repeatPassword: "",
+  });
+  const { addNewUser } = useActions();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { error, isAuth } = useSelector((state) => state.user);
+
+  const validateRegistration = (event) => {
+    event.preventDefault();
+    const { login, password, repeatPassword } = userData;
+    const newErrors = {};
+
+    if (!login.trim()) {
+      newErrors.login = "Поле не может быть пустым";
+    } else if (login.length < 6 && !/\d/.test(login)) {
+      newErrors.login =
+        "Поле не может содержать меньше 6 символов или меньше 1 цифры";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Поле не может быть пустым";
+    } else if (password.length < 6 && !/\d/.test(password)) {
+      newErrors.login =
+        "Поле не может содержать меньше 6 символов или меньше 1 цифры";
+    }
+
+    if (!repeatPassword.trim()) {
+      newErrors.repeatPassword = "Поле не может быть пустым";
+    } else if (password !== repeatPassword) {
+      newErrors.repeatPassword = "Пароли должны совпадать";
+    }
+
+    setLocalError(newErrors);
+    addNewUser(userData);
+  };
 
   useEffect(() => {
-    if (message) {
+    if (isAuth) {
+      navigate("/main");
+    } else if (error) {
       const timer = setTimeout(() => {
-        setMessage("");
+        setLocalError("");
       }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, [message]);
-
-  const validateRegistration = (event) => {
-    event.preventDefault();
-    const { login, password, repeatPassword } = info;
-
-    if (!login.trim() || !password.trim() || !repeatPassword.trim()) {
-      setMessage("Поля не могут быть пустыми");
-
-      return;
-    }
-    if (login.length < 6 || password.length < 6 || repeatPassword.length < 6) {
-      setMessage("Поля не могут содержать меньше 6 символов");
-
-      return;
-    }
-    if (!/\d/.test(login) || !/\d/.test(password)) {
-      setMessage("Логин и пароль должны содержать хотя бы одну цифру");
-
-      return;
-    }
-    if (password !== repeatPassword) {
-      setMessage("Пароли должны совпадать");
-
-      return;
-    }
-    dispatch(addNewUser(info));
-  };
+  }, [isAuth, navigate, error]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
-  };
-
-  const handleNavigation = (event) => {
-    event.preventDefault();
-    navigate("/login");
+    setUserData((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
   return (
-    <>
+    <StyledContainer>
+      <StyledAlert>
+        {error && <Alert severity="error">{error}</Alert>}
+      </StyledAlert>
       <Header title="Зарегистрироваться в системе" />
       <Form
         title="Регистрация"
         handleSubmit={validateRegistration}
         handleChange={handleChange}
-        info={info}
-        buttonInfo={"Зарегистрироваться"}
-        linkTitle={"Авторизоваться"}
-        handleNavigation={handleNavigation}
+        info={userData}
+        buttonInfo="Зарегистрироваться"
       >
-        <Message message={message} />
         <CustomInput
           label="Логин:"
           placeholder="Логин"
           typeInput="text"
           nameInput="login"
-          value={info.login}
-          onChange={handleChange}
+          valueInput={userData.login}
+          handleChangeInput={handleChange}
+          error={localError.login}
         />
         <CustomInput
           label="Пароль:"
           placeholder="Пароль"
           typeInput="password"
           nameInput="password"
-          value={info.password}
-          onChange={handleChange}
+          valueInput={userData.password}
+          handleChangeInput={handleChange}
+          error={localError.password}
         />
         <CustomInput
           label="Повторите пароль:"
           placeholder="Пароль"
           typeInput="password"
           nameInput="repeatPassword"
-          value={info.repeatPassword}
-          onChange={handleChange}
+          valueInput={userData.repeatPassword}
+          handleChangeInput={handleChange}
+          error={localError.repeatPassword}
         />
       </Form>
-    </>
+    </StyledContainer>
   );
 };
 
-export default withServerResponseHandler(RegistrationPage);
+export default RegistrationPage;

@@ -6,20 +6,19 @@ import {
   startLoginUser,
   successLoginUser,
   errorLoginUser,
-} from "../actions/tasks";
+} from "../actions/users";
 
 export const addNewUser = (user) => {
   return async (dispatch) => {
     try {
       dispatch(startAddUser());
-      const response = await createNewUser(user);
+      const newUser = await createNewUser(user);
 
-      console.log("Пользователь добавлен успешно!");
-      dispatch(successAddUser(response));
+      dispatch(successAddUser(newUser));
     } catch (error) {
       console.error("Error object:", error);
-      const errorText = error.response
-        ? error.response.data.message
+      const errorText = error.newUser
+        ? error.newUser.data.message
         : error.message;
       dispatch(errorAddUser(errorText));
     }

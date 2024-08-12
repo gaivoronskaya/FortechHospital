@@ -1,31 +1,23 @@
 import CustomButton from "../UI/CustomButton";
-import { Link } from "react-router-dom";
 import {
-  FormContainer,
-  FormTitle,
-  FormLink,
-  FormEntrance,
-  FormContent,
-  FormContainergtoundImage,
-  FormWrapper,
+  StyledFormContainer,
+  StyledFormTitle,
+  StyledFormLink,
+  StyledFormEntrance,
+  StyledFormContent,
+  StyledFormImage,
+  StyledFormWrapper,
 } from "./style";
 
-const Form = ({
-  title,
-  handleSubmit,
-  children,
-  buttonInfo,
-  linkTitle,
-  handleNavigation,
-}) => {
+const Form = ({ title, handleSubmit, children, buttonInfo }) => {
   return (
-    <FormWrapper>
-      <FormContainergtoundImage />
-      <FormContainer onSubmit={handleSubmit}>
-        <FormContent>
-          <FormTitle>{title}</FormTitle>
+    <StyledFormWrapper>
+      <StyledFormImage />
+      <StyledFormContainer onSubmit={handleSubmit}>
+        <StyledFormContent>
+          <StyledFormTitle>{title}</StyledFormTitle>
           {children}
-          <FormEntrance>
+          <StyledFormEntrance>
             <CustomButton
               typeButton="submit"
               nameButton="registrationButton"
@@ -33,13 +25,11 @@ const Form = ({
             >
               {buttonInfo}
             </CustomButton>
-            <FormLink>
-              <Link onClick={handleNavigation}>{linkTitle}</Link>
-            </FormLink>
-          </FormEntrance>
-        </FormContent>
-      </FormContainer>
-    </FormWrapper>
+            <StyledFormLink href="#">Авторизоваться</StyledFormLink>
+          </StyledFormEntrance>
+        </StyledFormContent>
+      </StyledFormContainer>
+    </StyledFormWrapper>
   );
 };
 

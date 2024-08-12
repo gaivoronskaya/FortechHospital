@@ -1,11 +1,15 @@
-import { HeaderContainer, HeaderImage, HeaderTitle } from "./style.js";
+import {
+  StyledHeaderContainer,
+  StyledHeaderImage,
+  StyledHeaderTitle,
+} from "./style.js";
 
 const Header = ({ title }) => {
   return (
-    <HeaderContainer>
-      <HeaderImage />
-      <HeaderTitle>{title}</HeaderTitle>
-    </HeaderContainer>
+    <StyledHeaderContainer>
+      <StyledHeaderImage />
+      <StyledHeaderTitle>{title}</StyledHeaderTitle>
+    </StyledHeaderContainer>
   );
 };
 
