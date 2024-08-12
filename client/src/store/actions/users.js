@@ -1,22 +1,22 @@
-import taskEnums from "../enums/users";
+import hospitalPart from "../enums/users";
 
 export const startAddUser = (payload) => {
   return {
-    type: taskEnums.ADD_USER,
+    type: hospitalPart.ADD_USER,
     payload,
   };
 };
 
 export const successAddUser = (payload) => {
   return {
-    type: taskEnums.ADD_USER_SUCCESS,
+    type: hospitalPart.ADD_USER_SUCCESS,
     payload,
   };
 };
 
 export const errorAddUser = (error) => {
   return {
-    type: taskEnums.ADD_USER_ERROR,
+    type: hospitalPart.ADD_USER_ERROR,
     error,
   };
 };

@@ -1,4 +1,5 @@
 import CustomButton from "../UI/CustomButton";
+import { Link } from "react-router-dom";
 import {
   StyledFormContainer,
   StyledFormTitle,
@@ -9,7 +10,13 @@ import {
   StyledFormWrapper,
 } from "./style";
 
-const Form = ({ title, handleSubmit, children, buttonInfo }) => {
+const Form = ({
+  title,
+  handleSubmit,
+  children,
+  linkTitle,
+  handleNavigation,
+}) => {
   return (
     <StyledFormWrapper>
       <StyledFormImage />
@@ -20,12 +27,14 @@ const Form = ({ title, handleSubmit, children, buttonInfo }) => {
           <StyledFormEntrance>
             <CustomButton
               typeButton="submit"
-              nameButton="registrationButton"
-              valueButton="register"
+              nameButton="formNameButton"
+              valueButton="formValueButton"
             >
-              {buttonInfo}
+              {linkTitle}
             </CustomButton>
-            <StyledFormLink href="#">Авторизоваться</StyledFormLink>
+            <StyledFormLink>
+              <Link onClick={handleNavigation}>{linkTitle}</Link>
+            </StyledFormLink>
           </StyledFormEntrance>
         </StyledFormContent>
       </StyledFormContainer>

@@ -8,7 +8,6 @@ export const addNewUser = (user) => {
       const newUser = await createNewUser(user);
       dispatch(successAddUser(newUser));
     } catch (error) {
-      console.error("Error object:", error);
       const errorText = error.newUser
         ? error.newUser.data.message
         : error.message;

@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
-import Alert from "@mui/material/Alert";
-import { StyledAlert, StyledContainer } from "./style";
+import { StyledContainer } from "./style";
 import useActions from "../../hooks/useActions";
 
 const RegistrationPage = () => {
@@ -14,55 +15,37 @@ const RegistrationPage = () => {
     password: "",
     repeatPassword: "",
   });
-  const [localError, setLocalError] = useState({
+  const [inputError, setInputError] = useState({
     login: "",
     password: "",
     repeatPassword: "",
   });
   const { addNewUser } = useActions();
   const navigate = useNavigate();
-  const { error, isAuth } = useSelector((state) => state.user);
+  const { error } = useSelector((state) => state.user);
 
   const validateRegistration = (event) => {
     event.preventDefault();
+    const errors = { login: "", password: "", repeatPassword: "" };
     const { login, password, repeatPassword } = userData;
-    const newErrors = {};
 
-    if (!login.trim()) {
-      newErrors.login = "Поле не может быть пустым";
-    } else if (login.length < 6 && !/\d/.test(login)) {
-      newErrors.login =
+    if (login.length < 6 && !/\d/.test(login)) {
+      errors.login =
         "Поле не может содержать меньше 6 символов или меньше 1 цифры";
     }
 
-    if (!password.trim()) {
-      newErrors.password = "Поле не может быть пустым";
-    } else if (password.length < 6 && !/\d/.test(password)) {
-      newErrors.login =
+    if (password.length < 6 && !/\d/.test(password)) {
+      errors.password =
         "Поле не может содержать меньше 6 символов или меньше 1 цифры";
     }
 
-    if (!repeatPassword.trim()) {
-      newErrors.repeatPassword = "Поле не может быть пустым";
-    } else if (password !== repeatPassword) {
-      newErrors.repeatPassword = "Пароли должны совпадать";
+    if (password !== repeatPassword) {
+      errors.repeatPassword = "Пароли должны совпадать";
     }
 
-    setLocalError(newErrors);
+    setInputError(errors);
     addNewUser(userData);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate("/main");
-    } else if (error) {
-      const timer = setTimeout(() => {
-        setLocalError("");
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isAuth, navigate, error]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,18 +53,28 @@ const RegistrationPage = () => {
     setUserData((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
+  const handleNavigation = (event) => {
+    event.preventDefault();
+    navigate("/login");
+  };
+
   return (
     <StyledContainer>
-      <StyledAlert>
+      <Snackbar
+        open={Boolean(error)}
+        autoHideDuration={7000}
+        onClose={() => {}}
+      >
         {error && <Alert severity="error">{error}</Alert>}
-      </StyledAlert>
+      </Snackbar>
       <Header title="Зарегистрироваться в системе" />
       <Form
         title="Регистрация"
         handleSubmit={validateRegistration}
         handleChange={handleChange}
-        info={userData}
-        buttonInfo="Зарегистрироваться"
+        userData={userData}
+        linkTitle="Зарегистрироваться"
+        handleNavigation={handleNavigation}
       >
         <CustomInput
           label="Логин:"
@@ -90,7 +83,7 @@ const RegistrationPage = () => {
           nameInput="login"
           valueInput={userData.login}
           handleChangeInput={handleChange}
-          error={localError.login}
+          error={inputError.login}
         />
         <CustomInput
           label="Пароль:"
@@ -99,7 +92,7 @@ const RegistrationPage = () => {
           nameInput="password"
           valueInput={userData.password}
           handleChangeInput={handleChange}
-          error={localError.password}
+          error={inputError.password}
         />
         <CustomInput
           label="Повторите пароль:"
@@ -108,7 +101,7 @@ const RegistrationPage = () => {
           nameInput="repeatPassword"
           valueInput={userData.repeatPassword}
           handleChangeInput={handleChange}
-          error={localError.repeatPassword}
+          error={inputError.repeatPassword}
         />
       </Form>
     </StyledContainer>

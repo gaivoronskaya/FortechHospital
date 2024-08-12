@@ -14,16 +14,16 @@ const CustomInput = ({
   handleChangeInput,
   error,
 }) => {
-  const inputId = `input_${nameInput}`;
   return (
     <StyledInputContainer>
-      {label && <StyledLabel htmlFor={inputId}>{label}</StyledLabel>}
+      {label && <StyledLabel>{label}</StyledLabel>}
       <StyledCustomInput
         placeholder={placeholder}
         type={typeInput}
         value={valueInput}
         name={nameInput}
         onChange={handleChangeInput}
+        id={`input_${nameInput}`}
       />
       {error && <StyledErrorText>{error}</StyledErrorText>}
     </StyledInputContainer>

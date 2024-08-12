@@ -1,33 +1,35 @@
-import taskEnums from "../enums/users";
+import hospitalPart from "../enums/users";
 
 const initialState = {
-  users: "",
+  users: {},
   error: null,
   isAuth: false,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case taskEnums.ADD_USER:
+    case hospitalPart.ADD_USER:
       return {
         ...state,
         error: null,
       };
-    case taskEnums.ADD_USER_SUCCESS:
-      if (state.users === action.payload.name) {
+    case hospitalPart.ADD_USER_SUCCESS:
+      if (state.users[action.payload.id]) {
         return {
           ...state,
-          error: "User already exists",
           isAuth: false,
         };
       }
       return {
         ...state,
-        users: action.payload.name,
+        users: {
+          ...state.users,
+          [action.payload.id]: action.payload,
+        },
         error: null,
         isAuth: true,
       };
-    case taskEnums.ADD_USER_ERROR:
+    case hospitalPart.ADD_USER_ERROR:
       return {
         ...state,
         error: action.error,
