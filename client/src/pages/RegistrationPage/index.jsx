@@ -24,7 +24,7 @@ const RegistrationPage = () => {
 
   const validateRegistration = (event) => {
     event.preventDefault();
-    const errors = { login: "", password: "", repeatPassword: "" };
+    const errors = {};
     const { login, password, repeatPassword } = userData;
 
     if (login.length < 6 && !/\d/.test(login)) {
@@ -65,7 +65,6 @@ const RegistrationPage = () => {
         title="Регистрация"
         handleSubmit={validateRegistration}
         handleChange={handleChange}
-        userData={userData}
         linkTitle="Зарегистрироваться"
         handleNavigation="/login"
       >
