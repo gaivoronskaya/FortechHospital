@@ -7,13 +7,11 @@ export const addNewUser = (user) => {
       dispatch(startAddUser());
       const newUser = await createNewUser(user);
       dispatch(successAddUser(newUser));
-      console.log("успешно")
     } catch (error) {
       const errorText = error.newUser
         ? error.newUser.data.message
         : error.message;
       dispatch(errorAddUser(errorText));
-      console.log("ха")
     }
   };
 };
