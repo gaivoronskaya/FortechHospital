@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
-import { StyledContainer } from "./style";
 import useActions from "../../hooks/useActions";
+import { validateString } from "../../helpers/validate-string";
 
 const RegistrationPage = () => {
   const [userData, setUserData] = useState({
@@ -19,29 +19,57 @@ const RegistrationPage = () => {
     password: "",
     repeatPassword: "",
   });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { addNewUser } = useActions();
   const { error } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (error) {
+      setSnackbarOpen(true);
+    }
+  }, [error]);
+
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackbarOpen(false);
+  };
+
   const validateRegistration = (event) => {
     event.preventDefault();
-    const errors = {};
     const { login, password, repeatPassword } = userData;
 
-    if (login.length < 6 && !/\d/.test(login)) {
-      errors.login =
-        "Поле не может содержать меньше 6 символов или меньше 1 цифры";
+    if (!validateString(login)) {
+      setInputError({
+        ...inputError,
+        login: "Поле не может содержать меньше 6 символов или меньше 1 цифры",
+      });
+
+      return;
     }
 
-    if (password.length < 6 && !/\d/.test(password)) {
-      errors.password =
-        "Поле не может содержать меньше 6 символов или меньше 1 цифры";
+    if (!validateString(password)) {
+      setInputError({
+        ...inputError,
+        password:
+          "Поле не может содержать меньше 6 символов или меньше 1 цифры",
+      });
+
+      return;
     }
 
-    if (password !== repeatPassword) {
-      errors.repeatPassword = "Пароли должны совпадать";
+    if (!validateString(repeatPassword)) {
+      setInputError({
+        ...inputError,
+        repeatPassword:
+          "Поле не может содержать меньше 6 символов или меньше 1 цифры",
+      });
+
+      return;
     }
 
-    setInputError(errors);
     addNewUser(userData);
   };
 
@@ -52,21 +80,24 @@ const RegistrationPage = () => {
   };
 
   return (
-    <StyledContainer>
+    <div>
       <Snackbar
-        open={Boolean(error)}
-        autoHideDuration={7000}
-        onClose={() => {}}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleClose}
       >
-        {error && <Alert severity="error">{error}</Alert>}
+        <Alert onClose={handleClose} severity="error">
+          {error}
+        </Alert>
       </Snackbar>
       <Header title="Зарегистрироваться в системе" />
       <Form
         title="Регистрация"
         handleSubmit={validateRegistration}
         handleChange={handleChange}
-        linkTitle="Зарегистрироваться"
-        handleNavigation="/login"
+        buttonTitle="Зарегистрироваться"
+        linkTitle="Авторизоваться"
+        transitionLink="/login"
       >
         <CustomInput
           label="Логин:"
@@ -96,7 +127,7 @@ const RegistrationPage = () => {
           error={inputError.repeatPassword}
         />
       </Form>
-    </StyledContainer>
+    </div>
   );
 };
 

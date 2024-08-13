@@ -14,7 +14,8 @@ const Form = ({
   handleSubmit,
   children,
   linkTitle,
-  handleNavigation,
+  buttonTitle,
+  transitionLink,
 }) => {
   return (
     <StyledFormWrapper>
@@ -29,9 +30,9 @@ const Form = ({
               nameButton="formNameButton"
               valueButton="formValueButton"
             >
-              {linkTitle}
+              {buttonTitle}
             </CustomButton>
-            <StyledFormLink href={handleNavigation}>{linkTitle}</StyledFormLink>
+            <StyledFormLink href={transitionLink}>{linkTitle}</StyledFormLink>
           </StyledFormEntrance>
         </StyledFormContent>
       </StyledFormContainer>

@@ -28,9 +28,8 @@ export const loginUserAction = (user) => {
     try {
       dispatch(startLoginUser());
       const response = await loginUser(user);
-      
+
       dispatch(successLoginUser(response));
-      console.log("Вход успешный");
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
-import Alert from "@mui/material/Alert";
-import { StyledAlert, StyledContainer } from "./style";
 import useActions from "../../hooks/useActions";
+import { validateString } from "../../helpers/validate-string";
 
 const LoginPage = () => {
   const [userData, setUserData] = useState({
@@ -14,62 +14,80 @@ const LoginPage = () => {
     password: "",
     repeatPassword: "",
   });
-  const [localError, setLocalError] = useState({
+  const [inputError, setInputError] = useState({
     login: "",
     password: "",
     repeatPassword: "",
   });
-  const navigate = useNavigate();
-  const { error, isAuth } = useSelector((state) => state.user);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { error } = useSelector((state) => state.user);
   const { loginUserAction } = useActions();
 
   useEffect(() => {
-    if (isAuth) {
-      navigate("/main");
-    } else if (error) {
-      const timer = setTimeout(() => {
-        setLocalError("");
-      }, 3000);
-
-      return () => clearTimeout(timer);
+    if (error) {
+      setSnackbarOpen(true);
     }
-  }, [isAuth, navigate, error]);
+  }, [error]);
+
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackbarOpen(false);
+  };
 
   const validateLogin = (event) => {
     event.preventDefault();
     const { login, password } = userData;
-    const newErrors = {};
 
-    if (!login.trim()) {
-      newErrors.password = "Поле не может быть пустым";
-    } else if (!password.trim()) {
-      newErrors.login = "Поле не может быть пустым";
+    if (!validateString(login)) {
+      setInputError({
+        ...inputError,
+        login: "Поле не может содержать меньше 6 символов или меньше 1 цифры",
+      });
+
+      return;
     }
 
-    setLocalError(newErrors);
+    if (!validateString(password)) {
+      setInputError({
+        ...inputError,
+        password:
+          "Поле не может содержать меньше 6 символов или меньше 1 цифры",
+      });
+
+      return;
+    }
+
     loginUserAction(userData);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevInfo) => ({
-      ...prevInfo,
-      [name]: value,
-    }));
+
+    setUserData((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
   return (
-    <StyledContainer>
-      <StyledAlert>
-        {error && <Alert severity="error">{error}</Alert>}
-      </StyledAlert>
+    <div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error">
+          {error}
+        </Alert>
+      </Snackbar>
       <Header title="Вход в систему" />
       <Form
         title="Вход"
         handleSubmit={validateLogin}
         handleChange={handleChange}
-        info={userData}
-        buttonInfo="Войти"
+        buttonTitle="Войти"
+        linkTitle="Зарегистрироваться"
+        transitionLink="/registration"
       >
         <CustomInput
           label="Логин:"
@@ -78,7 +96,7 @@ const LoginPage = () => {
           nameInput="login"
           valueInput={userData.login}
           handleChangeInput={handleChange}
-          error={localError.login}
+          error={inputError.login}
         />
         <CustomInput
           label="Пароль:"
@@ -87,10 +105,10 @@ const LoginPage = () => {
           nameInput="password"
           valueInput={userData.password}
           handleChangeInput={handleChange}
-          error={localError.password}
+          error={inputError.password}
         />
       </Form>
-    </StyledContainer>
+    </div>
   );
 };
 
