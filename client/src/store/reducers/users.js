@@ -1,4 +1,4 @@
-import hospitalPart from "../enums/users";
+import userEnums from "../enums/users";
 
 const initialState = {
   users: {},
@@ -8,18 +8,13 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case hospitalPart.ADD_USER:
+    case userEnums.ADD_USER:
       return {
         ...state,
         error: null,
       };
-    case hospitalPart.ADD_USER_SUCCESS:
-      if (state.users[action.payload.id]) {
-        return {
-          ...state,
-          isAuth: false,
-        };
-      }
+      
+    case userEnums.ADD_USER_SUCCESS:
       return {
         ...state,
         users: {
@@ -29,12 +24,14 @@ const userReducer = (state = initialState, action) => {
         error: null,
         isAuth: true,
       };
-    case hospitalPart.ADD_USER_ERROR:
+
+    case userEnums.ADD_USER_ERROR:
       return {
         ...state,
         error: action.error,
         isAuth: false,
       };
+      
     default:
       return state;
   }
