@@ -1,4 +1,4 @@
-const taskEnums = {
+const hospitalPart = {
   ADD_USER: "ADD_USER",
   ADD_USER_SUCCESS: "ADD_USER_SUCCESS",
   ADD_USER_ERROR: "ADD_USER_ERROR",
@@ -7,4 +7,4 @@ const taskEnums = {
   LOGIN_USER_ERROR: "LOGIN_USER_ERROR",
 };
 
-export default taskEnums;
+export default hospitalPart;

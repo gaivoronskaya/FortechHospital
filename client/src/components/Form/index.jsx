@@ -9,7 +9,13 @@ import {
   StyledFormWrapper,
 } from "./style";
 
-const Form = ({ title, handleSubmit, children, buttonInfo }) => {
+const Form = ({
+  title,
+  handleSubmit,
+  children,
+  linkTitle,
+  handleNavigation,
+}) => {
   return (
     <StyledFormWrapper>
       <StyledFormImage />
@@ -20,12 +26,12 @@ const Form = ({ title, handleSubmit, children, buttonInfo }) => {
           <StyledFormEntrance>
             <CustomButton
               typeButton="submit"
-              nameButton="registrationButton"
-              valueButton="register"
+              nameButton="formNameButton"
+              valueButton="formValueButton"
             >
-              {buttonInfo}
+              {linkTitle}
             </CustomButton>
-            <StyledFormLink href="#">Авторизоваться</StyledFormLink>
+            <StyledFormLink href={handleNavigation}>{linkTitle}</StyledFormLink>
           </StyledFormEntrance>
         </StyledFormContent>
       </StyledFormContainer>

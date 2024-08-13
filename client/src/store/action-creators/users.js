@@ -1,4 +1,4 @@
-import { createNewUser, loginUser } from "../../services";
+import { createNewUser, loginUser } from "../../services/users";
 import {
   startAddUser,
   successAddUser,
@@ -13,10 +13,8 @@ export const addNewUser = (user) => {
     try {
       dispatch(startAddUser());
       const newUser = await createNewUser(user);
-
       dispatch(successAddUser(newUser));
     } catch (error) {
-      console.error("Error object:", error);
       const errorText = error.newUser
         ? error.newUser.data.message
         : error.message;

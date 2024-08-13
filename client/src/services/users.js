@@ -6,13 +6,13 @@ const api = axios.create({
 });
 
 export const createNewUser = async (user) => {
-  const response = await api.post("/users/signup", user);
+  const newUser = await api.post("/users/signup", user);
 
-  return response.data;
-};  
+  return newUser.data;
+};
 
 export const loginUser = async (user) => {
-  const response = await api.post("/users/signin", user);
+  const userLogin = await api.post("/users/signin", user);
 
-  return response.data;
-}
+  return userLogin.data;
+};
