@@ -1,7 +1,7 @@
 import userEnums from "../enums/users";
 
 const initialState = {
-  users: {},
+  user: {},
   error: null,
   isAuth: false,
 };
@@ -13,14 +13,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         error: null,
       };
-      
+
     case userEnums.ADD_USER_SUCCESS:
       return {
-        ...state,
-        users: {
-          ...state.users,
-          [action.payload.id]: action.payload,
-        },
+        user: action.payload.user,
         error: null,
         isAuth: true,
       };
@@ -31,7 +27,7 @@ const userReducer = (state = initialState, action) => {
         error: action.error,
         isAuth: false,
       };
-      
+
     default:
       return state;
   }
