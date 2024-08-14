@@ -19,22 +19,22 @@ const RegistrationPage = () => {
     password: "",
     repeatPassword: "",
   });
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const { addNewUser } = useActions();
   const { error } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (error) {
-      setSnackbarOpen(true);
+      setIsOpenSnackbar(true);
     }
   }, [error]);
 
-  const handleClose = (reason) => {
+  const handleCloseSnackbar = (reason) => {
     if (reason === "clickaway") {
       return;
     }
 
-    setSnackbarOpen(false);
+    setIsOpenSnackbar(false);
   };
 
   const validateRegistration = (event) => {
@@ -73,7 +73,7 @@ const RegistrationPage = () => {
     addNewUser(userData);
   };
 
-  const handleChange = (e) => {
+  const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
     setUserData((prevInfo) => ({ ...prevInfo, [name]: value }));
@@ -82,11 +82,11 @@ const RegistrationPage = () => {
   return (
     <div>
       <Snackbar
-        open={snackbarOpen}
+        open={isOpenSnackbar}
         autoHideDuration={6000}
-        onClose={handleClose}
+        onClose={handleCloseSnackbar}
       >
-        <Alert onClose={handleClose} severity="error">
+        <Alert onClose={handleCloseSnackbar} severity="error">
           {error}
         </Alert>
       </Snackbar>
@@ -94,10 +94,10 @@ const RegistrationPage = () => {
       <Form
         title="Регистрация"
         handleSubmit={validateRegistration}
-        handleChange={handleChange}
+        handleChangeInput={handleChangeInput}
         buttonTitle="Зарегистрироваться"
         linkTitle="Авторизоваться"
-        transitionLink="/login"
+        path="/login"
       >
         <CustomInput
           label="Логин:"
@@ -105,7 +105,7 @@ const RegistrationPage = () => {
           typeInput="text"
           nameInput="login"
           valueInput={userData.login}
-          handleChangeInput={handleChange}
+          handleChangeInput={handleChangeInput}
           error={inputError.login}
         />
         <CustomInput
@@ -114,7 +114,7 @@ const RegistrationPage = () => {
           typeInput="password"
           nameInput="password"
           valueInput={userData.password}
-          handleChangeInput={handleChange}
+          handleChangeInput={handleChangeInput}
           error={inputError.password}
         />
         <CustomInput
@@ -123,7 +123,7 @@ const RegistrationPage = () => {
           typeInput="password"
           nameInput="repeatPassword"
           valueInput={userData.repeatPassword}
-          handleChangeInput={handleChange}
+          handleChangeInput={handleChangeInput}
           error={inputError.repeatPassword}
         />
       </Form>

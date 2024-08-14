@@ -87,7 +87,7 @@ const LoginPage = () => {
         handleChange={handleChange}
         buttonTitle="Войти"
         linkTitle="Зарегистрироваться"
-        transitionLink="/registration"
+        path="/registration"
       >
         <CustomInput
           label="Логин:"

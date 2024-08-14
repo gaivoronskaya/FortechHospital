@@ -13,7 +13,7 @@ const App = () => {
     if (isAuth) {
       navigate("/main");
     }
-  }, [isAuth, navigate]);
+  }, [isAuth]);
 
   if (isAuth) {
     return (

@@ -15,7 +15,7 @@ const Form = ({
   children,
   linkTitle,
   buttonTitle,
-  transitionLink,
+  path,
 }) => {
   return (
     <StyledFormWrapper>
@@ -32,7 +32,7 @@ const Form = ({
             >
               {buttonTitle}
             </CustomButton>
-            <StyledFormLink href={transitionLink}>{linkTitle}</StyledFormLink>
+            <StyledFormLink href={path}>{linkTitle}</StyledFormLink>
           </StyledFormEntrance>
         </StyledFormContent>
       </StyledFormContainer>
