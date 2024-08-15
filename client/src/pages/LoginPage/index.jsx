@@ -6,7 +6,6 @@ import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
 import useActions from "../../hooks/useActions";
-import { validateString } from "../../helpers/validate-string";
 
 const LoginPage = () => {
   const [userData, setUserData] = useState({
@@ -41,20 +40,10 @@ const LoginPage = () => {
     event.preventDefault();
     const { login, password } = userData;
 
-    if (!validateString(login)) {
+    if (!login || !password) {
       setInputError({
-        ...inputError,
-        login: "Поле не может содержать меньше 6 символов или меньше 1 цифры",
-      });
-
-      return;
-    }
-
-    if (!validateString(password)) {
-      setInputError({
-        ...inputError,
-        password:
-          "Поле не может содержать меньше 6 символов или меньше 1 цифры",
+        login: !login ? "Поле не может быть пустым" : "",
+        password: !password ? "Поле не может быть пустым" : "",
       });
 
       return;
