@@ -1,9 +1,11 @@
 import userEnums from "../enums/users";
 
 const initialState = {
-  user: {},
+  user:{},
   error: null,
   isAuth: false,
+  appointments: [],
+  isLoading: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -35,6 +37,9 @@ const userReducer = (state = initialState, action) => {
       };
 
     case userEnums.LOGIN_USER_SUCCESS:
+      // localStorage.setItem("user", JSON.stringify(action.payload.user));
+      // localStorage.setItem("isAuth", "true");
+
       return {
         ...state,
         error: null,
@@ -48,6 +53,36 @@ const userReducer = (state = initialState, action) => {
         error: action.error,
         isAuth: false,
       };
+
+    case userEnums.GET_APPOINTMENT:
+      return {
+        ...state,
+        error: null,
+        isLoading: false,
+      };
+
+    case userEnums.GET_APPOINTMENT_SUCCESS:
+      return {
+        appointments: action.payload.appointments,
+        error: null,
+        isLoading: true,
+      };
+
+    case userEnums.GET_APPOINTMENT_ERROR:
+      return {
+        error: action.error,
+        response: null,
+        isLoading: false,
+      };
+    // case userEnums.LOGOUT_USER:
+    //   localStorage.removeItem("user");
+    //   localStorage.removeItem("isAuth");
+    //   return {
+    //     ...state,
+    //     user: {},
+    //     isAuth: false,
+    //     error: null,
+    //   };
 
     default:
       return state;

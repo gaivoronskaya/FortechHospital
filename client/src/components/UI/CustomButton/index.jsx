@@ -1,14 +1,22 @@
 import { StyledCustomButton } from "./style";
 
-const CustomButton = ({ children, nameButton, typeButton, valueButton }) => {
+const CustomButton = ({
+  children,
+  nameButton,
+  typeButton,
+  valueButton,
+  handleActionButton,
+  as: AsComponent = StyledCustomButton,
+}) => {
   return (
-    <StyledCustomButton
+    <AsComponent
       type={typeButton}
       name={nameButton}
       value={valueButton}
+      onClick={handleActionButton}
     >
       {children}
-    </StyledCustomButton>
+    </AsComponent>
   );
 };
 
