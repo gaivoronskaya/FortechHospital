@@ -41,7 +41,6 @@ const userReducer = (state = initialState, action) => {
       // localStorage.setItem("isAuth", "true");
 
       return {
-        ...state,
         error: null,
         user: action.payload.user,
         isAuth: true,
