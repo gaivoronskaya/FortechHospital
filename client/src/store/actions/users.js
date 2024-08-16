@@ -56,15 +56,9 @@ export const successGetAppointment = (playload) => {
   };
 };
 
-export const errorGetAppointment = (playload) => {
+export const errorGetAppointment = (error) => {
   return {
     type: userEnums.GET_APPOINTMENT_ERROR,
-    playload,
-  };
-};
-
-export const logoutUser = () => {
-  return {
-    type: userEnums.LOGOUT_USER,
+    error,
   };
 };

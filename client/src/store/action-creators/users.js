@@ -1,7 +1,6 @@
 import {
   createNewUser,
   loginUser,
-  getAppointments,
 } from "../../services/users";
 import {
   startAddUser,
@@ -10,10 +9,6 @@ import {
   startLoginUser,
   successLoginUser,
   errorLoginUser,
-  startGetAppointment,
-  successGetAppointment,
-  errorGetAppointment,
-  logoutUser,
 } from "../actions/users";
 
 export const addNewUser = (user) => {
@@ -36,9 +31,14 @@ export const loginUserAction = (user) => {
     try {
       dispatch(startLoginUser());
       const response = await loginUser(user);
+      const userId = response.user.id;
+      console.log(userId, "ЛДЛ")
 
-      dispatch(successLoginUser(response));
-    } catch (error) {
+      dispatch(successLoginUser({
+        user: response.user,
+        userId: userId,
+      }));
+    } catch (error) { 
       const errorText = error.response
         ? error.response.data.message
         : error.message;
@@ -46,24 +46,3 @@ export const loginUserAction = (user) => {
     }
   };
 };
-export const getUserAppointments = (userId) => {
-  return async (dispatch) => {
-    try {
-      dispatch(startGetAppointment());
-      const response = await getAppointments(userId);
-
-      dispatch(successGetAppointment(response));
-    } catch (error) {
-      const errorText = error.response
-        ? error.response.data.message
-        : error.message;
-      dispatch(errorGetAppointment(errorText));
-    }
-  };
-};
-
-// export const logoutUserAction = () => {
-//   return (dispatch) => {
-//     dispatch(logoutUser());
-//   };
-// };

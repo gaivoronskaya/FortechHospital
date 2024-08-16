@@ -6,7 +6,7 @@ import {
 import CustomInput from "../UI/CustomInput";
 import CustomButton from "../UI/CustomButton";
 
-const Techniques = ({ formData, handleChangeInput, handleActionButton, error }) => {
+const Techniques = ({ formData, handleChangeInput, handleActionButton }) => {
   return (
     <StyledTechniquesContainer>
       <CustomInput
@@ -37,7 +37,12 @@ const Techniques = ({ formData, handleChangeInput, handleActionButton, error }) 
         handleChangeInput={handleChangeInput}
         nameInput="complaints"
       />
-      <CustomButton as={StyledTechniquesButton} handleActionButton={handleActionButton}>Добавить</CustomButton>
+      <CustomButton
+        as={StyledTechniquesButton}
+        handleActionButton={handleActionButton}
+      >
+        Добавить
+      </CustomButton>
     </StyledTechniquesContainer>
   );
 };

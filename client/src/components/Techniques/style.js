@@ -9,7 +9,7 @@ export const StyledTechniquesContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 26px;
-  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.20);
+  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.2);
 `;
 
 export const StyledTechniquesInput = styled.input`

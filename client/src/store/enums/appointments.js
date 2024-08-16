@@ -1,0 +1,7 @@
+const appointmentsEnums = {
+  GET_APPOINTMENT: "GET_APPOINTMENT",
+  GET_APPOINTMENT_SUCCESS: "GET_APPOINTMENT_SUCCESS",
+  GET_APPOINTMENT_ERROR: "GET_APPOINTMENT_ERROR",
+};
+
+export default appointmentsEnums;

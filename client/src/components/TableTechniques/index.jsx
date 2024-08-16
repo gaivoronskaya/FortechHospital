@@ -10,6 +10,7 @@ import {
   StyledLineCell,
   StyledButtons,
 } from "./style";
+import { formatDate } from "../../helpers/formate-date";
 
 const TableTechniques = ({ techniques }) => {
   return (
@@ -19,14 +20,14 @@ const TableTechniques = ({ techniques }) => {
         <StyledTitle>Врач</StyledTitle>
         <StyledTitle>Дата</StyledTitle>
         <StyledTitle>Жалобы</StyledTitle>
-        <StyledTitle></StyledTitle>
+        <StyledTitle />
       </StyledLine>
       <StyledCellsBody>
         {techniques.map((technique) => (
-          <StyledLineCell>
-            <StyledCell key={technique._id}>{technique.name}</StyledCell>
+          <StyledLineCell key={technique._id}>
+            <StyledCell>{technique.name}</StyledCell>
             <StyledCell>{technique.doctor}</StyledCell>
-            <StyledCell>{technique.date}</StyledCell>
+            <StyledCell>{formatDate(technique.date)}</StyledCell>
             <StyledCell>{technique.complaint}</StyledCell>
             <StyledCell>
               <StyledButtons>

@@ -8,8 +8,6 @@ import TableTechniques from "../../components/TableTechniques";
 import { StyledCustomButton } from "../../components/UI/CustomButton/style";
 import { ButtonExit } from "./style";
 import useActions from "../../hooks/useActions";
-import { getUserAppointments } from "../../store/action-creators/users";
-
 
 const MainPage = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +17,11 @@ const MainPage = () => {
     complaints: "",
   });
   const { getUserAppointments } = useActions();
+  const complaints = useSelector((state) => state.appointments.appointments);
+
+  useEffect(() => {
+    getUserAppointments();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,14 +30,14 @@ const MainPage = () => {
 
   return (
     <div>
-       <Header title="Приемы">
+      <Header title="Приемы">
         <StyledCustomButton as={ButtonExit}>Выход</StyledCustomButton>
       </Header>
       <Techniques
         handleChangeInput={handleChange}
         formData={formData}
       ></Techniques>
-      {/* <TableTechniques techniques={appointments}></TableTechniques>  */}
+      <TableTechniques techniques={complaints}></TableTechniques>
     </div>
   );
 };
