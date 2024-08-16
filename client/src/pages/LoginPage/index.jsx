@@ -40,7 +40,7 @@ const LoginPage = () => {
     event.preventDefault();
     const { login, password } = userData;
 
-    if (!login || !password) {
+    if (!login.trim() || !password.trim()) {
       setInputError({
         login: !login ? "Поле не может быть пустым" : "",
         password: !password ? "Поле не может быть пустым" : "",
