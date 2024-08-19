@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import RegistrationPage from "./pages/RegistrationPage";
@@ -27,7 +27,7 @@ const App = () => {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registration" element={<RegistrationPage />} />
-      <Route path="*" element={<LoginPage />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 };

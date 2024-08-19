@@ -31,6 +31,7 @@ const userReducer = (state = initialState, action) => {
     case userEnums.LOGIN_USER:
       return {
         ...state,
+        isAuth: false,
         error: null,
       };
 
