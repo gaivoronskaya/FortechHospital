@@ -14,6 +14,7 @@ const CustomInput = ({
   handleChangeInput,
   error,
   as: AsComponent = StyledCustomInput,
+  options,
 }) => {
   return (
     <StyledInputContainer>

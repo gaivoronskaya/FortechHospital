@@ -32,7 +32,6 @@ export const loginUserAction = (user) => {
       dispatch(startLoginUser());
       const response = await loginUser(user);
       const userId = response.user.id;
-      console.log(userId, "ЛДЛ")
 
       dispatch(successLoginUser({
         user: response.user,

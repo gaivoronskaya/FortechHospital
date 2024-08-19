@@ -20,3 +20,24 @@ export const errorGetAppointment = (error) => {
     error,
   };
 };
+
+export const startSendAppointment = (playload) => {
+  return {
+    type: appointmentsEnums.SEND_APPOINTMENT,
+    playload,
+  };
+};
+
+export const successSendAppointment = (playload) => {
+  return {
+    type: appointmentsEnums.SEND_APPOINTMENT_SUCCESS,
+    playload,
+  };
+};
+
+export const errorSendAppointment = (playload) => {
+  return {
+    type: appointmentsEnums.SEND_APPOINTMENT_ERROR,
+    playload,
+  };
+};

@@ -17,5 +17,5 @@ export const loginUser = async (user) => {
 export const refreshToken = async () => {
   const response = await api.get('/refresh');
 
-  return response.data.accessToken;
+  return response.data;
 };

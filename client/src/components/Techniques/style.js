@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledTechniquesContainer = styled.div`
+export const StyledTechniquesContainer = styled.form`
   width: 989px;
   height: 122px;
   margin-left: auto;

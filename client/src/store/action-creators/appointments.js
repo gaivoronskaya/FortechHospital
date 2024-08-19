@@ -1,10 +1,14 @@
 import {
   getAppointments,
+  sendNewAppointments,
 } from "../../services/appointments";
 import {
   startGetAppointment,
   successGetAppointment,
   errorGetAppointment,
+  startSendAppointment,
+  successSendAppointment,
+  errorSendAppointment,
 } from "../actions/appointments";
 
 export const getUserAppointments = () => {
@@ -22,3 +26,20 @@ export const getUserAppointments = () => {
     }
   };
 };
+
+export const sendAppointments = (appointmentData) => {
+  return async (dispatch) => {
+    try {
+      dispatch(startSendAppointment());
+      const response = await sendNewAppointments(appointmentData);
+      
+      dispatch(successSendAppointment(response));
+    } catch (error) {
+      const errorText = error.response
+        ? error.response.data.message
+        : error.message;
+      dispatch(errorSendAppointment(errorText));
+    }
+  };
+};
+

@@ -7,7 +7,7 @@ import {
   StyledFormContent,
   StyledFormImage,
   StyledFormWrapper,
-} from "./style";
+} from "./style"; 
 
 const Form = ({
   title,

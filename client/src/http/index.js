@@ -7,71 +7,9 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-// // Интерцептор для добавления токена в заголовки запросов
-// api.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
-
-// // Интерцептор для обработки ответов и обновления токена
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-
-//     if (error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-      
-//       try {
-//         const newToken = await refreshToken();
-//         axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-//         return api(originalRequest); // Повторяем запрос с новым токеном
-//       } catch (refreshError) {
-//         console.error('Ошибка обновления токена:', refreshError);
-//         window.location.href = '/login'; // Перенаправляем на страницу логина
-//         return Promise.reject(refreshError);
-//       }
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
-
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-
-//     if (error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-
-//       try {
-//         const newToken = await refreshToken();
-        
-//         localStorage.setItem('token', newToken);
-
-//         originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
-
-//         return api(originalRequest);
-//       } catch (refreshError) {
-//         console.error('Ошибка обновления токена:', refreshError);
-//         window.location.href = '/login';
-//         return Promise.reject(refreshError);
-//       }
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -86,30 +24,40 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    console.log("Error status:", error.response ? error.response.status : "No response");
+
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        // Попробуйте обновить токен
-        const { data } = await refreshToken(); // Предположим, что рефреш токен возвращает объект с новым токеном
-        const newToken = data.token; // Путь к новому токену может отличаться
+        const newAccessToken = await refreshToken();
+        console.log("New access token:", newAccessToken);
 
-        // Обновите токен в localStorage или sessionStorage
-        localStorage.setItem('token', newToken);
+        localStorage.setItem("token", newAccessToken);
+        sessionStorage.setItem("token", newAccessToken);
 
-        // Установите новый токен в заголовки
-        api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-        originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+        api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
-        // Повторите запрос с новым токеном
         return api(originalRequest);
-      } catch (refreshError) {
-        console.error('Ошибка обновления токена:', refreshError);
-        window.location.href = '/login'; // Перенаправляем на страницу логина
-        return Promise.reject(refreshError);
+      } catch (error) {
+        console.log("Failed to refresh token, redirecting to login...");
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
+        window.location.href = "/login";
+
+        return Promise.reject(error);
       }
+    }
+
+    if (error.response && error.response.status === 500) {
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      window.location.href = "/login";
     }
 
     return Promise.reject(error);
   }
 );
+
+export default api;

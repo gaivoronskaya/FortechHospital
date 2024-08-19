@@ -1,7 +1,13 @@
 import { api } from "../http";
 
 export const getAppointments = async () => {
-  const response = await api.get("/appointments");
+  const appointments = await api.get("/appointments");
 
-  return response.data;
+  return appointments.data;
 };
+
+export const sendNewAppointments = async (appointmentData) => {
+  const newAppointments = await api.post("/appointments", appointmentData);
+
+  return newAppointments.data;
+}
