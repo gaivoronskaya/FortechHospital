@@ -4,7 +4,6 @@ const initialState = {
   user: {},
   error: null,
   isAuth: false,
-  userId: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -17,7 +16,7 @@ const userReducer = (state = initialState, action) => {
 
     case userEnums.ADD_USER_SUCCESS:
       return {
-        user: action.payload.user,
+        user: action.payload,
         error: null,
         isAuth: true,
       };
@@ -32,14 +31,15 @@ const userReducer = (state = initialState, action) => {
     case userEnums.LOGIN_USER:
       return {
         ...state,
-        isAuth: false,
         error: null,
+        isAuth: true,
       };
 
     case userEnums.LOGIN_USER_SUCCESS:
       return {
+        ...state,
         error: null,
-        user: action.payload.user,
+        user: action.payload,
         isAuth: true,
       };
 

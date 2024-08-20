@@ -1,5 +1,8 @@
+//!!!!!!!!!!!!!!! Без библиотеки не могу решить проблему сохранения isAth. По этому данный код в данный момент бесполезен 
+
+
 import axios from "axios";
-import { refreshToken } from "../services/users"; // Импорт функции для рефреша токена
+import { refreshToken } from "../services/users";
 import { baseURL } from "../constants";
 
 export const api = axios.create({
@@ -7,57 +10,42 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// api.interceptors.request.use((config) => {
+//   config.headers.Authorization = `Bearer ${localStorage.getItem(
+//     "accessToken"
+//   )}`;
 
-// Интерцептор для обработки ответов и обновления токена
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+//   return config;
+// });
 
-    console.log("Error status:", error.response ? error.response.status : "No response");
+// api.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   async (error) => {
+//     const originalRequest = error.config;
+//     if (
+//       error.response &&
+//       error.response.status === 401 &&
+//       !originalRequest._retry
+//     ) {
+//       originalRequest._retry = true;
+//       try {
+//         const newAccessToken = await refreshToken();
+//         console.log("NEW", newAccessToken);
 
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+//         localStorage.setItem("accessToken", newAccessToken);
+//         sessionStorage.setItem("accessToken", newAccessToken);
 
-      try {
-        const newAccessToken = await refreshToken();
-        console.log("New access token:", newAccessToken);
+//         // api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+//         // originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
-        localStorage.setItem("token", newAccessToken);
-        sessionStorage.setItem("token", newAccessToken);
+//         return api.request(originalRequest);
+//       } catch (error) {
+//         throw error;
+//       }
+//     }
+//   }
+// );
 
-        api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-
-        return api(originalRequest);
-      } catch (error) {
-        console.log("Failed to refresh token, redirecting to login...");
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("token");
-        window.location.href = "/login";
-
-        return Promise.reject(error);
-      }
-    }
-
-    if (error.response && error.response.status === 500) {
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("token");
-      window.location.href = "/login";
-    }
-
-    return Promise.reject(error);
-  }
-);
-
-export default api;
+// export default api;

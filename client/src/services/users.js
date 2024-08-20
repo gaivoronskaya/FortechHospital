@@ -8,14 +8,12 @@ export const createNewUser = async (user) => {
 
 export const loginUser = async (user) => {
   const userLogin = await api.post("/users/signin", user);
-  localStorage.setItem('token', userLogin.data.accessToken);
-  sessionStorage.setItem('token', userLogin.data.accessToken);
 
   return userLogin.data;
 };
 
 export const refreshToken = async () => {
-  const response = await api.get('/refresh');
+  const response = await api.get("/refresh");
 
   return response.data;
 };

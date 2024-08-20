@@ -1,7 +1,4 @@
-import {
-  createNewUser,
-  loginUser,
-} from "../../services/users";
+import { createNewUser, loginUser } from "../../services/users";
 import {
   startAddUser,
   successAddUser,
@@ -16,6 +13,7 @@ export const addNewUser = (user) => {
     try {
       dispatch(startAddUser());
       const newUser = await createNewUser(user);
+      localStorage.setItem("accessToken", newUser.accessToken);
       dispatch(successAddUser(newUser));
     } catch (error) {
       const errorText = error.newUser
@@ -31,13 +29,10 @@ export const loginUserAction = (user) => {
     try {
       dispatch(startLoginUser());
       const response = await loginUser(user);
-      const userId = response.user.id;
+      localStorage.setItem("accessToken", response.accessToken);
 
-      dispatch(successLoginUser({
-        user: response.user,
-        userId: userId,
-      }));
-    } catch (error) { 
+      dispatch(successLoginUser(response.user));
+    } catch (error) {
       const errorText = error.response
         ? error.response.data.message
         : error.message;
