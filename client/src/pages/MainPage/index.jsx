@@ -5,9 +5,9 @@ import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
 import Techniques from "../../components/Techniques";
 import TableTechniques from "../../components/TableTechniques";
+import CustomButton from "../../components/UI/CustomButton";
 import { StyledButtonExit } from "./style";
 import useActions from "../../hooks/useActions";
-import CustomButton from "../../components/UI/CustomButton";
 
 const MainPage = () => {
   const [formData, setFormData] = useState({
