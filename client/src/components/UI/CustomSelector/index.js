@@ -1,5 +1,5 @@
 import { 
-  StyledSelect, 
+  StyledSelector, 
   StyledLabel, 
   StyledCelectContainer 
 } from "./style";
@@ -19,7 +19,7 @@ const CustomSelector = ({
         {labelSelector}
       </StyledLabel>
     )}
-    <StyledSelect
+    <StyledSelector
       value={valueSelector}
       name={nameSelector}
       onChange={handleChangeSelector}
@@ -29,7 +29,7 @@ const CustomSelector = ({
         {labelOption}
       </option>
       {children}
-    </StyledSelect>
+    </StyledSelector>
   </StyledCelectContainer>
 );
 
