@@ -13,6 +13,7 @@ const CustomCelector = ({
   labelOption,
   valueOption,
   labelCelector,
+  as: AsComponent = StyledSelect,
 }) => (
   <StyledCelectContainer>
     {labelCelector && (
@@ -20,7 +21,7 @@ const CustomCelector = ({
         {labelCelector}
       </StyledLabel>
     )}
-    <StyledSelect
+    <AsComponent
       value={valueCelect}
       name={nameCelect}
       onChange={onChangeonChangeSelect}
@@ -30,7 +31,7 @@ const CustomCelector = ({
         {labelOption}
       </option>
       {children}
-    </StyledSelect>
+    </AsComponent>
   </StyledCelectContainer>
 );
 

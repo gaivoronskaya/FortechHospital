@@ -19,6 +19,13 @@ export const StyledTechniquesInput = styled.input`
   padding-left: 10px;
 `;
 
+export const StyledTechniquesCelector = styled.select`
+  width: 188px;
+  height: 45px;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  padding-left: 10px;
+`;
+
 export const StyledTechniquesButton = styled.button`
   width: 131px;
   height: 45px;

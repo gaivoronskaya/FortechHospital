@@ -10,4 +10,10 @@ export const sendNewAppointments = async (appointmentData) => {
   const newAppointments = await api.post("/appointments", appointmentData);
 
   return newAppointments.data;
-}
+};
+
+export const updateAppointment = async (id, updateAppointment) => {
+  const renameAppointment = await api.patch(`/${id}`, updateAppointment);
+
+  return renameAppointment.data;
+};

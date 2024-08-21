@@ -12,7 +12,7 @@ import {
 } from "./style";
 import { formatDate } from "../../helpers/formate-date";
 
-const TableTechniques = ({ techniques }) => {
+const TableTechniques = ({ techniques, handleEditAppointment }) => {
   return (
     <StyledTable>
       <StyledLine>
@@ -25,14 +25,14 @@ const TableTechniques = ({ techniques }) => {
       <StyledCellsBody>
         {techniques.map((technique) => (
           <StyledLineCell key={technique._id}>
-            <StyledCell>{technique.name}</StyledCell>
-            <StyledCell>{technique.doctor}</StyledCell>
-            <StyledCell>{formatDate(technique.date)}</StyledCell>
-            <StyledCell>{technique.complaint}</StyledCell>
+            <StyledCell>{technique?.name || ""}</StyledCell>
+            <StyledCell>{technique?.doctor || ""}</StyledCell>
+            <StyledCell>{formatDate(technique?.date || "")}</StyledCell>
+            <StyledCell>{technique?.complaint || ""}</StyledCell>
             <StyledCell>
               <StyledButtons>
                 <CustomButton as={StyledButtonDelete} />
-                <CustomButton as={StyledButtonRename} />
+                <CustomButton handleActionButton={() => handleEditAppointment(technique._id)} as={StyledButtonRename} />
               </StyledButtons>
             </StyledCell>
           </StyledLineCell>
