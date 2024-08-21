@@ -4,38 +4,44 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { Modal } from "@mui/material";
 import Header from "../../components/Header";
-import ModalForm from "../../components/ModalForm";
-import Techniques from "../../components/Techniques";
-import TableTechniques from "../../components/TableTechniques";
+import ModalForm from "../../components/ModalForm"
+import Appointment from "../../components/Appointment";
+import TableAppointment from "../../components/TableAppointment";
 import { StyledButtonExit, StyledModalContainer } from "./style";
 import useActions from "../../hooks/useActions";
-import CustomButton from "../../components/UI/CustomButton";
 
 const MainPage = () => {
-  const [formData, setFormData] = useState({
+  const [appointmentDataModalWindow , setAppointmentDataModalWindow ] = useState({
     name: "",
     doctor: "",
     date: "",
     complaint: "",
   });
+
   const [dataModal, setDataModal] = useState({
     name: "",
     doctor: "",
     date: "",
     complaint: "",
   });
+
   const [inputError, setInputError] = useState({
     name: "",
     doctor: "",
     date: "",
     complaint: "",
   });
+  
+  
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [editingId, setEditingId] = useState(null);
-  const { getUserAppointments, sendAppointments, updateAppointmentAsync } =
-    useActions();
-  const complaints = useSelector((state) => state.appointments.appointments);
+
+  const { getUserAppointments, createAppointments, updateAppointmentAsync } = useActions();
+
+  const appointments = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -58,13 +64,15 @@ const MainPage = () => {
 
   const validateComplaints = (event) => {
     event.preventDefault();
-    const { name, doctor, date, complaint } = formData;
+    const { name, doctor, date, complaint } = appointmentDataModalWindow;
 
     if (!name.trim()) {
       setInputError({
         ...inputError,
         name: "Поле не может быть пустым",
       });
+
+      return;
     }
 
     if (!doctor.trim()) {
@@ -72,6 +80,8 @@ const MainPage = () => {
         ...inputError,
         doctor: "Поле не может быть пустым",
       });
+
+      return;
     }
 
     if (!date.trim()) {
@@ -79,6 +89,8 @@ const MainPage = () => {
         ...inputError,
         date: "Поле не может быть пустым",
       });
+
+      return;
     }
 
     if (!complaint.trim()) {
@@ -90,13 +102,13 @@ const MainPage = () => {
       return;
     }
 
-    sendAppointments(formData);
+    createAppointments(appointmentDataModalWindow);
   };
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setAppointmentDataModalWindow((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleChangeUpdateInput = (e) => {
@@ -114,7 +126,7 @@ const MainPage = () => {
   };
 
   const handleEditAppointment = (id) => {
-    const appointmentToEdit = complaints.find(
+    const appointmentToEdit = appointments.find(
       (appointment) => appointment._id === id
     );
 
@@ -167,18 +179,15 @@ const MainPage = () => {
         </Alert>
       </Snackbar>
       <Header title="Приемы">
-        <CustomButton as={StyledButtonExit}>Выход</CustomButton>
+        <StyledButtonExit >Выход</StyledButtonExit>
       </Header>
-      <Techniques
+      <Appointment
         handleChangeInput={handleChangeInput}
-        formData={formData}
+        appointmentDataModalWindow={appointmentDataModalWindow}
         error={inputError}
         handleSubmit={validateComplaints}
-      ></Techniques>
-      <TableTechniques
-        techniques={complaints}
-        handleEditAppointment={handleEditAppointment}
-      ></TableTechniques>
+      />
+      <TableAppointment appointments={appointments} />
     </div>
   );
 };

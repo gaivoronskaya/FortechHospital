@@ -28,10 +28,10 @@ export const loginUserAction = (user) => {
   return async (dispatch) => {
     try {
       dispatch(startLoginUser());
-      const response = await loginUser(user);
-      localStorage.setItem("accessToken", response.accessToken);
+      const signIn = await loginUser(user);
+      localStorage.setItem("accessToken", signIn.accessToken);
 
-      dispatch(successLoginUser(response.user));
+      dispatch(successLoginUser(signIn.user));
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message

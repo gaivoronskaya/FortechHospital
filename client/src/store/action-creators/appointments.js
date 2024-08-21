@@ -1,15 +1,15 @@
 import {
   getAppointments,
-  sendNewAppointments,
+  createNewAppointments,
   updateAppointment,
 } from "../../services/appointments";
 import {
   startGetAppointment,
   successGetAppointment,
   errorGetAppointment,
-  startSendAppointment,
-  successSendAppointment,
-  errorSendAppointment,
+  startCreateAppointment,
+  successCreateAppointment,
+  errorCreateAppointment,
   startUpdateAppointment,
   successUpdateAppointment,
   errorUpdateAppointment,
@@ -19,9 +19,9 @@ export const getUserAppointments = () => {
   return async (dispatch) => {
     try {
       dispatch(startGetAppointment());
-      const response = await getAppointments();
+      const getAppointment = await getAppointments();
 
-      dispatch(successGetAppointment(response));
+      dispatch(successGetAppointment(getAppointment));
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message
@@ -31,18 +31,18 @@ export const getUserAppointments = () => {
   };
 };
 
-export const sendAppointments = (appointmentData) => {
+export const createAppointments = (appointmentData) => {
   return async (dispatch) => {
     try {
-      dispatch(startSendAppointment());
-      const response = await sendNewAppointments(appointmentData);
+      dispatch(startCreateAppointment());
+      const addAppointments = await createNewAppointments(appointmentData);
       
-      dispatch(successSendAppointment(response));
+      dispatch(successCreateAppointment(addAppointments));
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message
         : error.message;
-      dispatch(errorSendAppointment(errorText));
+      dispatch(errorCreateAppointment(errorText));
     }
   };
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledTechniquesContainer = styled.form`
+export const StyledappointmentContainer = styled.form`
   width: 989px;
   height: 122px;
   margin-left: auto;
@@ -12,21 +12,14 @@ export const StyledTechniquesContainer = styled.form`
   box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.2);
 `;
 
-export const StyledTechniquesInput = styled.input`
+export const StyledappointmentInput = styled.input`
   width: 188px;
   height: 45px;
   border: 1px solid rgb(0, 0, 0, 0.2);
   padding-left: 10px;
 `;
 
-export const StyledTechniquesCelector = styled.select`
-  width: 188px;
-  height: 45px;
-  border: 1px solid rgb(0, 0, 0, 0.2);
-  padding-left: 10px;
-`;
-
-export const StyledTechniquesButton = styled.button`
+export const StyledappointmentButton = styled.button`
   width: 131px;
   height: 45px;
   border-radius: 4px;

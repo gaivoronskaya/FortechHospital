@@ -6,17 +6,18 @@ const CustomButton = ({
   typeButton,
   valueButton,
   handleActionButton,
-  as: AsComponent = StyledCustomButton,
+  classNameButton,
 }) => {
   return (
-    <AsComponent
+    <StyledCustomButton
       type={typeButton}
       name={nameButton}
       value={valueButton}
       onClick={handleActionButton}
+      className={classNameButton}
     >
       {children}
-    </AsComponent>
+    </StyledCustomButton>
   );
 };
 

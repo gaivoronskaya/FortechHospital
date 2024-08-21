@@ -1,6 +1,7 @@
 import CustomButton from "../UI/CustomButton";
 import CustomInput from "../UI/CustomInput";
-import CustomCelector from "../UI/CustomCelector";
+import CustomCelector from "../UI/CustomSelector";
+import { doctorsOptions } from "../../constants";
 import {
   StyledModal,
   StyledHeader,
@@ -14,11 +15,6 @@ import {
 } from "./style";
 
 const ModalForm = ({ closeModal, dataModal, handleSaveChanges, handleChangeInput }) => {
-  const doctorsOptions = [
-    { value: "doctor 1", label: "Врач 1" },
-    { value: "Врач 2", label: "Врач 2" },
-    { value: "Врач 3", label: "Врач 3" },
-  ];
   return (
     <>
       <StyledModal>
@@ -35,9 +31,8 @@ const ModalForm = ({ closeModal, dataModal, handleSaveChanges, handleChangeInput
           />
           <CustomCelector
             as={StyledModalCelector}
-            labelCelector="Врач:"
-            nameCelect="doctor"
-            typeCelect="date"
+            labelSelector="Врач:"
+            nameSelector="doctor"
           >
             {doctorsOptions.map((option) => (
               <option key={option.value} value={option.value}>

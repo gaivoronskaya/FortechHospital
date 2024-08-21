@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledSelect = styled.select`
+export const StyledSelector = styled.select`
   width: 188px;
   height: 45px;
   border: 1px solid rgb(0, 0, 0, 0.2);
@@ -12,7 +12,7 @@ export const StyledLabel = styled.label`
   margin-bottom: 5px;
 `;
 
-export const StyledCelectContainer = styled.div`
+export const StyledSelectorContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;

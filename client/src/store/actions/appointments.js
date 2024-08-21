@@ -21,24 +21,24 @@ export const errorGetAppointment = (error) => {
   };
 };
 
-export const startSendAppointment = (playload) => {
+export const startCreateAppointment = (playload) => {
   return {
-    type: appointmentsEnums.SEND_APPOINTMENT,
+    type: appointmentsEnums.CREATE_APPOINTMENT,
     playload,
   };
 };
 
-export const successSendAppointment = (playload) => {
+export const successCreateAppointment = (playload) => {
   return {
-    type: appointmentsEnums.SEND_APPOINTMENT_SUCCESS,
+    type: appointmentsEnums.CREATE_APPOINTMENT_SUCCESS,
     playload,
   };
 };
 
-export const errorSendAppointment = (playload) => {
+export const errorCreateAppointment = (error) => {
   return {
-    type: appointmentsEnums.SEND_APPOINTMENT_ERROR,
-    playload,
+    type: appointmentsEnums.CREATE_APPOINTMENT_ERROR,
+    error,
   };
 };
 

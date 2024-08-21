@@ -6,24 +6,20 @@ import {
 import CustomInput from "../UI/CustomInput";
 import CustomButton from "../UI/CustomButton";
 import CustomSelector from "../UI/CustomSelector";
+import { doctorsOptions } from "../../constants";
 
 const Appointment = ({
-  formData,
+  appointmentDataModalWindow,
   handleChangeInput,
   handleActionButton,
   error,
   handleSubmit,
 }) => {
-  const doctorsOptions = [
-    { value: "doctor 1", label: "Врач 1" },
-    { value: "Врач 2", label: "Врач 2" },
-    { value: "Врач 3", label: "Врач 3" },
-  ];
   return (
     <StyledappointmentContainer onSubmit={handleSubmit}>
       <StyledappointmentInput
         label="Имя:"
-        valueInput={formData.name}
+        valueInput={appointmentDataModalWindow.name}
         typeInput="text"
         handleChangeInput={handleChangeInput}
         nameInput="name"
@@ -31,9 +27,9 @@ const Appointment = ({
       />
       <CustomSelector
         labelSelector="Врач:"
-        valueCelect={formData.doctor}
-        nameCelect="doctor"
-        onChangeonChangeSelect={handleChangeInput}
+        valueSelector={appointmentDataModalWindow.doctor}
+        nameSelector="doctor"
+        handleChangeSelector={handleChangeInput}
       >
         {doctorsOptions.map((option) => (
           <option key={option.value} value={option.value}>
@@ -43,7 +39,7 @@ const Appointment = ({
       </CustomSelector>
       <StyledappointmentInput
         label="Дата:"
-        valueInput={formData.date}
+        valueInput={appointmentDataModalWindow.date}
         typeInput="date"
         handleChangeInput={handleChangeInput}
         nameInput="date"
@@ -51,20 +47,20 @@ const Appointment = ({
       />
       <StyledappointmentInput
         label="Жалобы:"
-        valueInput={formData.complaint}
+        valueInput={appointmentDataModalWindow.complaint}
         handleChangeInput={handleChangeInput}
         typeInput="text"
         nameInput="complaint"
         error={error.complaints}
       />
-      <StyledappointmentButton
+      <CustomButton
         handleActionButton={handleActionButton}
         typeButton="submit"
         nameButton="mainNameButton"
         valueButton="mainValueButton"
       >
         Добавить
-      </StyledappointmentButton>
+      </CustomButton>
     </StyledappointmentContainer>
   );
 };
