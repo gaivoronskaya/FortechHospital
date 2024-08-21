@@ -3,8 +3,6 @@ import {
   StyledappointmentInput,
   StyledappointmentButton,
 } from "./style";
-import CustomInput from "../UI/CustomInput";
-import CustomButton from "../UI/CustomButton";
 import CustomSelector from "../UI/CustomSelector";
 
 const Appointment = ({

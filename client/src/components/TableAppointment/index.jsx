@@ -1,5 +1,3 @@
-// src/components/TableAppointment.js
-import React from 'react';
 import { tableHeaders } from "../../constants";
 import AppointmentItem from "../AppointmentItem";
 import {
