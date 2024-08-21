@@ -33,7 +33,8 @@ const MainPage = () => {
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const { getUserAppointments, sendAppointments, updateAppointmentAsync } = useActions();
+  const { getUserAppointments, sendAppointments, updateAppointmentAsync } =
+    useActions();
   const complaints = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
 
@@ -98,6 +99,12 @@ const MainPage = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleChangeUpdateInput = (e) => {
+    const { name, value } = e.target;
+
+    setDataModal((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -107,12 +114,14 @@ const MainPage = () => {
   };
 
   const handleEditAppointment = (id) => {
-    const appointmentToEdit = complaints.find((appointment) => appointment._id === id);
-  
+    const appointmentToEdit = complaints.find(
+      (appointment) => appointment._id === id
+    );
+
     if (!appointmentToEdit) {
       return;
     }
-    
+
     setEditingId(id);
     setDataModal({
       name: appointmentToEdit.name,
@@ -120,7 +129,7 @@ const MainPage = () => {
       date: appointmentToEdit.date,
       complaint: appointmentToEdit.complaint,
     });
-    
+
     handleOpenModal();
   };
 
@@ -128,7 +137,7 @@ const MainPage = () => {
     if (editingId) {
       try {
         await updateAppointmentAsync(editingId, dataModal);
-        handleCloseModal(); 
+        handleCloseModal();
       } catch (error) {
         console.error("Error updating appointment:", error);
       }
@@ -139,7 +148,13 @@ const MainPage = () => {
     <div>
       <Modal open={isModalOpen} onClose={handleCloseModal}>
         <StyledModalContainer>
-          <ModalForm closeModal={handleCloseModal} headerTitile="Изменить прием" dataModal={dataModal} handleSaveChanges={handleSaveChanges}/>
+          <ModalForm
+            closeModal={handleCloseModal}
+            headerTitile="Изменить прием"
+            dataModal={dataModal}
+            handleSaveChanges={handleSaveChanges}
+            handleChangeInput={handleChangeUpdateInput}
+          />
         </StyledModalContainer>
       </Modal>
       <Snackbar

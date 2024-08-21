@@ -1,4 +1,3 @@
-import React from "react";
 import { 
   StyledSelect, 
   StyledLabel, 
@@ -13,6 +12,7 @@ const CustomCelector = ({
   labelOption,
   valueOption,
   labelCelector,
+  typeCelect,
   as: AsComponent = StyledSelect,
 }) => (
   <StyledCelectContainer>
@@ -24,6 +24,7 @@ const CustomCelector = ({
     <AsComponent
       value={valueCelect}
       name={nameCelect}
+      type={typeCelect}
       onChange={onChangeonChangeSelect}
       id={`select_${nameCelect}`}
     >

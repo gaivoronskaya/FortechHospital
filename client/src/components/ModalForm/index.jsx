@@ -13,13 +13,12 @@ import {
   StyledModalCelector,
 } from "./style";
 
-const ModalForm = ({ closeModal, dataModal, handleSaveChanges }) => {
+const ModalForm = ({ closeModal, dataModal, handleSaveChanges, handleChangeInput }) => {
   const doctorsOptions = [
     { value: "doctor 1", label: "Врач 1" },
     { value: "Врач 2", label: "Врач 2" },
     { value: "Врач 3", label: "Врач 3" },
   ];
-
   return (
     <>
       <StyledModal>
@@ -32,11 +31,13 @@ const ModalForm = ({ closeModal, dataModal, handleSaveChanges }) => {
             label="Имя:"
             nameInput="name"
             valueInput={dataModal?.name || ""}
+            handleChangeInput={handleChangeInput}
           />
           <CustomCelector
             as={StyledModalCelector}
             labelCelector="Врач:"
             nameCelect="doctor"
+            typeCelect="date"
           >
             {doctorsOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -49,12 +50,15 @@ const ModalForm = ({ closeModal, dataModal, handleSaveChanges }) => {
             label="Дата:"
             nameInput="date"
             valueInput={dataModal?.date || ""}
+            handleChangeInput={handleChangeInput}
           />
           <CustomInput
             as={StyledModalInput}
             label="Жалобы:"
-            nameInput="complaints"
+            nameInput="complaint"
             valueInput={dataModal?.complaint  || ""}
+            handleChangeInput={handleChangeInput}
+            typeInput="comment"
           />
         </StyledModalForm>
         <StyledFooter>

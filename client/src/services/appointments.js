@@ -13,7 +13,7 @@ export const sendNewAppointments = async (appointmentData) => {
 };
 
 export const updateAppointment = async (id, updateAppointment) => {
-  const renameAppointment = await api.patch(`/${id}`, updateAppointment);
+  const renameAppointment = await api.patch(`/appointments/${id}`, updateAppointment);
 
   return renameAppointment.data;
 };

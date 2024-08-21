@@ -1,3 +1,4 @@
+import { formatDate } from "../../helpers/formate-date";
 import CustomButton from "../UI/CustomButton";
 import {
   StyledTable,
@@ -10,7 +11,6 @@ import {
   StyledLineCell,
   StyledButtons,
 } from "./style";
-import { formatDate } from "../../helpers/formate-date";
 
 const TableTechniques = ({ techniques, handleEditAppointment }) => {
   return (
