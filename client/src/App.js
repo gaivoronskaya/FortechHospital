@@ -6,31 +6,31 @@ import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 
 const App = () => {
-  const isToken = localStorage.getItem("accessToken");
-  const isAth = useSelector((state) => state.user);
+  const token = localStorage.getItem("accessToken");
+  const isAuth = useSelector((state) => state.user.isAuth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isToken) {
+    if (isAuth) {
       navigate("/main");
     }
-  }, [isAth]);
+  }, [isAuth]);
 
-  if (isAth, isToken) {
+  if (isAuth) {
     return (
       <Routes>
         <Route path="/main" element={<MainPage />} />
+        <Route path="*" element={<Navigate to="/main" />} />
       </Routes>
     );
-  } else {
+  } 
     return (
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     );
-  }
 };
 
 export default App;

@@ -29,10 +29,8 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const newAccessToken = await refreshToken();
-        console.log("NEW", newAccessToken);
 
         localStorage.setItem("accessToken", newAccessToken);
-        sessionStorage.setItem("accessToken", newAccessToken);
 
         return api.request(originalRequest);
       } catch (error) {

@@ -4,26 +4,26 @@ import {
   StyledCelectContainer 
 } from "./style";
 
-const CustomCelector = ({
-  valueCelect,
-  nameCelect,
-  onChangeonChangeSelect,
+const CustomSelector = ({
+  valueSelector,
+  nameSelector,
+  handleChangeSelector,
   children,
   labelOption,
   valueOption,
-  labelCelector,
+  labelSelector,
 }) => (
   <StyledCelectContainer>
-    {labelCelector && (
-      <StyledLabel htmlFor={`select_${nameCelect}`}>
-        {labelCelector}
+    {labelSelector && (
+      <StyledLabel htmlFor={`select_${nameSelector}`}>
+        {labelSelector}
       </StyledLabel>
     )}
     <StyledSelect
-      value={valueCelect}
-      name={nameCelect}
-      onChange={onChangeonChangeSelect}
-      id={`select_${nameCelect}`}
+      value={valueSelector}
+      name={nameSelector}
+      onChange={handleChangeSelector}
+      id={`select_${nameSelector}`}
     >
       <option value={valueOption} disabled>
         {labelOption}
@@ -33,4 +33,4 @@ const CustomCelector = ({
   </StyledCelectContainer>
 );
 
-export default CustomCelector;
+export default CustomSelector;

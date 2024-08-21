@@ -3,28 +3,31 @@ import { useSelector } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
-import Techniques from "../../components/Techniques";
-import TableTechniques from "../../components/TableTechniques";
-import CustomButton from "../../components/UI/CustomButton";
+import Appointment from "../../components/Appointment";
+import TableAppointment from "../../components/TableAppointment";
 import { StyledButtonExit } from "./style";
 import useActions from "../../hooks/useActions";
 
 const MainPage = () => {
-  const [formData, setFormData] = useState({
+  const [appointmentForm , setAppointmentForm ] = useState({ //изменить нейминг appointmentForm
     name: "",
     doctor: "",
     date: "",
     complaint: "",
   });
+
   const [inputError, setInputError] = useState({
     name: "",
     doctor: "",
     date: "",
     complaint: "",
   });
+  
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
-  const { getUserAppointments, sendAppointments } = useActions();
-  const complaints = useSelector((state) => state.appointments.appointments);
+
+  const { getUserAppointments, createAppointments } = useActions();
+
+  const appointments = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -47,13 +50,15 @@ const MainPage = () => {
 
   const validateComplaints = (event) => {
     event.preventDefault();
-    const { name, doctor, date, complaint } = formData;
+    const { name, doctor, date, complaint } = appointmentForm;
 
     if (!name.trim()) {
       setInputError({
         ...inputError,
         name: "Поле не может быть пустым",
       });
+
+      return;
     }
 
     if (!doctor.trim()) {
@@ -61,6 +66,8 @@ const MainPage = () => {
         ...inputError,
         doctor: "Поле не может быть пустым",
       });
+
+      return;
     }
 
     if (!date.trim()) {
@@ -68,6 +75,8 @@ const MainPage = () => {
         ...inputError,
         date: "Поле не может быть пустым",
       });
+
+      return;
     }
 
     if (!complaint.trim()) {
@@ -79,13 +88,13 @@ const MainPage = () => {
       return;
     }
 
-    sendAppointments(formData);
+    createAppointments(appointmentForm);
   };
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setAppointmentForm((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return (
@@ -100,15 +109,15 @@ const MainPage = () => {
         </Alert>
       </Snackbar>
       <Header title="Приемы">
-        <CustomButton as={StyledButtonExit}>Выход</CustomButton>
+        <StyledButtonExit >Выход</StyledButtonExit>
       </Header>
-      <Techniques
+      <Appointment
         handleChangeInput={handleChangeInput}
-        formData={formData}
+        appointmentForm={appointmentForm}
         error={inputError}
         handleSubmit={validateComplaints}
-      ></Techniques>
-      <TableTechniques techniques={complaints}></TableTechniques>
+      />
+      <TableAppointment appointments={appointments} />
     </div>
   );
 };
