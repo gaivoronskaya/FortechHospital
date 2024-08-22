@@ -1,11 +1,6 @@
+import CustomButton from "../UI/CustomButton";
 import { formatDate } from "../../helpers/formate-date";
-import {
-  StyledCell,
-  StyledLineCell,
-  StyledButtonRenameAppointment,
-  StyledButtonDelete,
-  StyledButtons,
-} from "./style";
+import { StyledCell, StyledLineCell, StyledButtons } from "./style";
 
 const Appointment = ({ appointment }) => {
   return (
@@ -16,8 +11,8 @@ const Appointment = ({ appointment }) => {
       <StyledCell>{appointment.complaint}</StyledCell>
       <StyledCell>
         <StyledButtons>
-          <StyledButtonDelete />
-          <StyledButtonRenameAppointment classNameButton="renameButton" />
+          <CustomButton classNameButton="styled-buttons_all-button styled-buttons_delete-button" />
+          <CustomButton classNameButton="styled-buttons_all-button styled-buttons_rename-button" />
         </StyledButtons>
       </StyledCell>
     </StyledLineCell>

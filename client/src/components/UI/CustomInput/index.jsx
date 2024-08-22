@@ -13,19 +13,19 @@ const CustomInput = ({
   nameInput,
   handleChangeInput,
   error,
-  as: AsComponent = StyledCustomInput,
-  options,
+  classNameInput,
 }) => {
   return (
     <StyledInputContainer>
       {label && <StyledLabel>{label}</StyledLabel>}
-      <AsComponent
+      <StyledCustomInput
         placeholder={placeholder}
         type={typeInput}
         value={valueInput}
         name={nameInput}
         onChange={handleChangeInput}
         id={`input_${nameInput}`}
+        className={classNameInput}
       />
       {error && <StyledErrorText>{error}</StyledErrorText>}
     </StyledInputContainer>

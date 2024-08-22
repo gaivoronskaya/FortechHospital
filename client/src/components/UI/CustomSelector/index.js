@@ -8,6 +8,7 @@ const CustomSelector = ({
   labelOption,
   valueOption,
   labelSelector,
+  classNameSelector,
 }) => (
   <StyledCelectContainer>
     {labelSelector && (
@@ -20,6 +21,7 @@ const CustomSelector = ({
       name={nameSelector}
       onChange={handleChangeSelector}
       id={`select_${nameSelector}`}
+      className="classNameSelector"
     >
       <option value={valueOption} disabled>
         {labelOption}

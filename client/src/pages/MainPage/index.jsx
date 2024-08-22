@@ -71,7 +71,7 @@ const MainPage = () => {
       return;
     }
 
-    if (!date.trim() || currentDate < date) {
+    if (!date.trim() || new Date(date) < currentDate) {
       setInputError({
         ...inputError,
         date: "Поле не может быть пустым или содержать прошлое время",

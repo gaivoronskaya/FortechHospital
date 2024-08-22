@@ -10,6 +10,6 @@ export const tableHeaders = [
 
 export const doctorsOptions = [
   { value: "firstDoctor", label: "Врач1" },
-  { value: "seconsDOctor", label: "Врач2" },
-  { value: "therdDoctor", label: "Врач3" },
+  { value: "secondDoctor", label: "Врач2" },
+  { value: "thirdDoctor", label: "Врач3" },
 ];

@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import CustomButton from "../UI/CustomButton/index";
-import rename from "../../images/rename.svg";
+import renameButton from "../../images/rename.svg";
 import deleteButton from "../../images/delete.svg";
 
 export const StyledLineCell = styled.tr`
@@ -12,26 +11,21 @@ export const StyledCell = styled.td`
   border-right: 1px solid #000000;
 `;
 
-export const StyledButtonDelete = styled.button`
-  width: 24px;
-  height: 24px;
-  background-color: #ffffff;
-  border: none;
-  background-image: url(${deleteButton});
-`;
-
-export const StyledButtonRenameAppointment = styled(CustomButton)`
-  &.renameButton {
-    width: 24px;
-    height: 24px;
-    background-color: #ffffff;
-    border: none;
-    background-image: url(${rename});
-    background-size: cover;
-  }
-`;
-
 export const StyledButtons = styled.div`
   display: flex;
   gap: 5px;
+
+  .styled-buttons_all-button {
+    width: 24px;
+    height: 24px;
+    border: none;
+  }
+
+  .styled-buttons_rename-button {
+    background-image: url(${renameButton});
+  }
+
+  .styled-buttons_delete-button {
+    background-image: url(${deleteButton});
+  }
 `;

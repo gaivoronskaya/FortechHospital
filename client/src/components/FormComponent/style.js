@@ -13,20 +13,16 @@ export const StyledAppointmentContainer = styled.form`
   justify-content: center;
   align-items: center;
   gap: 26px;
-`;
 
-export const StyledAppointmentInput = styled.input`
-  width: 188px;
-  height: 45px;
-  border: 1px solid rgb(0, 0, 0, 0.2);
-  padding-left: 10px;
-`;
+  .appointment-container__input,
+  .appointment-container__selector {
+    width: 188px;
+    height: 45px;
+  }
 
-export const StyledAppointmentButton = styled.button`
-  width: 131px;
-  height: 45px;
-  border-radius: 4px;
-  background-color: #ffffff;
-  border: 1px solid rgb(0, 0, 0, 0.2);
-  margin-top: 10px;
+  .appointment-container__button {
+    width: 131px;
+    height: 45px;
+    margin-top: 10px;
+  }
 `;
