@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../store";
-import { refreshToken } from "../services/users";
+import { refreshTokenAction } from "../store/action-creators/users";
 import { errorRefreshToken } from "../store/actions/users";
 import { baseURL } from "../constants";
 
@@ -23,6 +23,7 @@ api.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+
     if (
       error.response &&
       error.response.status === 401 &&
@@ -30,10 +31,9 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const newAccessToken = await refreshToken();
-
-        localStorage.setItem("accessToken", newAccessToken);
-        api.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+        const newAccessToken = await store.dispatch(refreshTokenAction());
+        
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return api.request(originalRequest);
       } catch (refreshError) {

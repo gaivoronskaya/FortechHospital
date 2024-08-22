@@ -54,12 +54,13 @@ const userReducer = (state = initialState, action) => {
           ...state,
           error: null,
         };
+
       case userEnums.REFRESH_TOKEN_SUCCESS:
         return {
-          ...state,
           error: null,
           isAuth: true,
         };
+        
       case userEnums.REFRESH_TOKEN_ERROR:
         return {
           ...state,
