@@ -1,7 +1,8 @@
 import axios from "axios";
+import store from "../store";
 import { refreshToken } from "../services/users";
+import { errorRefreshToken } from "../store/actions/users";
 import { baseURL } from "../constants";
-import useActions from "../hooks/useActions";
 
 export const api = axios.create({
   baseURL,
@@ -28,17 +29,15 @@ api.interceptors.response.use(
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
-      const { logoutUser, errorRefreshToken } = useActions();
-
       try {
         const newAccessToken = await refreshToken();
 
         localStorage.setItem("accessToken", newAccessToken);
+        api.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return api.request(originalRequest);
       } catch (refreshError) {
-        logoutUser();
-        errorRefreshToken(refreshError.message);
+        store.dispatch(errorRefreshToken(refreshError.message));
         throw refreshError;
       }
     }
