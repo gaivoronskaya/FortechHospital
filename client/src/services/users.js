@@ -1,19 +1,19 @@
 import { api } from "../http";
 
 export const createNewUser = async (user) => {
-  const newUser = await api.post("/users/signup", user);
+  const signUpResponse = await api.post("/users/signup", user);
 
-  return newUser.data;
+  return signUpResponse.data;
 };
 
 export const loginUser = async (user) => {
-  const userLogin = await api.post("/users/signin", user);
+  const userLoginResponse = await api.post("/users/signin", user);
 
-  return userLogin.data;
+  return userLoginResponse.data;
 };
 
 export const refreshToken = async () => {
-  const response = await api.get("/refresh");
+  const newTokenResponse = await api.get("/refresh");
 
-  return response.data;
+  return newTokenResponse.data;
 };

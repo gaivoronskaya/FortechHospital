@@ -37,7 +37,6 @@ const userReducer = (state = initialState, action) => {
 
     case userEnums.LOGIN_USER_SUCCESS:
       return {
-        ...state,
         error: null,
         user: action.payload,
         isAuth: true,
@@ -49,6 +48,24 @@ const userReducer = (state = initialState, action) => {
         error: action.error,
         isAuth: false,
       };
+
+      case userEnums.REFRESH_TOKEN:
+        return {
+          ...state,
+          error: null,
+        };
+      case userEnums.REFRESH_TOKEN_SUCCESS:
+        return {
+          ...state,
+          error: null,
+          isAuth: true,
+        };
+      case userEnums.REFRESH_TOKEN_ERROR:
+        return {
+          ...state,
+          error: action.error,
+          isAuth: false,
+        };
 
     default:
       return state;

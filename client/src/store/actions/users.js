@@ -42,23 +42,22 @@ export const errorLoginUser = (error) => {
   };
 };
 
-export const startGetAppointment = (playload) => {
+export const startRefreshToken = () => {
   return {
-    type: userEnums.GET_APPOINTMENT,
-    playload,
+    type: userEnums.REFRESH_TOKEN,
   };
 };
 
-export const successGetAppointment = (playload) => {
+export const successRefreshToken = (payload) => {
   return {
-    type: userEnums.GET_APPOINTMENT_SUCCESS,
-    playload,
+    type: userEnums.REFRESH_TOKEN_SUCCESS,
+    payload,
   };
 };
 
-export const errorGetAppointment = (error) => {
+export const errorRefreshToken = (error) => {
   return {
-    type: userEnums.GET_APPOINTMENT_ERROR,
+    type: userEnums.REFRESH_TOKEN_ERROR,
     error,
   };
 };

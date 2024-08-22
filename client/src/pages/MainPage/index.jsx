@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
-import Appointment from "../../components/Appointment";
+import FormComponent from "../../components/FormComponent";
 import TableAppointment from "../../components/TableAppointment";
-import { StyledButtonExit } from "./style";
 import useActions from "../../hooks/useActions";
+import { StyledButtonExit } from "./style";
 
 const MainPage = () => {
-  const [appointmentForm , setAppointmentForm ] = useState({ //изменить нейминг appointmentForm
+  const [appointment, setAppointment] = useState({
     name: "",
     doctor: "",
     date: "",
@@ -22,7 +22,7 @@ const MainPage = () => {
     date: "",
     complaint: "",
   });
-  
+
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
 
   const { getUserAppointments, createAppointments } = useActions();
@@ -48,9 +48,10 @@ const MainPage = () => {
     getUserAppointments();
   }, []);
 
-  const validateComplaints = (event) => {
+  const validateAppointments = (event) => {
     event.preventDefault();
-    const { name, doctor, date, complaint } = appointmentForm;
+    const { name, doctor, date, complaint } = appointment;
+    const currentDate = new Date();
 
     if (!name.trim()) {
       setInputError({
@@ -70,10 +71,10 @@ const MainPage = () => {
       return;
     }
 
-    if (!date.trim()) {
+    if (!date.trim() || currentDate < date) {
       setInputError({
         ...inputError,
-        date: "Поле не может быть пустым",
+        date: "Поле не может быть пустым или содержать прошлое время",
       });
 
       return;
@@ -88,13 +89,13 @@ const MainPage = () => {
       return;
     }
 
-    createAppointments(appointmentForm);
+    createAppointments(appointment);
   };
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
-    setAppointmentForm((prevData) => ({ ...prevData, [name]: value }));
+    setAppointment((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return (
@@ -109,13 +110,13 @@ const MainPage = () => {
         </Alert>
       </Snackbar>
       <Header title="Приемы">
-        <StyledButtonExit >Выход</StyledButtonExit>
+        <StyledButtonExit>Выход</StyledButtonExit>
       </Header>
-      <Appointment
+      <FormComponent
         handleChangeInput={handleChangeInput}
-        appointmentForm={appointmentForm}
+        appointment={appointment}
         error={inputError}
-        handleSubmit={validateComplaints}
+        handleSubmit={validateAppointments}
       />
       <TableAppointment appointments={appointments} />
     </div>

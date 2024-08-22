@@ -1,14 +1,10 @@
-import { 
-  StyledSelector, 
-  StyledLabel, 
-  StyledCelectContainer 
-} from "./style";
+import { StyledSelector, StyledLabel, StyledCelectContainer } from "./style";
 
 const CustomSelector = ({
   valueSelector,
   nameSelector,
   handleChangeSelector,
-  children,
+  options,
   labelOption,
   valueOption,
   labelSelector,
@@ -28,7 +24,11 @@ const CustomSelector = ({
       <option value={valueOption} disabled>
         {labelOption}
       </option>
-      {children}
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
     </StyledSelector>
   </StyledCelectContainer>
 );

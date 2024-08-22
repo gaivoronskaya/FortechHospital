@@ -11,8 +11,8 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuth) {
-      navigate("/main");
+    if (token) {
+      return navigate("/main");
     }
   }, [isAuth]);
 
@@ -23,14 +23,14 @@ const App = () => {
         <Route path="*" element={<Navigate to="/main" />} />
       </Routes>
     );
-  } 
-    return (
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    );
+  }
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/registration" element={<RegistrationPage />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
+  );
 };
 
 export default App;

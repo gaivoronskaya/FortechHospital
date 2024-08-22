@@ -15,9 +15,9 @@ export const getUserAppointments = () => {
   return async (dispatch) => {
     try {
       dispatch(startGetAppointment());
-      const getAppointment = await getAppointments();
+      const appointmentList = await getAppointments();
 
-      dispatch(successGetAppointment(getAppointment));
+      dispatch(successGetAppointment(appointmentList));
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message
@@ -31,9 +31,9 @@ export const createAppointments = (appointmentData) => {
   return async (dispatch) => {
     try {
       dispatch(startCreateAppointment());
-      const addAppointments = await createNewAppointments(appointmentData);
-      
-      dispatch(successCreateAppointment(addAppointments));
+      const newAppointment = await createNewAppointments(appointmentData);
+
+      dispatch(successCreateAppointment(newAppointment));
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message
@@ -42,4 +42,3 @@ export const createAppointments = (appointmentData) => {
     }
   };
 };
-

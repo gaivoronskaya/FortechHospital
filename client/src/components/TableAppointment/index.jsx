@@ -1,13 +1,6 @@
-// src/components/TableAppointment.js
-import React from 'react';
+import Appointment from "../Appointment";
 import { tableHeaders } from "../../constants";
-import AppointmentItem from "../AppointmentItem";
-import {
-  StyledTable,
-  StyledLine,
-  StyledTitle,
-  StyledCellsBody,
-} from "./style";
+import { StyledTable, StyledLine, StyledTitle, StyledCellsBody } from "./style";
 
 const TableAppointment = ({ appointments }) => {
   return (
@@ -19,7 +12,7 @@ const TableAppointment = ({ appointments }) => {
       </StyledLine>
       <StyledCellsBody>
         {appointments.map((appointment) => (
-          <AppointmentItem key={appointment._id} appointment={appointment} />
+          <Appointment key={appointment._id} appointment={appointment} />
         ))}
       </StyledCellsBody>
     </StyledTable>

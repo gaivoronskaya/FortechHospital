@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
     background-color: #C5E9FF;
   }
 
-  button {
+  button, input {
     cursor: pointer;
   }
 
