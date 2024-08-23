@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
-import FormComponent from "../../components/FormComponent";
+import FormAppointment from "../../components/FormAppointment";
 import TableAppointment from "../../components/TableAppointment";
 import useActions from "../../hooks/useActions";
 import { StyledButtonExit } from "./style";
@@ -112,7 +112,7 @@ const MainPage = () => {
       <Header title="Приемы">
         <StyledButtonExit>Выход</StyledButtonExit>
       </Header>
-      <FormComponent
+      <FormAppointment
         handleChangeInput={handleChangeInput}
         appointment={appointment}
         error={inputError}

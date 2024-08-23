@@ -1,4 +1,4 @@
-import { createNewUser, loginUser } from "../../services/users";
+import { createNewUser, loginUser, refreshToken } from "../../services/users";
 import {
   startAddUser,
   successAddUser,
@@ -49,12 +49,15 @@ export const refreshTokenAction = () => {
   return async (dispatch) => {
     try {
       dispatch(startRefreshToken());
-      const newTokenResponse = await loginUser();
+      const newToken = await refreshToken();
 
-      localStorage.setItem("accessToken", newTokenResponse.data.accessToken);
-      dispatch(successRefreshToken(newTokenResponse.data));
+      const newAccessToken = newToken.accessToken;
+      localStorage.setItem("accessToken", newAccessToken);
+
+      dispatch(successRefreshToken(newToken));
+      return newAccessToken;
     } catch (error) {
-      const errorText = error.response
+      const errorText = error.response      
         ? error.response.data.message
         : error.message;
       dispatch(errorRefreshToken(errorText));

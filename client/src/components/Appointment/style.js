@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import renameButton from "../../images/rename.svg";
+import editButton from "../../images/rename.svg";
 import deleteButton from "../../images/delete.svg";
 
 export const StyledLineCell = styled.tr`
@@ -15,17 +15,17 @@ export const StyledButtons = styled.div`
   display: flex;
   gap: 5px;
 
-  .styled-buttons_all-button {
+  .appointment_all-button {
     width: 24px;
     height: 24px;
     border: none;
   }
 
-  .styled-buttons_rename-button {
-    background-image: url(${renameButton});
+  .appointment_edit-button {
+    background-image: url(${editButton});
   }
 
-  .styled-buttons_delete-button {
+  .appointment_delete-button {
     background-image: url(${deleteButton});
   }
 `;

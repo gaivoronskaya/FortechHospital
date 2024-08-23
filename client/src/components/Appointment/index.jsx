@@ -11,8 +11,8 @@ const Appointment = ({ appointment }) => {
       <StyledCell>{appointment.complaint}</StyledCell>
       <StyledCell>
         <StyledButtons>
-          <CustomButton classNameButton="styled-buttons_all-button styled-buttons_delete-button" />
-          <CustomButton classNameButton="styled-buttons_all-button styled-buttons_rename-button" />
+          <CustomButton classNameButton="appointment__all-button appointment__delete-button" />
+          <CustomButton classNameButton="appointment_all-button appointment_edit-button" />
         </StyledButtons>
       </StyledCell>
     </StyledLineCell>

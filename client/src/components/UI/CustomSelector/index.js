@@ -21,7 +21,7 @@ const CustomSelector = ({
       name={nameSelector}
       onChange={handleChangeSelector}
       id={`select_${nameSelector}`}
-      className="classNameSelector"
+      className={classNameSelector}
     >
       <option value={valueOption} disabled>
         {labelOption}

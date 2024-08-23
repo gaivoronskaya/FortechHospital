@@ -4,7 +4,7 @@ import CustomInput from "../UI/CustomInput";
 import { doctorsOptions } from "../../constants";
 import { StyledAppointmentContainer, StyledShadow } from "./style";
 
-const FormComponent = ({
+const FormAppointment = ({
   appointment,
   handleChangeInput,
   handleActionButton,
@@ -21,7 +21,7 @@ const FormComponent = ({
           handleChangeInput={handleChangeInput}
           nameInput="name"
           error={error.name}
-          classNameInput="appointment-container__input"
+          classNameInput="form-appointment__input"
         />
         <CustomSelector
           labelSelector="Врач:"
@@ -29,8 +29,8 @@ const FormComponent = ({
           nameSelector="doctor"
           handleChangeSelector={handleChangeInput}
           options={doctorsOptions}
-          classNameSelector="appointment-container__selector"
-        ></CustomSelector>
+          classNameSelector="form-appointment__selector"
+        />
         <CustomInput
           label="Дата:"
           valueInput={appointment.date}
@@ -38,7 +38,7 @@ const FormComponent = ({
           handleChangeInput={handleChangeInput}
           nameInput="date"
           error={error.date}
-          classNameInput="appointment-container__input"
+          classNameInput="form-appointment__input"
         />
         <CustomInput
           label="Жалобы:"
@@ -47,10 +47,10 @@ const FormComponent = ({
           typeInput="text"
           nameInput="complaint"
           error={error.complaints}
-          classNameInput="appointment-container__input"
+          classNameInput="form-appointment__input"
         />
         <CustomButton
-          classNameButton="appointment-container__button"
+          classNameButton="form-appointment__button"
           handleActionButton={handleActionButton}
           typeButton="submit"
           nameButton="mainNameButton"
@@ -63,4 +63,4 @@ const FormComponent = ({
   );
 };
 
-export default FormComponent;
+export default FormAppointment;

@@ -14,13 +14,13 @@ export const StyledAppointmentContainer = styled.form`
   align-items: center;
   gap: 26px;
 
-  .appointment-container__input,
-  .appointment-container__selector {
+  .form-appointment__input,
+  .form-appointment__selector {
     width: 188px;
     height: 45px;
   }
 
-  .appointment-container__button {
+  .form-appointment__button {
     width: 131px;
     height: 45px;
     margin-top: 10px;
