@@ -12,7 +12,7 @@ const Appointment = ({ appointment }) => {
       <StyledCell>
         <StyledButtons>
           <CustomButton classNameButton="appointment__all-button appointment__all-button_delete-button" />
-          <CustomButton classNameButton="appointment_all-button appointment__all-button_edit-button" />
+          <CustomButton classNameButton="appointment__all-button appointment__all-button_edit-button" />
         </StyledButtons>
       </StyledCell>
     </StyledLineCell>
