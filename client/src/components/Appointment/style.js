@@ -21,11 +21,11 @@ export const StyledButtons = styled.div`
     border: none;
   }
 
-  .appointment_edit-button {
+  .appointment__all-button_edit-button{
     background-image: url(${editButton});
   }
 
-  .appointment_delete-button {
+  .appointment__all-button_delete-button {
     background-image: url(${deleteButton});
   }
 `;

@@ -2,9 +2,9 @@ import CustomButton from "../UI/CustomButton";
 import CustomSelector from "../UI/CustomSelector";
 import CustomInput from "../UI/CustomInput";
 import { doctorsOptions } from "../../constants";
-import { StyledAppointmentContainer, StyledShadow } from "./style";
+import { StyledAppointmentContainer, StyledAddAppointmentForm } from "./style";
 
-const FormAppointment = ({
+const AddingAppointmentForm = ({
   appointment,
   handleChangeInput,
   handleActionButton,
@@ -12,7 +12,7 @@ const FormAppointment = ({
   handleSubmit,
 }) => {
   return (
-    <StyledShadow>
+    <StyledAddAppointmentForm>
       <StyledAppointmentContainer onSubmit={handleSubmit}>
         <CustomInput
           label="Имя:"
@@ -21,7 +21,7 @@ const FormAppointment = ({
           handleChangeInput={handleChangeInput}
           nameInput="name"
           error={error.name}
-          classNameInput="form-appointment__input"
+          classNameInput="adding-appointment-form__input"
         />
         <CustomSelector
           labelSelector="Врач:"
@@ -29,7 +29,7 @@ const FormAppointment = ({
           nameSelector="doctor"
           handleChangeSelector={handleChangeInput}
           options={doctorsOptions}
-          classNameSelector="form-appointment__selector"
+          classNameSelector="adding-appointment-formm__selector"
         />
         <CustomInput
           label="Дата:"
@@ -38,7 +38,7 @@ const FormAppointment = ({
           handleChangeInput={handleChangeInput}
           nameInput="date"
           error={error.date}
-          classNameInput="form-appointment__input"
+          classNameInput="adding-appointment-form__input"
         />
         <CustomInput
           label="Жалобы:"
@@ -47,10 +47,10 @@ const FormAppointment = ({
           typeInput="text"
           nameInput="complaint"
           error={error.complaints}
-          classNameInput="form-appointment__input"
+          classNameInput="adding-appointment-form__input"
         />
         <CustomButton
-          classNameButton="form-appointment__button"
+          classNameButton="adding-appointment-form__button"
           handleActionButton={handleActionButton}
           typeButton="submit"
           nameButton="mainNameButton"
@@ -59,8 +59,8 @@ const FormAppointment = ({
           Добавить
         </CustomButton>
       </StyledAppointmentContainer>
-    </StyledShadow>
+    </StyledAddAppointmentForm>
   );
 };
 
-export default FormAppointment;
+export default AddingAppointmentForm;

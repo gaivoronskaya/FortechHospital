@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import icon from "../../images/icon.svg";
 
-export const StyledShadow = styled.div`
+export const StyledHeader = styled.div`
   box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.2);
 `;
 

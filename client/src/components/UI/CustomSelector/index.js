@@ -1,4 +1,4 @@
-import { StyledSelector, StyledLabel, StyledCelectContainer } from "./style";
+import { StyledSelector, StyledLabel, StyledSelectContainer } from "./style";
 
 const CustomSelector = ({
   valueSelector,
@@ -10,7 +10,7 @@ const CustomSelector = ({
   labelSelector,
   classNameSelector,
 }) => (
-  <StyledCelectContainer>
+  <StyledSelectContainer>
     {labelSelector && (
       <StyledLabel htmlFor={`select_${nameSelector}`}>
         {labelSelector}
@@ -32,7 +32,7 @@ const CustomSelector = ({
         </option>
       ))}
     </StyledSelector>
-  </StyledCelectContainer>
+  </StyledSelectContainer>
 );
 
 export default CustomSelector;
