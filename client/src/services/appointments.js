@@ -11,3 +11,9 @@ export const createNewAppointments = async (appointmentData) => {
 
   return newAppointments.data;
 }
+
+export const updateAppointment = async (id, updateAppointment) => {
+  const renameAppointment = await api.patch(`/appointments/${id}`, updateAppointment);
+
+  return renameAppointment.data;
+};

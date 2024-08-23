@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { Modal } from "@mui/material";
 import Header from "../../components/Header";
 import AddingAppointmentForm from "../../components/AddingAppointmentForm";
 import TableAppointment from "../../components/TableAppointment";
+import ModalForm from "../../components/ModalForm";
 import useActions from "../../hooks/useActions";
-import { StyledButtonExit } from "./style";
+import { StyledButtonExit, StyledModalContainer } from "./style";
 
 const MainPage = () => {
   const [appointment, setAppointment] = useState({
@@ -23,9 +25,20 @@ const MainPage = () => {
     complaint: "",
   });
 
+  const [newAppointment, setNewAppointment] = useState({
+    name: "",
+    doctor: "",
+    date: "",
+    complaint: "",
+  })
+
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
 
-  const { getUserAppointments, createAppointments } = useActions();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [editingId, setEditingId] = useState(null);
+
+  const { getUserAppointments, createAppointments, updateAppointmentAsync } = useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
@@ -98,6 +111,45 @@ const MainPage = () => {
     setAppointment((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleEditAppointment = (id) => {
+    const appointmentToEdit = appointments.find(
+      (appointment) => appointment._id === id
+    );
+
+    if (!appointmentToEdit) {
+      return;
+    }
+
+    setEditingId(id);
+    setNewAppointment({
+      name: appointmentToEdit.name,
+      doctor: appointmentToEdit.doctor,
+      date: appointmentToEdit.date,
+      complaint: appointmentToEdit.complaint,
+    });
+
+    handleOpenModal();
+  };
+
+  const handleSaveChanges = async () => {
+    if (editingId) {
+      try {
+        await updateAppointmentAsync(editingId, newAppointment);
+        handleCloseModal();
+      } catch (error) {
+        console.error("Error updating appointment:", error);
+      }
+    }
+  };
+
   return (
     <div>
       <Snackbar
@@ -119,6 +171,17 @@ const MainPage = () => {
         handleSubmit={validateAppointments}
       />
       <TableAppointment appointments={appointments} />
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <StyledModalContainer>
+          <ModalForm
+            closeModal={handleCloseModal}
+            headerTitile="Изменить прием"
+            dataModal={newAppointment}
+            handleSaveChanges={handleSaveChanges}
+            handleChangeInput={handleEditAppointment}
+          />
+        </StyledModalContainer>
+      </Modal>
     </div>
   );
 };

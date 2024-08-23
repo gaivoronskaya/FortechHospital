@@ -1,6 +1,7 @@
 import {
   getAppointments,
   createNewAppointments,
+  updateAppointment,
 } from "../../services/appointments";
 import {
   startGetAppointment,
@@ -9,6 +10,9 @@ import {
   startCreateAppointment,
   successCreateAppointment,
   errorCreateAppointment,
+  startUpdateAppointment,
+  successUpdateAppointment,
+  errorUpdateAppointment,
 } from "../actions/appointments";
 
 export const getUserAppointments = () => {
@@ -41,4 +45,15 @@ export const createAppointments = (appointmentData) => {
       dispatch(errorCreateAppointment(errorText));
     }
   };
+};
+
+export const updateAppointmentAsync = (id, updatedData) => async (dispatch) => {
+  dispatch(startUpdateAppointment());
+
+  try {
+    const updatedAppointment = await updateAppointment(id, updatedData);
+    dispatch(successUpdateAppointment(updatedAppointment));
+  } catch (error) {
+    dispatch(errorUpdateAppointment(error.message));
+  }
 };

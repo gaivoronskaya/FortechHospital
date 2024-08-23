@@ -43,6 +43,26 @@ const appointmentsReducer = (state = initialState, action) => {
         error: action.error,
       };
 
+      case appointmentsEnums.UPDATE_APPOINTMENT:
+        return {
+          ...state,
+          error: null,
+        };
+  
+      case appointmentsEnums.UPDATE_APPOINTMENT_SUCCESS:
+        return {
+          appointments: state.appointments.map((appointment) =>
+            appointment._id === action.payload._id ? action.payload : appointment
+          ),
+          error: null,
+        };
+  
+      case appointmentsEnums.UPDATE_APPOINTMENT_ERROR:
+        return {
+          ...state,
+          error: action.error,
+        };
+
     default:
       return state;
   }

@@ -41,3 +41,24 @@ export const errorCreateAppointment = (error) => {
     error,
   };
 };
+
+export const startUpdateAppointment = (playload) => {
+  return {
+    type: appointmentsEnums.UPDATE_APPOINTMENT,
+    playload,
+  };
+};
+
+export const successUpdateAppointment = (playload) => {
+  return {
+    type: appointmentsEnums.UPDATE_APPOINTMENT_SUCCESS,
+    playload,
+  };
+};
+
+export const errorUpdateAppointment = (error) => {
+  return {
+    type: appointmentsEnums.UPDATE_APPOINTMENT_ERROR,
+    error,
+  };
+};
