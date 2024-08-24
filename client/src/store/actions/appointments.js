@@ -7,10 +7,10 @@ export const startGetAppointment = (payload) => {
   };
 };
 
-export const successGetAppointment = (playload) => {
+export const successGetAppointment = (payload) => {
   return {
     type: appointmentsEnums.GET_APPOINTMENT_SUCCESS,
-    playload,
+    payload,
   };
 };
 
@@ -21,17 +21,17 @@ export const errorGetAppointment = (error) => {
   };
 };
 
-export const startCreateAppointment = (playload) => {
+export const startCreateAppointment = (payload) => {
   return {
     type: appointmentsEnums.CREATE_APPOINTMENT,
-    playload,
+    payload,
   };
 };
 
-export const successCreateAppointment = (playload) => {
+export const successCreateAppointment = (payload) => {
   return {
     type: appointmentsEnums.CREATE_APPOINTMENT_SUCCESS,
-    playload,
+    payload,
   };
 };
 

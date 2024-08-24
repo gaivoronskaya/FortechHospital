@@ -13,7 +13,7 @@ export const loginUser = async (user) => {
 };
 
 export const refreshToken = async () => {
-  const newToken = await api.get("/refresh");
+  const newToken = await api.get("/users/refresh");
 
   return newToken.data;
 };

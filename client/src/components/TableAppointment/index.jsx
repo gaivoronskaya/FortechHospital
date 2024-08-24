@@ -12,7 +12,7 @@ const TableAppointment = ({ appointments }) => {
       </StyledLine>
       <StyledCellsBody>
         {appointments.map((appointment) => (
-          <Appointment key={appointment.id} appointment={appointment} />
+          <Appointment key={appointment._id} appointment={appointment} />
         ))}
       </StyledCellsBody>
     </StyledTable>
