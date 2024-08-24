@@ -15,7 +15,7 @@ const appointmentsReducer = (state = initialState, action) => {
 
     case appointmentsEnums.GET_APPOINTMENT_SUCCESS:
       return {
-        appointments: action.playload,
+        appointments: action.payload,
         error: null,
       };
 

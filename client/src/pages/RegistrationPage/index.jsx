@@ -9,7 +9,7 @@ import useActions from "../../hooks/useActions";
 import { validateString } from "../../helpers/validate-string";
 
 const RegistrationPage = () => {
-  const [userData, setUserData] = useState({
+  const [user, setUser] = useState({
     login: "",
     password: "",
     repeatPassword: "",
@@ -39,7 +39,7 @@ const RegistrationPage = () => {
 
   const validateRegistration = (event) => {
     event.preventDefault();
-    const { login, password, repeatPassword } = userData;
+    const { login, password, repeatPassword } = user;
 
     if (!validateString(login)) {
       setInputError({
@@ -70,13 +70,13 @@ const RegistrationPage = () => {
       return;
     }
 
-    addNewUser(userData);
+    addNewUser(user);
   };
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
-    setUserData((prevInfo) => ({ ...prevInfo, [name]: value }));
+    setUser((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
   return (
@@ -104,7 +104,7 @@ const RegistrationPage = () => {
           placeholder="Логин"
           typeInput="text"
           nameInput="login"
-          valueInput={userData.login}
+          valueInput={user.login}
           handleChangeInput={handleChangeInput}
           error={inputError.login}
         />
@@ -113,7 +113,7 @@ const RegistrationPage = () => {
           placeholder="Пароль"
           typeInput="password"
           nameInput="password"
-          valueInput={userData.password}
+          valueInput={user.password}
           handleChangeInput={handleChangeInput}
           error={inputError.password}
         />
@@ -122,7 +122,7 @@ const RegistrationPage = () => {
           placeholder="Пароль"
           typeInput="password"
           nameInput="repeatPassword"
-          valueInput={userData.repeatPassword}
+          valueInput={user.repeatPassword}
           handleChangeInput={handleChangeInput}
           error={inputError.repeatPassword}
         />

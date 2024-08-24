@@ -15,7 +15,7 @@ export const StyledButtons = styled.div`
   display: flex;
   gap: 5px;
 
-  .appointment_all-button {
+  .appointment__all-button {
     width: 24px;
     height: 24px;
     border: none;

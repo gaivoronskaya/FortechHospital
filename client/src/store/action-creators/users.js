@@ -35,6 +35,7 @@ export const loginUserAction = (user) => {
       const signIn = await loginUser(user);
 
       localStorage.setItem("accessToken", signIn.accessToken);
+
       dispatch(successLoginUser(signIn.user));
     } catch (error) {
       const errorText = error.response

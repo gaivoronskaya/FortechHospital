@@ -29,7 +29,7 @@ const MainPage = () => {
 
   const appointments = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
-
+  
   useEffect(() => {
     if (error) {
       setIsOpenSnackbar(true);
