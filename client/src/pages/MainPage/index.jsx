@@ -8,6 +8,10 @@ import AddingAppointmentForm from "../../components/AddingAppointmentForm";
 import TableAppointment from "../../components/TableAppointment";
 import ModalForm from "../../components/ModalForm";
 import useActions from "../../hooks/useActions";
+import CustomInput from "../../components/UI/CustomInput";
+import CustomSelector from "../../components/UI/CustomSelector";
+import { doctorsOptions } from "../../constants";
+import { formatDate } from "../../helpers/formate-date";
 import { StyledButtonExit, StyledModalContainer } from "./style";
 
 const MainPage = () => {
@@ -30,7 +34,7 @@ const MainPage = () => {
     doctor: "",
     date: "",
     complaint: "",
-  })
+  });
 
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
 
@@ -38,11 +42,12 @@ const MainPage = () => {
 
   const [editingId, setEditingId] = useState(null);
 
-  const { getUserAppointments, createAppointments, updateAppointmentAsync } = useActions();
+  const { getUserAppointments, createAppointments, updateAppointmentAsync } =
+    useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
-  
+
   useEffect(() => {
     if (error) {
       setIsOpenSnackbar(true);
@@ -111,6 +116,12 @@ const MainPage = () => {
     setAppointment((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleChangeModalInput = (e) => {
+    const { name, value } = e.target;
+
+    setNewAppointment((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -142,10 +153,24 @@ const MainPage = () => {
   const handleSaveChanges = async () => {
     if (editingId) {
       try {
-        await updateAppointmentAsync(editingId, newAppointment);
+        const updatedAppointment = await updateAppointmentAsync(
+          editingId,
+          newAppointment
+        );
+
+        if (updatedAppointment) {
+          const appointmentToUpdate = appointments.find(
+            (appointment) => appointment._id === editingId
+          );
+
+          if (appointmentToUpdate) {
+            Object.assign(appointmentToUpdate, updatedAppointment);
+          }
+        }
+
         handleCloseModal();
       } catch (error) {
-        console.error("Error updating appointment:", error);
+        console.error("Ошибка при обновлении приема:", error);
       }
     }
   };
@@ -170,16 +195,50 @@ const MainPage = () => {
         error={inputError}
         handleSubmit={validateAppointments}
       />
-      <TableAppointment appointments={appointments} />
+      <TableAppointment
+        appointments={appointments}
+        handleEditAppointment={handleEditAppointment}
+      />
       <Modal open={isModalOpen} onClose={handleCloseModal}>
         <StyledModalContainer>
           <ModalForm
             closeModal={handleCloseModal}
             headerTitile="Изменить прием"
-            dataModal={newAppointment}
+            newAppointment={newAppointment}
             handleSaveChanges={handleSaveChanges}
-            handleChangeInput={handleEditAppointment}
-          />
+            handleChangeInput={handleChangeModalInput}
+            modalTitle="Изменить прием"
+            buttonTitle="Отменить"
+          >
+            <CustomInput
+              classNameInput="modal-form__input"
+              label="Имя:"
+              nameInput="name"
+              valueInput={newAppointment?.name || ""}
+              handleChangeInput={handleChangeModalInput}
+            />
+            <CustomSelector
+              labelSelector="Врач:"
+              nameSelector="doctor"
+              classNameSelector="modal-form__selector"
+              options={doctorsOptions}
+            />
+            <CustomInput
+              classNameInput="modal-form__input"
+              label="Дата:"
+              nameInput="date"
+              valueInput={formatDate(newAppointment?.date || "")}
+              handleChangeInput={handleChangeModalInput}
+            />
+            <CustomInput
+              classNameInput="modal-form__input"
+              label="Жалобы:"
+              nameInput="complaint"
+              valueInput={newAppointment?.complaint || ""}
+              handleChangeInput={handleChangeModalInput}
+              typeInput="comment"
+            />
+          </ModalForm>
         </StyledModalContainer>
       </Modal>
     </div>

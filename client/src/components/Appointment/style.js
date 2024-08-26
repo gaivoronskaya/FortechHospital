@@ -21,7 +21,7 @@ export const StyledButtons = styled.div`
     border: none;
   }
 
-  .appointment__all-button_edit-button{
+  .appointment__all-button_edit-button {
     background-image: url(${editButton});
   }
 
