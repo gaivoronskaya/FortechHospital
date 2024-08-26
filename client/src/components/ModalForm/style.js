@@ -33,7 +33,7 @@ export const StyledHeader = styled.header`
 
 export const StyledHeaderContent = styled.div`
   width: 572px;
-  margin-left: auto;  
+  margin-left: auto;
   margin-right: auto;
   height: 90px;
   display: flex;
@@ -66,4 +66,11 @@ export const StyledModalForm = styled.form`
   margin: 20px auto;
   display: flex;
   flex-direction: column;
+`;
+
+export const StyledModalContainer = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

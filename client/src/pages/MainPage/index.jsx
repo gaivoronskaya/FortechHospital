@@ -2,17 +2,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { Modal } from "@mui/material";
+import useActions from "../../hooks/useActions";
 import Header from "../../components/Header";
 import AddingAppointmentForm from "../../components/AddingAppointmentForm";
 import TableAppointment from "../../components/TableAppointment";
-import ModalForm from "../../components/ModalForm";
-import useActions from "../../hooks/useActions";
-import CustomInput from "../../components/UI/CustomInput";
-import CustomSelector from "../../components/UI/CustomSelector";
-import { doctorsOptions } from "../../constants";
-import { formatDate } from "../../helpers/formate-date";
-import { StyledButtonExit, StyledModalContainer } from "./style";
+import EditingForm from "../../components/EditingForm";
+import { StyledButtonExit } from "./style";
 
 const MainPage = () => {
   const [appointment, setAppointment] = useState({
@@ -29,7 +24,7 @@ const MainPage = () => {
     complaint: "",
   });
 
-  const [newAppointment, setNewAppointment] = useState({
+  const [editAppointment, setEditAppointment] = useState({
     name: "",
     doctor: "",
     date: "",
@@ -38,9 +33,9 @@ const MainPage = () => {
 
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
 
-  const [editingId, setEditingId] = useState(null);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
 
   const { getUserAppointments, createAppointments, updateAppointmentAsync } =
     useActions();
@@ -119,60 +114,28 @@ const MainPage = () => {
   const handleChangeModalInput = (e) => {
     const { name, value } = e.target;
 
-    setNewAppointment((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setEditAppointment((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleEditAppointment = (id) => {
     const appointmentToEdit = appointments.find(
       (appointment) => appointment._id === id
     );
-
-    if (!appointmentToEdit) {
-      return;
+    if (appointmentToEdit) {
+      setEditAppointment({
+        name: appointmentToEdit.name,
+        doctor: appointmentToEdit.doctor,
+        date: appointmentToEdit.date,
+        complaint: appointmentToEdit.complaint,
+      });
+      setSelectedAppointmentId(id);
+      setIsModalEditOpen(true);
     }
-
-    setEditingId(id);
-    setNewAppointment({
-      name: appointmentToEdit.name,
-      doctor: appointmentToEdit.doctor,
-      date: appointmentToEdit.date,
-      complaint: appointmentToEdit.complaint,
-    });
-
-    handleOpenModal();
   };
 
-  const handleSaveChanges = async () => {
-    if (editingId) {
-      try {
-        const updatedAppointment = await updateAppointmentAsync(
-          editingId,
-          newAppointment
-        );
-
-        if (updatedAppointment) {
-          const appointmentToUpdate = appointments.find(
-            (appointment) => appointment._id === editingId
-          );
-
-          if (appointmentToUpdate) {
-            Object.assign(appointmentToUpdate, updatedAppointment);
-          }
-        }
-
-        handleCloseModal();
-      } catch (error) {
-        console.error("Ошибка при обновлении приема:", error);
-      }
-    }
+  const handleSaveChanges = () => {
+    updateAppointmentAsync(selectedAppointmentId, editAppointment);
+    setIsModalEditOpen(false);
   };
 
   return (
@@ -199,48 +162,16 @@ const MainPage = () => {
         appointments={appointments}
         handleEditAppointment={handleEditAppointment}
       />
-      <Modal open={isModalOpen} onClose={handleCloseModal}>
-        <StyledModalContainer>
-          <ModalForm
-            closeModal={handleCloseModal}
-            headerTitile="Изменить прием"
-            newAppointment={newAppointment}
-            handleSaveChanges={handleSaveChanges}
-            handleChangeInput={handleChangeModalInput}
-            modalTitle="Изменить прием"
-            buttonTitle="Отменить"
-          >
-            <CustomInput
-              classNameInput="modal-form__input"
-              label="Имя:"
-              nameInput="name"
-              valueInput={newAppointment?.name || ""}
-              handleChangeInput={handleChangeModalInput}
-            />
-            <CustomSelector
-              labelSelector="Врач:"
-              nameSelector="doctor"
-              classNameSelector="modal-form__selector"
-              options={doctorsOptions}
-            />
-            <CustomInput
-              classNameInput="modal-form__input"
-              label="Дата:"
-              nameInput="date"
-              valueInput={formatDate(newAppointment?.date || "")}
-              handleChangeInput={handleChangeModalInput}
-            />
-            <CustomInput
-              classNameInput="modal-form__input"
-              label="Жалобы:"
-              nameInput="complaint"
-              valueInput={newAppointment?.complaint || ""}
-              handleChangeInput={handleChangeModalInput}
-              typeInput="comment"
-            />
-          </ModalForm>
-        </StyledModalContainer>
-      </Modal>
+      <EditingForm
+        closeModal={() => setIsModalEditOpen(false)}
+        openModal={isModalEditOpen}
+        headerTitile="Изменить прием"
+        editAppointment={editAppointment}
+        handleSaveChanges={handleSaveChanges}
+        handleChangeInput={handleChangeModalInput}
+        modalTitle="Изменить прием"
+        buttonTitle="Сохранить"
+      />
     </div>
   );
 };

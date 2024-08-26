@@ -3,6 +3,7 @@ import { api } from "../http";
 export const getAppointments = async () => {
   const appointments = await api.get("/appointments");
   // console.log(appointments.data);
+
   return appointments.data;
 };
 

@@ -47,11 +47,12 @@ export const createAppointments = (appointmentData) => {
   };
 };
 
-export const updateAppointmentAsync = (id, updatedData) => async (dispatch) => {
+export const updateAppointmentAsync = (id, appointment) => async (dispatch) => {
   dispatch(startUpdateAppointment());
 
   try {
-    const updatedAppointment = await updateAppointment(id, updatedData);
+    const updatedAppointment = await updateAppointment(id, appointment);
+    
     dispatch(successUpdateAppointment(updatedAppointment));
   } catch (error) {
     dispatch(errorUpdateAppointment(error.message));
