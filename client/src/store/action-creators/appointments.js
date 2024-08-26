@@ -2,6 +2,7 @@ import {
   getAppointments,
   createNewAppointments,
   updateAppointment,
+  deleteAppointment,
 } from "../../services/appointments";
 import {
   startGetAppointment,
@@ -13,6 +14,9 @@ import {
   startUpdateAppointment,
   successUpdateAppointment,
   errorUpdateAppointment,
+  startDeleteAppointment,
+  successDeleteAppointment,
+  errorDeleteAppointment,
 } from "../actions/appointments";
 
 export const getUserAppointments = () => {
@@ -52,7 +56,20 @@ export const updateAppointmentAsync = (id, updatedData) => async (dispatch) => {
 
   try {
     const updatedAppointment = await updateAppointment(id, updatedData);
+    
     dispatch(successUpdateAppointment(updatedAppointment));
+  } catch (error) {
+    dispatch(errorUpdateAppointment(error.message));
+  }
+};
+
+export const deleteAppointmentAsync = (id) => async (dispatch) => {
+  dispatch(startDeleteAppointment());
+
+  try {
+    const deletedAppointment = await deleteAppointment(id);
+
+    dispatch(successDeleteAppointment(deletedAppointment));
   } catch (error) {
     dispatch(errorUpdateAppointment(error.message));
   }

@@ -2,7 +2,7 @@ import { api } from "../http";
 
 export const getAppointments = async () => {
   const appointments = await api.get("/appointments");
-  // console.log(appointments.data);
+  console.log(appointments.data);
   return appointments.data;
 };
 
@@ -19,4 +19,10 @@ export const updateAppointment = async (id, updateAppointment) => {
   );
 
   return renameAppointment.data;
+};
+
+export const deleteAppointment = async (id) => {
+  const appointment = await api.delete(`/appointments/${id}`);
+
+  return appointment.data;
 };

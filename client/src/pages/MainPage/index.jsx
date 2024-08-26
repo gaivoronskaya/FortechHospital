@@ -42,8 +42,12 @@ const MainPage = () => {
 
   const [editingId, setEditingId] = useState(null);
 
-  const { getUserAppointments, createAppointments, updateAppointmentAsync } =
-    useActions();
+  const {
+    getUserAppointments,
+    createAppointments,
+    updateAppointmentAsync,
+    deleteAppointmentAsync,
+  } = useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
@@ -175,6 +179,21 @@ const MainPage = () => {
     }
   };
 
+  const handleDeleteAppointment = async (id) => {
+    try {
+      const deletedAppointment = await deleteAppointmentAsync(id);
+      const updatedAppointment = newAppointment.filter(
+        (apppointment) => apppointment._id !== deletedAppointment._id
+      );
+
+      setNewAppointment(updatedAppointment);
+
+      handleCloseModal();
+    } catch (error) {
+      console.error("Ошибка при обновлении приема:", error);
+    }
+  };
+
   return (
     <div>
       <Snackbar
@@ -198,6 +217,7 @@ const MainPage = () => {
       <TableAppointment
         appointments={appointments}
         handleEditAppointment={handleEditAppointment}
+        handleOpenModal={handleOpenModal}
       />
       <Modal open={isModalOpen} onClose={handleCloseModal}>
         <StyledModalContainer>
@@ -239,6 +259,16 @@ const MainPage = () => {
               typeInput="comment"
             />
           </ModalForm>
+        </StyledModalContainer>
+      </Modal>
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <StyledModalContainer>
+          <ModalForm
+            closeModal={handleCloseModal}
+            headerTitile="Удалить прием"
+            modalTitle="Удалить"
+            buttonTitle="Отменить"
+          ></ModalForm>
         </StyledModalContainer>
       </Modal>
     </div>

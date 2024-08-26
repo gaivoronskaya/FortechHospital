@@ -31,13 +31,13 @@ const ModalForm = ({
               handleActionButton={closeModal}
               classNameButton="modal-form__buttons"
             >
-              {buttonTitle}
+              Отменить
             </CustomButton>
             <CustomButton
               handleActionButton={handleSaveChanges}
               classNameButton="modal-form__buttons modal-form__confirmation-button"
             >
-              Сохранить
+              {buttonTitle}
             </CustomButton>
           </StyledFooterContent>
         </StyledFooter>
