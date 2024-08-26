@@ -2,7 +2,7 @@ import CustomButton from "../UI/CustomButton";
 import { formatDate } from "../../helpers/formate-date";
 import { StyledCell, StyledLineCell, StyledButtons } from "./style";
 
-const Appointment = ({ appointment, handleEditAppointment, handleOpenModal }) => {
+const Appointment = ({ appointment, handleEditAppointment, handleDeleteAppointmentId }) => {
   return (
     <StyledLineCell>
       <StyledCell>{appointment.name}</StyledCell>
@@ -11,7 +11,7 @@ const Appointment = ({ appointment, handleEditAppointment, handleOpenModal }) =>
       <StyledCell>{appointment.complaint}</StyledCell>
       <StyledCell>
         <StyledButtons>
-          <CustomButton classNameButton="appointment__all-button appointment__all-button_delete-button" handleActionButton={handleOpenModal}/>
+          <CustomButton handleActionButton={handleDeleteAppointmentId} classNameButton="appointment__all-button appointment__all-button_delete-button"/>
           <CustomButton
             classNameButton="appointment__all-button appointment__all-button_edit-button"
             handleActionButton={handleEditAppointment}
