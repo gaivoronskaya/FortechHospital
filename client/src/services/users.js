@@ -1,9 +1,4 @@
-import axios from "axios";
-import { baseURL } from "../constants";
-
-const api = axios.create({
-  baseURL,
-});
+import { api } from "../http";
 
 export const createNewUser = async (user) => {
   const newUser = await api.post("/users/signup", user);
@@ -15,4 +10,10 @@ export const loginUser = async (user) => {
   const userLogin = await api.post("/users/signin", user);
 
   return userLogin.data;
+};
+
+export const refreshToken = async () => {
+  const newToken = await api.get("/users/refresh");
+
+  return newToken.data;
 };

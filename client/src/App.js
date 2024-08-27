@@ -3,26 +3,27 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import RegistrationPage from "./pages/RegistrationPage";
 import LoginPage from "./pages/LoginPage";
-import TestPage from "./pages/TestPage";
+import MainPage from "./pages/MainPage";
 
 const App = () => {
+  const token = localStorage.getItem("accessToken");
   const isAuth = useSelector((state) => state.user.isAuth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuth) {
-      navigate("/main");
+    if (token) {
+      return navigate("/main");
     }
   }, [isAuth]);
 
   if (isAuth) {
     return (
       <Routes>
-        <Route path="/main" element={<TestPage />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="*" element={<Navigate to="/main" />} />
       </Routes>
     );
   }
-
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />

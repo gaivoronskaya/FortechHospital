@@ -8,23 +8,21 @@ import CustomInput from "../../components/UI/CustomInput";
 import useActions from "../../hooks/useActions";
 
 const LoginPage = () => {
-  const [userData, setUserData] = useState({
+  const [user, setUser] = useState({
     login: "",
     password: "",
-    repeatPassword: "",
   });
   const [inputError, setInputError] = useState({
     login: "",
     password: "",
-    repeatPassword: "",
   });
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const { error } = useSelector((state) => state.user);
   const { loginUserAction } = useActions();
 
   useEffect(() => {
     if (error) {
-      setSnackbarOpen(true);
+      setIsOpenSnackbar(true);
     }
   }, [error]);
 
@@ -33,12 +31,12 @@ const LoginPage = () => {
       return;
     }
 
-    setSnackbarOpen(false);
+    setIsOpenSnackbar(false);
   };
 
   const validateLogin = (event) => {
     event.preventDefault();
-    const { login, password } = userData;
+    const { login, password } = user;
 
     if (!login.trim() || !password.trim()) {
       setInputError({
@@ -48,20 +46,19 @@ const LoginPage = () => {
 
       return;
     }
-
-    loginUserAction(userData);
+    loginUserAction(user);
   };
 
-  const handleChange = (e) => {
+  const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
-    setUserData((prevInfo) => ({ ...prevInfo, [name]: value }));
+    setUser((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
   return (
     <div>
       <Snackbar
-        open={snackbarOpen}
+        open={isOpenSnackbar}
         autoHideDuration={6000}
         onClose={handleClose}
       >
@@ -73,7 +70,7 @@ const LoginPage = () => {
       <Form
         title="Вход"
         handleSubmit={validateLogin}
-        handleChange={handleChange}
+        handleChange={handleChangeInput}
         buttonTitle="Войти"
         linkTitle="Зарегистрироваться"
         path="/registration"
@@ -83,8 +80,8 @@ const LoginPage = () => {
           placeholder="Логин"
           typeInput="text"
           nameInput="login"
-          valueInput={userData.login}
-          handleChangeInput={handleChange}
+          valueInput={user.login}
+          handleChangeInput={handleChangeInput}
           error={inputError.login}
         />
         <CustomInput
@@ -92,8 +89,8 @@ const LoginPage = () => {
           placeholder="Пароль"
           typeInput="password"
           nameInput="password"
-          valueInput={userData.password}
-          handleChangeInput={handleChange}
+          valueInput={user.password}
+          handleChangeInput={handleChangeInput}
           error={inputError.password}
         />
       </Form>

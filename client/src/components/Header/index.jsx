@@ -2,14 +2,18 @@ import {
   StyledHeaderContainer,
   StyledHeaderImage,
   StyledHeaderTitle,
+  StyledHeader,
 } from "./style.js";
 
-const Header = ({ title }) => {
+const Header = ({ title, children }) => {
   return (
-    <StyledHeaderContainer>
-      <StyledHeaderImage />
-      <StyledHeaderTitle>{title}</StyledHeaderTitle>
-    </StyledHeaderContainer>
+    <StyledHeader>
+      <StyledHeaderContainer>
+        <StyledHeaderImage />
+        <StyledHeaderTitle>{title}</StyledHeaderTitle>
+        {children}
+      </StyledHeaderContainer>
+    </StyledHeader>
   );
 };
 

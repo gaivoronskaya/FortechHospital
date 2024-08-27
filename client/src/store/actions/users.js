@@ -41,3 +41,23 @@ export const errorLoginUser = (error) => {
     error,
   };
 };
+
+export const startRefreshToken = () => {
+  return {
+    type: userEnums.REFRESH_TOKEN,
+  };
+};
+
+export const successRefreshToken = (payload) => {
+  return {
+    type: userEnums.REFRESH_TOKEN_SUCCESS,
+    payload,
+  };
+};
+
+export const errorRefreshToken = (error) => {
+  return {
+    type: userEnums.REFRESH_TOKEN_ERROR,
+    error,
+  };
+};

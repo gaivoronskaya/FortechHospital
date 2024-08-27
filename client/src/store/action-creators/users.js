@@ -1,4 +1,4 @@
-import { createNewUser, loginUser } from "../../services/users";
+import { createNewUser, loginUser, refreshToken } from "../../services/users";
 import {
   startAddUser,
   successAddUser,
@@ -6,6 +6,9 @@ import {
   startLoginUser,
   successLoginUser,
   errorLoginUser,
+  startRefreshToken,
+  successRefreshToken,
+  errorRefreshToken,
 } from "../actions/users";
 
 export const addNewUser = (user) => {
@@ -13,10 +16,12 @@ export const addNewUser = (user) => {
     try {
       dispatch(startAddUser());
       const newUser = await createNewUser(user);
+
+      localStorage.setItem("accessToken", newUser.accessToken);
       dispatch(successAddUser(newUser));
     } catch (error) {
-      const errorText = error.newUser
-        ? error.newUser.data.message
+      const errorText = error.response
+        ? error.response.data.message
         : error.message;
       dispatch(errorAddUser(errorText));
     }
@@ -27,14 +32,42 @@ export const loginUserAction = (user) => {
   return async (dispatch) => {
     try {
       dispatch(startLoginUser());
+<<<<<<< HEAD
       const userLogin = await loginUser(user);
 
       dispatch(successLoginUser(userLogin));
+=======
+      const signIn = await loginUser(user);
+
+      localStorage.setItem("accessToken", signIn.accessToken);
+
+      dispatch(successLoginUser(signIn.user));
+>>>>>>> feat/edit-appointment
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message
         : error.message;
       dispatch(errorLoginUser(errorText));
+    }
+  };
+};
+
+export const refreshTokenAction = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(startRefreshToken());
+      const newToken = await refreshToken();
+
+      const newAccessToken = newToken.accessToken;
+      localStorage.setItem("accessToken", newAccessToken);
+
+      dispatch(successRefreshToken(newToken));
+      return newAccessToken;
+    } catch (error) {
+      const errorText = error.response      
+        ? error.response.data.message
+        : error.message;
+      dispatch(errorRefreshToken(errorText));
     }
   };
 };
