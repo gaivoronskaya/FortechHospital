@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import AddingAppointmentForm from "../../components/AddingAppointmentForm";
 import TableAppointment from "../../components/TableAppointment";
 import EditingForm from "../../components/EditingForm";
+import DeletingForm from "../../components/DeletingForm";
 import { StyledButtonExit } from "./style";
 
 const MainPage = () => {
@@ -35,10 +36,18 @@ const MainPage = () => {
 
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
 
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
   const [editedAppointmentId, setEditedAppointmentId] = useState(null);
 
-  const { getUserAppointments, createAppointments, updateAppointmentById } =
-    useActions();
+  const [deletedAppointmentId, setDeletedAppointmentId] = useState(null);
+
+  const {
+    getUserAppointments,
+    createAppointments,
+    updateAppointmentById,
+    deleteAppointmentById,
+  } = useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
   const { error } = useSelector((state) => state.user);
@@ -181,6 +190,22 @@ const MainPage = () => {
     setIsModalEditOpen(true);
   };
 
+  const handleDeleteAppointment = () => {
+    deleteAppointmentById(deletedAppointmentId);
+    setIsModalDeleteOpen(false);
+  };
+
+  const handleDeleteAppointmentId = (id) => {
+    const appointmentToDelete = appointments.find(
+      (appointment) => appointment._id === id
+    );
+    if (!appointmentToDelete) {
+      return;
+    }
+    setDeletedAppointmentId(id);
+    setIsModalDeleteOpen(true);
+  };
+
   return (
     <div>
       <Snackbar
@@ -204,6 +229,7 @@ const MainPage = () => {
       <TableAppointment
         appointments={appointments}
         handleEditAppointment={handleEditAppointment}
+        handleDeleteAppointmentId={handleDeleteAppointmentId}
       />
       <EditingForm
         closeModal={() => setIsModalEditOpen(false)}
@@ -211,6 +237,11 @@ const MainPage = () => {
         editAppointment={editAppointment}
         handleSubmit={validateUpdateAppointment}
         handleChangeInput={handleChangeModalInput}
+      />
+      <DeletingForm
+        closeModal={() => setIsModalDeleteOpen(false)}
+        openModal={isModalDeleteOpen}
+        handleDeleteAppointment={handleDeleteAppointment}
       />
     </div>
   );

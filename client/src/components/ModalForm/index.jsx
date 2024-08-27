@@ -13,14 +13,15 @@ import {
 
 const ModalForm = ({
   closeModal,
-  handleSaveChanges,
   modalTitle,
   children,
   buttonTitle,
   handleSubmit,
+  handlePrimaryAction,
+  openModal,
 }) => {
   return (
-    <Modal onClose={closeModal}>
+    <Modal open={openModal} onClose={closeModal}>
       <StyledModalContainer>
         <StyledModal>
           <StyledHeader>
@@ -40,7 +41,7 @@ const ModalForm = ({
                 Отмена
               </CustomButton>
               <CustomButton
-                handleActionButton={handleSaveChanges}
+                handleActionButton={handlePrimaryAction}
                 typeButton="submit"
                 classNameButton="modal-form__buttons modal-form_confirmation-button"
               >

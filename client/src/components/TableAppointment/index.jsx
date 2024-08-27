@@ -2,7 +2,7 @@ import Appointment from "../Appointment";
 import { tableHeaders } from "../../constants";
 import { StyledTable, StyledLine, StyledTitle, StyledCellsBody } from "./style";
 
-const TableAppointment = ({ appointments, handleEditAppointment }) => {
+const TableAppointment = ({ appointments, handleEditAppointment, handleDeleteAppointmentId }) => {
   return (
     <StyledTable>
       <thead>
@@ -18,6 +18,7 @@ const TableAppointment = ({ appointments, handleEditAppointment }) => {
             key={appointment._id}
             appointment={appointment}
             handleEditAppointment={() => handleEditAppointment(appointment._id)}
+            handleDeleteAppointmentId={() => handleDeleteAppointmentId(appointment._id)}
           />
         ))}
       </StyledCellsBody>

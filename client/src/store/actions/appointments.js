@@ -62,3 +62,24 @@ export const errorUpdateAppointment = (error) => {
     error,
   };
 };
+
+export const startDeleteAppointment = (playload) => {
+  return {
+    type: appointmentsEnums.DELETE_APPPOINTMENT,
+    playload,
+  };
+};
+
+export const successDeleteAppointment = (playload) => {
+  return {
+    type: appointmentsEnums.DELETE_APPPOINTMENT_SUCCESS,
+    playload,
+  };
+};
+
+export const errorDeleteAppointment = (error) => {
+  return {
+    type: appointmentsEnums.DELETE_APPPOINTMENT_ERROR,
+    error,
+  };
+};

@@ -21,3 +21,9 @@ export const updateAppointment = async (id, editingAppointment) => {
 
   return updateAppointment.data;
 };
+
+export const deleteAppointment = async (id) => {
+  const appointment = await api.delete(`/appointments/${id}`);
+
+  return appointment.data;
+};
