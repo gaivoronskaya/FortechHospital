@@ -35,9 +35,9 @@ const MainPage = () => {
 
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
 
-  const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
+  const [editedAppointmentId, setEditedAppointmentId] = useState(null);
 
-  const { getUserAppointments, createAppointments, updateAppointmentAsync } =
+  const { getUserAppointments, createAppointments, updateAppointmentById } =
     useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
@@ -105,6 +105,51 @@ const MainPage = () => {
     createAppointments(appointment);
   };
 
+  const validateUpdateAppointment = (event) => {
+    event.preventDefault();
+    const { name, doctor, date, complaint } = appointment;
+    const currentDate = new Date();
+
+    if (!name.trim()) {
+      setInputError({
+        ...inputError,
+        name: "Поле не может быть пустым",
+      });
+
+      return;
+    }
+
+    if (!doctor.trim()) {
+      setInputError({
+        ...inputError,
+        doctor: "Поле не может быть пустым",
+      });
+
+      return;
+    }
+
+    if (!date.trim() || new Date(date) < currentDate) {
+      setInputError({
+        ...inputError,
+        date: "Поле не может быть пустым или содержать прошлое время",
+      });
+
+      return;
+    }
+
+    if (!complaint.trim()) {
+      setInputError({
+        ...inputError,
+        complaint: "Поле не может быть пустым",
+      });
+
+      return;
+    }
+
+    updateAppointmentById(editedAppointmentId, editAppointment);
+    setIsModalEditOpen(false);
+  };
+
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
@@ -121,21 +166,19 @@ const MainPage = () => {
     const appointmentToEdit = appointments.find(
       (appointment) => appointment._id === id
     );
-    if (appointmentToEdit) {
-      setEditAppointment({
-        name: appointmentToEdit.name,
-        doctor: appointmentToEdit.doctor,
-        date: appointmentToEdit.date,
-        complaint: appointmentToEdit.complaint,
-      });
-      setSelectedAppointmentId(id);
-      setIsModalEditOpen(true);
-    }
-  };
 
-  const handleSaveChanges = () => {
-    updateAppointmentAsync(selectedAppointmentId, editAppointment);
-    setIsModalEditOpen(false);
+    if (!appointmentToEdit) {
+      return;
+    }
+    setEditAppointment({
+      name: appointmentToEdit.name,
+      doctor: appointmentToEdit.doctor,
+      date: appointmentToEdit.date,
+      complaint: appointmentToEdit.complaint,
+    });
+
+    setEditedAppointmentId(id);
+    setIsModalEditOpen(true);
   };
 
   return (
@@ -165,12 +208,10 @@ const MainPage = () => {
       <EditingForm
         closeModal={() => setIsModalEditOpen(false)}
         openModal={isModalEditOpen}
-        headerTitile="Изменить прием"
         editAppointment={editAppointment}
-        handleSaveChanges={handleSaveChanges}
+        // handleSaveChanges={handleSaveChanges}
+        handleSubmit={validateUpdateAppointment}
         handleChangeInput={handleChangeModalInput}
-        modalTitle="Изменить прием"
-        buttonTitle="Сохранить"
       />
     </div>
   );

@@ -13,11 +13,11 @@ export const createNewAppointments = async (appointmentData) => {
   return newAppointments.data;
 };
 
-export const updateAppointment = async (id, updateAppointment) => {
-  const renameAppointment = await api.patch(
+export const updateAppointment = async (id, editingAppointment) => {
+  const updateAppointment = await api.patch(
     `/appointments/${id}`,
-    updateAppointment
+    editingAppointment
   );
 
-  return renameAppointment.data;
+  return updateAppointment.data;
 };
