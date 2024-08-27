@@ -8,6 +8,7 @@ import AddingAppointmentForm from "../../components/AddingAppointmentForm";
 import TableAppointment from "../../components/TableAppointment";
 import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
+import SortingComponent from "../../components/SortingComponent";
 import { StyledButtonExit } from "./style";
 
 const MainPage = () => {
@@ -180,6 +181,7 @@ const MainPage = () => {
         error={inputError}
         handleSubmit={validateAppointments}
       />
+      <SortingComponent></SortingComponent>
       <TableAppointment
         appointments={appointments}
         handleEditAppointment={handleEditAppointment}
