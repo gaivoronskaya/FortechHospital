@@ -17,7 +17,7 @@ const EditingForm = ({
       closeModal={closeModal}
       openModal={openModal}
       handleSubmit={handleSubmit}
-      modalTitle="Отмена"
+      modalTitle="Изменить прием"
       buttonTitle="Сохранить"
     >
       <CustomInput
