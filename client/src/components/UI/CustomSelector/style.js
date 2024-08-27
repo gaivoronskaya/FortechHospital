@@ -5,7 +5,7 @@ export const StyledSelector = styled.select`
   height: 45px;
   border: 1px solid rgb(0, 0, 0, 0.2);
   padding-left: 10px;
-  cursor: pointer;
+  border-radius: 4px;
 `;
 
 export const StyledLabel = styled.label`

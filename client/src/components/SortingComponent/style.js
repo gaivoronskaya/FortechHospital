@@ -7,4 +7,12 @@ export const StyledSortedContainer = styled.div`
   margin-right: auto;
   display: flex;
   justify-content: flex-end;
+  gap: 20px;
+
+  .sorting-component__lable-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
 `;

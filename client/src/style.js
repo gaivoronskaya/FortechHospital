@@ -28,4 +28,8 @@ export const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  select {
+    cursor: pointer;
+  }
 `;

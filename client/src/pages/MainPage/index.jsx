@@ -41,6 +41,12 @@ const MainPage = () => {
 
   const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
 
+  const [sortOrder, setSortOrder] = useState("increasing");
+
+  const [sortOption, setSortOption] = useState("none");
+
+  const [sortedAppointments, setSortedAppointments] = useState([]);
+
   const {
     getUserAppointments,
     createAppointments,
@@ -68,6 +74,12 @@ const MainPage = () => {
   useEffect(() => {
     getUserAppointments();
   }, []);
+
+  useEffect(() => {
+    setSortedAppointments(
+      sortAppointments(appointments, sortOption, sortOrder)
+    );
+  }, [appointments, sortOption, sortOrder]);
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -161,6 +173,37 @@ const MainPage = () => {
     setIsModalDeleteOpen(false);
   };
 
+  const sortAppointments = (appointments, sortBy, order) => {
+    if (sortBy === "none") return appointments;
+
+    const sorted = [...appointments].sort((a, b) => {
+      let compareValue = 0;
+
+      if (sortBy === "date") {
+        compareValue = new Date(a.date) - new Date(b.date);
+      } else if (sortBy === "doctor") {
+        compareValue = a.doctor.localeCompare(b.doctor);
+      } else if (sortBy === "name") {
+        compareValue = a.name.localeCompare(b.name);
+      }
+
+      return order === "increasing" ? compareValue : -compareValue;
+    });
+
+    return sorted;
+  };
+
+  const handleSortChange = (selectedOption) => {
+    setSortOption(selectedOption);
+    if (selectedOption === "none") {
+      setSortOrder("increasing");
+    }
+  };
+
+  const handleOrderChange = (selectedOrder) => {
+    setSortOrder(selectedOrder);
+  };
+
   return (
     <div>
       <Snackbar
@@ -181,9 +224,14 @@ const MainPage = () => {
         error={inputError}
         handleSubmit={validateAppointments}
       />
-      <SortingComponent></SortingComponent>
+      <SortingComponent
+        sortOption={sortOption}
+        handleSortChange={handleSortChange}
+        handleOrderChange={handleOrderChange}
+        sortOrder={sortOrder}
+      />
       <TableAppointment
-        appointments={appointments}
+        appointments={sortedAppointments}
         handleEditAppointment={handleEditAppointment}
         handleDeleteAppointmentId={handleDeleteAppointmentId}
       />

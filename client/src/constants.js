@@ -17,11 +17,11 @@ export const doctorsOptions = [
 export const sortedList = [
   {value: "name", label: "Имя"},
   {value: "doctor", label: "Врач"},
-  {value: "doctor", label: "Дата"},
-  {value: "doctor", label: "None"},
+  {value: "date", label: "Дата"},
+  {value: "none", label: "None"},
 ]
 
 export const valueSortedList = [
-  {value: "up", label: "По возрастанию"},
-  {value: "doctor", label: "По убыванию"},
+  {value: "increasing", label: "По возрастанию"},
+  {value: "decreasing", label: "По убыванию"},
 ]
