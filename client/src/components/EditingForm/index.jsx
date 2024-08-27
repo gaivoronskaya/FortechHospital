@@ -10,14 +10,12 @@ const EditingForm = ({
   handleChangeInput,
   closeModal,
   openModal,
-  handleSaveChanges,
   handleSubmit,
 }) => {
   return (
     <ModalForm
       closeModal={closeModal}
       openModal={openModal}
-      handleSaveChanges={handleSaveChanges}
       handleSubmit={handleSubmit}
       modalTitle="Отмена"
       buttonTitle="Сохранить"

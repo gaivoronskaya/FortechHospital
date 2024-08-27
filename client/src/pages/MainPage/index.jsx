@@ -209,7 +209,6 @@ const MainPage = () => {
         closeModal={() => setIsModalEditOpen(false)}
         openModal={isModalEditOpen}
         editAppointment={editAppointment}
-        // handleSaveChanges={handleSaveChanges}
         handleSubmit={validateUpdateAppointment}
         handleChangeInput={handleChangeModalInput}
       />
