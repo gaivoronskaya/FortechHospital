@@ -13,11 +13,12 @@ import {
 
 const ModalForm = ({
   closeModal,
-  openModal,
   modalTitle,
   children,
   buttonTitle,
+  handleSubmit,
   handlePrimaryAction,
+  openModal,
 }) => {
   return (
     <Modal open={openModal} onClose={closeModal}>
@@ -28,7 +29,9 @@ const ModalForm = ({
               <StyledTitle>{modalTitle}</StyledTitle>
             </StyledHeaderContent>
           </StyledHeader>
-          <StyledModalForm>{children}</StyledModalForm>
+          <StyledModalForm handleSubmit={handleSubmit}>
+            {children}
+          </StyledModalForm>
           <StyledFooter>
             <StyledFooterContent>
               <CustomButton
@@ -40,7 +43,7 @@ const ModalForm = ({
               <CustomButton
                 handleActionButton={handlePrimaryAction}
                 typeButton="submit"
-                classNameButton="modal-form__buttons modal-form__confirmation-button"
+                classNameButton="modal-form__buttons modal-form_confirmation-button"
               >
                 {buttonTitle}
               </CustomButton>

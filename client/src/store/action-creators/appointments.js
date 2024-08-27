@@ -51,7 +51,7 @@ export const createAppointments = (appointmentData) => {
   };
 };
 
-export const updateAppointmentAsync = (id, appointment) => async (dispatch) => {
+export const updateAppointmentById = (id, appointment) => async (dispatch) => {
   dispatch(startUpdateAppointment());
 
   try {
@@ -63,7 +63,7 @@ export const updateAppointmentAsync = (id, appointment) => async (dispatch) => {
   }
 };
 
-export const deleteAppointmentAsync = (id) => async (dispatch) => {
+export const deleteAppointmentById = (id) => async (dispatch) => {
   dispatch(startDeleteAppointment());
 
   try {

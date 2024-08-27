@@ -2,7 +2,7 @@ import { api } from "../http";
 
 export const getAppointments = async () => {
   const appointments = await api.get("/appointments");
-  // console.log(appointments.data);
+  console.log(appointments.data);
 
   return appointments.data;
 };
@@ -13,13 +13,13 @@ export const createNewAppointments = async (appointmentData) => {
   return newAppointments.data;
 };
 
-export const updateAppointment = async (id, updateAppointment) => {
-  const renameAppointment = await api.patch(
+export const updateAppointment = async (id, editingAppointment) => {
+  const updateAppointment = await api.patch(
     `/appointments/${id}`,
-    updateAppointment
+    editingAppointment
   );
 
-  return renameAppointment.data;
+  return updateAppointment.data;
 };
 
 export const deleteAppointment = async (id) => {

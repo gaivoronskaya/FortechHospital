@@ -7,7 +7,7 @@ import {
 
 const CustomTextArea = ({
   valueTextArea,
-  habdleChangeTextArea,
+  handleChangeTextArea,
   textAreaLabel,
   error,
   nameTextArea,
@@ -17,7 +17,7 @@ const CustomTextArea = ({
       {textAreaLabel && <StyledLabel>{textAreaLabel}</StyledLabel>}
       <StyledCustomTextArea
         value={valueTextArea}
-        onChange={habdleChangeTextArea}
+        onChange={handleChangeTextArea}
         label={textAreaLabel}
         name={nameTextArea}
       >

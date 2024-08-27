@@ -10,17 +10,15 @@ const EditingForm = ({
   handleChangeInput,
   closeModal,
   openModal,
-  handleSaveChanges,
-  modalTitle,
-  buttonTitle,
+  handleSubmit,
 }) => {
   return (
     <ModalForm
       closeModal={closeModal}
       openModal={openModal}
-      handlePrimaryAction={handleSaveChanges}
-      modalTitle={modalTitle}
-      buttonTitle={buttonTitle}
+      handleSubmit={handleSubmit}
+      modalTitle="Отмена"
+      buttonTitle="Сохранить"
     >
       <CustomInput
         classNameInput="modal-form__input"
@@ -28,8 +26,6 @@ const EditingForm = ({
         nameInput="name"
         valueInput={editAppointment.name}
         handleChangeInput={handleChangeInput}
-        closeModal={closeModal}
-        openModal={openModal}
       />
       <CustomSelector
         labelSelector="Врач:"
@@ -49,7 +45,7 @@ const EditingForm = ({
         textAreaLabel="Жалобы:"
         nameTextArea="complaint"
         valueTextArea={editAppointment.complaint}
-        habdleChangeTextArea={handleChangeInput}
+        handleChangeTextArea={handleChangeInput}
       />
     </ModalForm>
   );
