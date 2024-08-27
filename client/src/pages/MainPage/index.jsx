@@ -40,6 +40,8 @@ const MainPage = () => {
 
   const [editedAppointmentId, setEditedAppointmentId] = useState(null);
 
+  const [deletedAppointmentId, setDeletedAppointmentId] = useState(null);
+
   const {
     getUserAppointments,
     createAppointments,
@@ -189,18 +191,19 @@ const MainPage = () => {
   };
 
   const handleDeleteAppointment = () => {
-    deleteAppointmentById(editedAppointmentId);
+    deleteAppointmentById(deletedAppointmentId);
     setIsModalDeleteOpen(false);
   };
 
   const handleDeleteAppointmentId = (id) => {
-    const appointmentToEdit = appointments.find(
+    const appointmentToDelete = appointments.find(
       (appointment) => appointment._id === id
     );
-    if (appointmentToEdit) {
-      setEditedAppointmentId(id);
-      setIsModalDeleteOpen(true);
+    if (!appointmentToDelete) {
+      return;
     }
+    setDeletedAppointmentId(id);
+    setIsModalDeleteOpen(true);
   };
 
   return (
@@ -238,7 +241,6 @@ const MainPage = () => {
       <DeletingForm
         closeModal={() => setIsModalDeleteOpen(false)}
         openModal={isModalDeleteOpen}
-        handleDelete={handleDeleteAppointment}
         handleDeleteAppointment={handleDeleteAppointment}
       />
     </div>
