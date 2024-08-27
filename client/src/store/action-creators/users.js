@@ -32,17 +32,11 @@ export const loginUserAction = (user) => {
   return async (dispatch) => {
     try {
       dispatch(startLoginUser());
-<<<<<<< HEAD
-      const userLogin = await loginUser(user);
-
-      dispatch(successLoginUser(userLogin));
-=======
       const signIn = await loginUser(user);
 
       localStorage.setItem("accessToken", signIn.accessToken);
 
       dispatch(successLoginUser(signIn.user));
->>>>>>> feat/edit-appointment
     } catch (error) {
       const errorText = error.response
         ? error.response.data.message
