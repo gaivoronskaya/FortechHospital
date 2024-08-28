@@ -51,6 +51,11 @@ const MainPage = () => {
 
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
 
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
+  const [errror, setError] = useState("");
+
   const {
     getUserAppointments,
     createAppointments,
@@ -84,6 +89,10 @@ const MainPage = () => {
       sortAppointments(appointments, sortOption, sortOrder)
     );
   }, [appointments, sortOption, sortOrder]);
+
+  useEffect(() => {
+    setFilteredAppointments(appointments);
+  }, [appointments]);
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -207,7 +216,38 @@ const MainPage = () => {
   const handleOrderChange = (selectedOrder) => {
     setSortOrder(selectedOrder);
   };
-  
+
+  const handleFilterClick = () => {
+    if (!fromDate && !toDate) {
+      setError("Please fill in at least one date field.");
+      return;
+    }
+
+    setError("");
+    let filtered = appointments;
+
+    if (fromDate) {
+      filtered = filtered.filter(
+        (appointment) => new Date(appointment.date) >= new Date(fromDate)
+      );
+    }
+
+    if (toDate) {
+      filtered = filtered.filter(
+        (appointment) => new Date(appointment.date) <= new Date(toDate)
+      );
+    }
+
+    setFilteredAppointments(filtered);
+  };
+
+  const handleResetClick = () => {
+    setFromDate("");
+    setToDate("");
+    setError("");
+    setFilteredAppointments(appointments);
+  };
+
   return (
     <div>
       <Snackbar
@@ -235,12 +275,19 @@ const MainPage = () => {
           handleOrderChange={handleOrderChange}
           sortOrder={sortOrder}
         />
-        {(isOpenFilterForm) ? (
-          <DataFilterForm closeFilterForm={() => setIsOpenFilterForm(false)} />
-        ):(
-        <DateFilter
-          openFilterForm={() => setIsOpenFilterForm(true)}
-        />)}
+        {isOpenFilterForm ? (
+          <DataFilterForm
+            closeFilterForm={() => setIsOpenFilterForm(false)}
+            fromDate={fromDate}
+            toDate={toDate}
+            onFromDateChange={(e) => setFromDate(e.target.value)}
+            onToDateChange={(e) => setToDate(e.target.value)}
+            onFilter={handleFilterClick}
+            onReset={handleResetClick}
+          />
+        ) : (
+          <DateFilter openFilterForm={() => setIsOpenFilterForm(true)} />
+        )}
       </StyledModalContainer>
       <TableAppointment
         appointments={sortedAppointments}

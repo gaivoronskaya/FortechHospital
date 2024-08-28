@@ -7,7 +7,15 @@ import {
   StyledButtonImage,
 } from "./style";
 
-const DataFilterForm = ({ closeFilterForm }) => {
+const DataFilterForm = ({
+  closeFilterForm,
+  fromDate,
+  toDate,
+  onFromDateChange,
+  onToDateChange,
+  onFilter,
+  onReset,
+}) => {
   return (
     <StyledContainer>
       <StyledFormFilter>
@@ -17,6 +25,8 @@ const DataFilterForm = ({ closeFilterForm }) => {
           typeInput="date"
           placeholder="Start Date"
           label="с:"
+          value={fromDate}
+          handleChangeInput={onFromDateChange}
         />
         <CustomInput
           classNameInputContainer="date-filter__lable-container"
@@ -24,12 +34,15 @@ const DataFilterForm = ({ closeFilterForm }) => {
           typeInput="date"
           placeholder="End Date"
           label="по:"
+          value={toDate}
+          handleChangeInput={onToDateChange}
         />
       </StyledFormFilter>
       <StyletButtonsContainer>
         <CustomButton
           className="date-filter__filter-button"
           typeButton="button"
+          handleActionButton={onFilter}
         >
           Фильтровать
         </CustomButton>
