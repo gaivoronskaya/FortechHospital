@@ -231,18 +231,20 @@ const MainPage = () => {
         handleEditAppointment={handleEditAppointment}
         handleDeleteAppointmentId={handleDeleteAppointmentId}
       />
-      <EditingForm
-        closeModal={() => setIsModalEditOpen(false)}
-        openModal={isModalEditOpen}
-        editAppointment={editAppointment}
-        handleSubmit={validateUpdateAppointment}
-        handleChangeInput={handleChangeModalInput}
-      />
-      <DeletingForm
-        closeModal={() => setIsModalDeleteOpen(false)}
-        openModal={isModalDeleteOpen}
-        handleDeleteAppointment={handleDeleteAppointment}
-      />
+      {isModalEditOpen && (
+        <EditingForm
+          closeModal={() => setIsModalEditOpen(false)}
+          editAppointment={editAppointment}
+          handleSubmit={validateUpdateAppointment}
+          handleChangeInput={handleChangeModalInput}
+        />
+      )}
+      {isModalDeleteOpen && (
+        <DeletingForm
+          closeModal={() => setIsModalDeleteOpen(false)}
+          handleDeleteAppointment={handleDeleteAppointment}
+        />
+      )}
     </div>
   );
 };

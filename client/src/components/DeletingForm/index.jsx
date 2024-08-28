@@ -1,14 +1,9 @@
 import ModalForm from "../ModalForm";
 
-const DeletingForm = ({
-  closeModal,
-  openModal,
-  handleDeleteAppointment,
-}) => {
+const DeletingForm = ({ closeModal, handleDeleteAppointment }) => {
   return (
     <ModalForm
       closeModal={closeModal}
-      openModal={openModal}
       modalTitle="Удалить прием"
       buttonTitle="удалить"
       handlePrimaryAction={handleDeleteAppointment}

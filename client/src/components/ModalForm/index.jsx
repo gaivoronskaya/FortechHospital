@@ -17,10 +17,7 @@ const ModalForm = ({
   buttonTitle,
   handleSubmit,
   handlePrimaryAction,
-  openModal,
 }) => {
-  if (!openModal) return null;
-
   return (
     <StyledModal>
       <StyledModalContent>

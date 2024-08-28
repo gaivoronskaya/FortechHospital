@@ -9,13 +9,11 @@ const EditingForm = ({
   editAppointment,
   handleChangeInput,
   closeModal,
-  openModal,
   handleSubmit,
 }) => {
   return (
     <ModalForm
       closeModal={closeModal}
-      openModal={openModal}
       handleSubmit={handleSubmit}
       modalTitle="Изменить прием"
       buttonTitle="Сохранить"
