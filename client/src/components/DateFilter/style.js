@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import add_filter from "../../images/add_filter.svg"
+import add_filter from "../../images/add_filter.svg";
 
 export const StyledComponent = styled.div`
-  width: 400px;
+  width: 937px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -10,7 +10,6 @@ export const StyledComponent = styled.div`
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
-
 
   .date-filter__button {
     background: none;
@@ -23,4 +22,4 @@ export const StyledComponent = styled.div`
 
 export const StyledTitle = styled.h6`
   font-size: 18px;
-`
+`;

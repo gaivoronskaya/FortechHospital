@@ -10,6 +10,7 @@ import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
 import SortingComponent from "../../components/SortingComponent";
 import DateFilter from "../../components/DateFilter/indes";
+import DataFilterForm from "../../components/DataFilterForm";
 import { StyledButtonExit, StyledModalContainer } from "./style";
 
 const MainPage = () => {
@@ -48,7 +49,7 @@ const MainPage = () => {
 
   const [sortedAppointments, setSortedAppointments] = useState([]);
 
-  const [onClickDateFilter, setOnClickDateFilter] = useState(false);
+  const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
 
   const {
     getUserAppointments,
@@ -206,12 +207,7 @@ const MainPage = () => {
   const handleOrderChange = (selectedOrder) => {
     setSortOrder(selectedOrder);
   };
-
-  // const handleCLose = () => {
-  //   setOnClickDateFilter(false)
-  //   console.log("fdf")
-  // }
-
+  
   return (
     <div>
       <Snackbar
@@ -239,10 +235,12 @@ const MainPage = () => {
           handleOrderChange={handleOrderChange}
           sortOrder={sortOrder}
         />
+        {(isOpenFilterForm) ? (
+          <DataFilterForm closeFilterForm={() => setIsOpenFilterForm(false)} />
+        ):(
         <DateFilter
-          openFilterForm={() => setOnClickDateFilter(true)}
-          closeFilterForm={() => setOnClickDateFilter(false)}
-        />
+          openFilterForm={() => setIsOpenFilterForm(true)}
+        />)}
       </StyledModalContainer>
       <TableAppointment
         appointments={sortedAppointments}

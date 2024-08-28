@@ -8,7 +8,6 @@ export const StyledSortedContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 20px;
-  position: absolute;
 
   .sorting-component__lable-container {
     display: flex;
@@ -16,4 +15,8 @@ export const StyledSortedContainer = styled.div`
     align-items: center;
     gap: 20px;
   }
+`;
+
+export const StyledSelectors = styled.div`
+
 `;

@@ -11,7 +11,8 @@ export const StyledButtonExit = styled.button`
 `;
 export const StyledModalContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
   width: 989px;

@@ -1,12 +1,10 @@
-import DataFilterForm from "../DataFilterForm";
+
 import CustomButton from "../UI/CustomButton";
 import { StyledComponent, StyledTitle } from "./style";
 
-const DateFilter = ({ openFilterForm, closeFilterForm }) => {
+const DateFilter = ({ openFilterForm }) => {
   return (
     <StyledComponent>
-      {!openFilterForm ? (
-        <>
           <StyledTitle>Добавить фильтр по дате:</StyledTitle>
           <CustomButton
             classNameButton="date-filter__button"
@@ -14,10 +12,6 @@ const DateFilter = ({ openFilterForm, closeFilterForm }) => {
             nameButton="dateFilter"
             handleActionButton={openFilterForm}
           />
-        </>
-      ) : (
-        <DataFilterForm closeFilterForm={closeFilterForm}/>
-      )}
     </StyledComponent>
   );
 };
