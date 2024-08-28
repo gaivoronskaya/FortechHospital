@@ -25,7 +25,7 @@ const MainPage = () => {
     complaint: "",
   });
 
-  const [editAppointment, setEditAppointment] = useState({
+  const [editedAppointment, setEditedAppointment] = useState({
     name: "",
     doctor: "",
     date: "",
@@ -155,7 +155,7 @@ const MainPage = () => {
       return;
     }
 
-    updateAppointmentById(editedAppointmentId, editAppointment);
+    updateAppointmentById(editedAppointmentId, editedAppointment);
     setIsModalEditOpen(false);
   };
 
@@ -168,7 +168,7 @@ const MainPage = () => {
   const handleChangeModalInput = (e) => {
     const { name, value } = e.target;
 
-    setEditAppointment((prevData) => ({ ...prevData, [name]: value }));
+    setEditedAppointment((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleEditAppointment = (id) => {
@@ -179,7 +179,7 @@ const MainPage = () => {
     if (!appointmentToEdit) {
       return;
     }
-    setEditAppointment({
+    setEditedAppointment({
       name: appointmentToEdit.name,
       doctor: appointmentToEdit.doctor,
       date: appointmentToEdit.date,
@@ -234,7 +234,7 @@ const MainPage = () => {
       {isModalEditOpen && (
         <EditingForm
           closeModal={() => setIsModalEditOpen(false)}
-          editAppointment={editAppointment}
+          editedAppointment={editedAppointment}
           handleSubmit={validateUpdateAppointment}
           handleChangeInput={handleChangeModalInput}
         />

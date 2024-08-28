@@ -6,7 +6,7 @@ import { doctorsOptions } from "../../constants";
 import { formatDate } from "../../helpers/formate-date";
 
 const EditingForm = ({
-  editAppointment,
+  editedAppointment,
   handleChangeInput,
   closeModal,
   handleSubmit,
@@ -22,27 +22,27 @@ const EditingForm = ({
         classNameInput="modal-form__input"
         label="Имя:"
         nameInput="name"
-        valueInput={editAppointment.name}
+        valueInput={editedAppointment.name}
         handleChangeInput={handleChangeInput}
       />
       <CustomSelector
         labelSelector="Врач:"
         nameSelector="doctor"
         classNameSelector="modal-form__selector"
-        valueSelector={editAppointment.doctor}
+        valueSelector={editedAppointment.doctor}
         options={doctorsOptions}
       />
       <CustomInput
         classNameInput="modal-form__input"
         label="Дата:"
         nameInput="date"
-        valueInput={formatDate(editAppointment.date)}
+        valueInput={formatDate(editedAppointment.date)}
         handleChangeInput={handleChangeInput}
       />
       <CustomTextArea
         textAreaLabel="Жалобы:"
         nameTextArea="complaint"
-        valueTextArea={editAppointment.complaint}
+        valueTextArea={editedAppointment.complaint}
         handleChangeTextArea={handleChangeInput}
       />
     </ModalForm>
