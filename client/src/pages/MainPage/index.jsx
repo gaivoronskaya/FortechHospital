@@ -51,10 +51,9 @@ const MainPage = () => {
 
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
 
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
   const [filteredAppointments, setFilteredAppointments] = useState([]);
-  const [errror, setError] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const {
     getUserAppointments,
@@ -85,14 +84,10 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    setSortedAppointments(
-      sortAppointments(appointments, sortOption, sortOrder)
-    );
-  }, [appointments, sortOption, sortOrder]);
-
-  useEffect(() => {
-    setFilteredAppointments(appointments);
-  }, [appointments]);
+    const sortedAppointments = sortAppointments(appointments, sortOption, sortOrder);
+    const filtered = filterAppointments(sortedAppointments);
+    setFilteredAppointments(filtered);
+  }, [appointments, sortOption, sortOrder, startDate, endDate]);
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -217,35 +212,23 @@ const MainPage = () => {
     setSortOrder(selectedOrder);
   };
 
-  const handleFilterClick = () => {
-    if (!fromDate && !toDate) {
-      setError("Please fill in at least one date field.");
-      return;
-    }
+  const filterAppointments = (appointments) => {
+    return appointments.filter((item) => {
+      const itemDate = new Date(item.date);
+      const start = startDate ? new Date(startDate) : null;
+      const end = endDate ? new Date(endDate) : null;
 
-    setError("");
-    let filtered = appointments;
+      const isAfterStart = !start || itemDate >= start;
+      const isBeforeEnd = !end || itemDate <= end;
 
-    if (fromDate) {
-      filtered = filtered.filter(
-        (appointment) => new Date(appointment.date) >= new Date(fromDate)
-      );
-    }
-
-    if (toDate) {
-      filtered = filtered.filter(
-        (appointment) => new Date(appointment.date) <= new Date(toDate)
-      );
-    }
-
-    setFilteredAppointments(filtered);
+      return isAfterStart && isBeforeEnd;
+    });
   };
 
-  const handleResetClick = () => {
-    setFromDate("");
-    setToDate("");
-    setError("");
-    setFilteredAppointments(appointments);
+  const applyDateFilter = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+    setIsOpenFilterForm(false); // Закрыть форму фильтрации после применения
   };
 
   return (
@@ -278,19 +261,16 @@ const MainPage = () => {
         {isOpenFilterForm ? (
           <DataFilterForm
             closeFilterForm={() => setIsOpenFilterForm(false)}
-            fromDate={fromDate}
-            toDate={toDate}
-            onFromDateChange={(e) => setFromDate(e.target.value)}
-            onToDateChange={(e) => setToDate(e.target.value)}
-            onFilter={handleFilterClick}
-            onReset={handleResetClick}
+            applyFilter={applyDateFilter}
+            startDate={startDate}
+            endDate={endDate}
           />
         ) : (
           <DateFilter openFilterForm={() => setIsOpenFilterForm(true)} />
         )}
       </StyledModalContainer>
       <TableAppointment
-        appointments={sortedAppointments}
+        appointments={filteredAppointments}
         handleEditAppointment={handleEditAppointment}
         handleDeleteAppointmentId={handleDeleteAppointmentId}
       />

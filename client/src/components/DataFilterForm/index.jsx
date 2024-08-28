@@ -9,12 +9,9 @@ import {
 
 const DataFilterForm = ({
   closeFilterForm,
-  fromDate,
-  toDate,
-  onFromDateChange,
-  onToDateChange,
-  onFilter,
-  onReset,
+  startDate,
+  endDate,
+  applyFilter,
 }) => {
   return (
     <StyledContainer>
@@ -25,8 +22,6 @@ const DataFilterForm = ({
           typeInput="date"
           placeholder="Start Date"
           label="с:"
-          value={fromDate}
-          handleChangeInput={onFromDateChange}
         />
         <CustomInput
           classNameInputContainer="date-filter__lable-container"
@@ -34,15 +29,12 @@ const DataFilterForm = ({
           typeInput="date"
           placeholder="End Date"
           label="по:"
-          value={toDate}
-          handleChangeInput={onToDateChange}
         />
       </StyledFormFilter>
       <StyletButtonsContainer>
         <CustomButton
           className="date-filter__filter-button"
           typeButton="button"
-          handleActionButton={onFilter}
         >
           Фильтровать
         </CustomButton>
@@ -50,7 +42,6 @@ const DataFilterForm = ({
         <CustomButton
           classNameButton="date-filter__cancel-button"
           typeButton="button"
-          handleActionButton={closeFilterForm}
         >
           <StyledButtonImage />
         </CustomButton>
