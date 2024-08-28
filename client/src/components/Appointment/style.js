@@ -14,6 +14,7 @@ export const StyledCell = styled.td`
 export const StyledButtons = styled.div`
   display: flex;
   gap: 5px;
+  justify-content: center;
 
   .appointment__all-button {
     width: 24px;
