@@ -9,7 +9,8 @@ import TableAppointment from "../../components/TableAppointment";
 import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
 import SortingComponent from "../../components/SortingComponent";
-import { StyledButtonExit } from "./style";
+import DateFilter from "../../components/DateFilter/indes";
+import { StyledButtonExit, StyledModalContainer } from "./style";
 
 const MainPage = () => {
   const [appointment, setAppointment] = useState({
@@ -46,6 +47,8 @@ const MainPage = () => {
   const [sortOption, setSortOption] = useState("none");
 
   const [sortedAppointments, setSortedAppointments] = useState([]);
+
+  const [onClickDateFilter, setOnClickDateFilter] = useState(false);
 
   const {
     getUserAppointments,
@@ -204,6 +207,11 @@ const MainPage = () => {
     setSortOrder(selectedOrder);
   };
 
+  // const handleCLose = () => {
+  //   setOnClickDateFilter(false)
+  //   console.log("fdf")
+  // }
+
   return (
     <div>
       <Snackbar
@@ -224,12 +232,18 @@ const MainPage = () => {
         error={inputError}
         handleSubmit={validateAppointments}
       />
-      <SortingComponent
-        sortOption={sortOption}
-        handleSortChange={handleSortChange}
-        handleOrderChange={handleOrderChange}
-        sortOrder={sortOrder}
-      />
+      <StyledModalContainer>
+        <SortingComponent
+          sortOption={sortOption}
+          handleSortChange={handleSortChange}
+          handleOrderChange={handleOrderChange}
+          sortOrder={sortOrder}
+        />
+        <DateFilter
+          openFilterForm={() => setOnClickDateFilter(true)}
+          closeFilterForm={() => setOnClickDateFilter(false)}
+        />
+      </StyledModalContainer>
       <TableAppointment
         appointments={sortedAppointments}
         handleEditAppointment={handleEditAppointment}

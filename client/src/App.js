@@ -10,11 +10,11 @@ const App = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token) {
-      return navigate("/main");
-    }
-  }, [isAuth]);
+  // useEffect(() => {
+  //   if (token) {
+  //     return navigate("/main");
+  //   }
+  // }, [isAuth]);
 
   if (isAuth) {
     return (

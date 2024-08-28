@@ -8,6 +8,7 @@ export const StyledSortedContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 20px;
+  position: absolute;
 
   .sorting-component__lable-container {
     display: flex;

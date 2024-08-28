@@ -10,8 +10,10 @@ export const StyledButtonExit = styled.button`
   border: 1px solid rgb(0, 0, 0, 0.2);
 `;
 export const StyledModalContainer = styled.div`
-  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: auto;
+  width: 989px;
+  height: auto;
 `;
