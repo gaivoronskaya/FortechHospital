@@ -11,7 +11,8 @@ import DeletingForm from "../../components/DeletingForm";
 import SortingComponent from "../../components/SortingComponent";
 import DateFilter from "../../components/DateFilter/indes";
 import DataFilterForm from "../../components/DataFilterForm";
-import { StyledButtonExit, StyledModalContainer } from "./style";
+import CustomButton from "../../components/UI/CustomButton";
+import { StyledHeader, StyledModalContainer } from "./style";
 
 const MainPage = () => {
   const [appointment, setAppointment] = useState({
@@ -52,14 +53,19 @@ const MainPage = () => {
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
 
   const [filteredAppointments, setFilteredAppointments] = useState([]);
+
   const [startDate, setStartDate] = useState("");
+
   const [endDate, setEndDate] = useState("");
+
+  const [isLogout, setIsLogout] = useState(false);
 
   const {
     getUserAppointments,
     createAppointments,
     updateAppointmentById,
     deleteAppointmentById,
+    logoutUserAction,
   } = useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
@@ -93,6 +99,14 @@ const MainPage = () => {
 
     setFilteredAppointments(filtered);
   }, [appointments, sortOption, sortOrder, startDate, endDate]);
+
+  useEffect(() => {
+    if (isLogout) {
+      logoutUserAction();
+      localStorage.removeItem("accessToken");
+      setIsLogout(false);
+    }
+  }, [isLogout]);
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -299,9 +313,16 @@ const MainPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <Header title="Приемы">
-        <StyledButtonExit>Выход</StyledButtonExit>
-      </Header>
+      <StyledHeader>
+        <Header title="Приемы">
+          <CustomButton
+            classNameButton="main-page__button"
+            handleActionButton={() => setIsLogout(true)}
+          >
+            Выход
+          </CustomButton>
+        </Header>
+      </StyledHeader>
       <AddingAppointmentForm
         handleChangeInput={handleChangeInput}
         appointment={appointment}

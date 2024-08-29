@@ -61,3 +61,22 @@ export const errorRefreshToken = (error) => {
     error,
   };
 };
+
+export const startLogoutUser = () => {
+  return {
+    type: userEnums.LOGOUT_USER,
+  };
+};
+
+export const successLogoutUser = () => {
+  return {
+    type: userEnums.LOGOUT_USER_SUCCESS,
+  };
+};
+
+export const errorLogoutUser = (error) => {
+  return {
+    type: userEnums.LOGOUT_USER_ERROR,
+    error,
+  };
+};

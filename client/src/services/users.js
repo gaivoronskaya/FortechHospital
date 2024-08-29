@@ -17,3 +17,9 @@ export const refreshToken = async () => {
 
   return newToken.data;
 };
+
+export const logoutUser = async () => {
+  const logoutStatus = await api.get("users/signout");
+
+  return logoutStatus.date;
+};

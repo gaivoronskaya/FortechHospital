@@ -1,4 +1,4 @@
-import { createNewUser, loginUser, refreshToken } from "../../services/users";
+import { createNewUser, loginUser, refreshToken, logoutUser } from "../../services/users";
 import {
   startAddUser,
   successAddUser,
@@ -9,6 +9,9 @@ import {
   startRefreshToken,
   successRefreshToken,
   errorRefreshToken,
+  startLogoutUser,
+  successLogoutUser,
+  errorLogoutUser,
 } from "../actions/users";
 
 export const addNewUser = (user) => {
@@ -65,3 +68,21 @@ export const refreshTokenAction = () => {
     }
   };
 };
+
+export const logoutUserAction = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(startLogoutUser());
+      await logoutUser(); 
+
+      localStorage.removeItem("accessToken");
+      dispatch(successLogoutUser()); 
+    } catch (error) {
+      const errorText = error.response
+        ? error.response.data.message
+        : error.message;
+      dispatch(errorLogoutUser(errorText)); 
+    }
+  };
+};
+
