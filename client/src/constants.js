@@ -22,6 +22,6 @@ export const sortedList = [
 ]
 
 export const valueSortedList = [
-  {value: "increasing", label: "По возрастанию"},
-  {value: "decreasing", label: "По убыванию"},
+  {value: "ascending", label: "По возрастанию"},
+  {value: "descending", label: "По убыванию"},
 ]

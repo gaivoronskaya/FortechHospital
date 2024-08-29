@@ -9,7 +9,7 @@ export const StyledSortedContainer = styled.div`
   justify-content: flex-end;
   gap: 20px;
 
-  .sorting-component__lable-container {
+  .sorting-appointment__lable-container {
     display: flex;
     flex-direction: row;
     align-items: center;
