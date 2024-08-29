@@ -14,9 +14,10 @@ const CustomInput = ({
   handleChangeInput,
   error,
   classNameInput,
+  classNameInputContainer,
 }) => {
   return (
-    <StyledInputContainer>
+    <StyledInputContainer className={classNameInputContainer}>
       {label && <StyledLabel>{label}</StyledLabel>}
       <StyledCustomInput
         placeholder={placeholder}

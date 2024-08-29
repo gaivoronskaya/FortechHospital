@@ -8,7 +8,11 @@ import AddingAppointmentForm from "../../components/AddingAppointmentForm";
 import TableAppointment from "../../components/TableAppointment";
 import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
-import { StyledButtonExit } from "./style";
+import SortingComponent from "../../components/SortingComponent";
+import DateFilter from "../../components/DateFilter/indes";
+import DataFilterForm from "../../components/DataFilterForm";
+import CustomButton from "../../components/UI/CustomButton";
+import { StyledHeader, StyledModalContainer } from "./style";
 
 const MainPage = () => {
   const [appointment, setAppointment] = useState({
@@ -42,11 +46,26 @@ const MainPage = () => {
 
   const [deletedAppointmentId, setDeletedAppointmentId] = useState(null);
 
+  const [sortOrder, setSortOrder] = useState("increasing");
+
+  const [sortOption, setSortOption] = useState("none");
+
+  const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
+
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
+
+  const [startDate, setStartDate] = useState("");
+
+  const [endDate, setEndDate] = useState("");
+
+  const [isLogout, setIsLogout] = useState(false);
+
   const {
     getUserAppointments,
     createAppointments,
     updateAppointmentById,
     deleteAppointmentById,
+    logoutUserAction,
   } = useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
@@ -69,6 +88,25 @@ const MainPage = () => {
   useEffect(() => {
     getUserAppointments();
   }, []);
+
+  useEffect(() => {
+    const sortedAppointments = sortAppointments(
+      appointments,
+      sortOption,
+      sortOrder
+    );
+    const filtered = filterAppointments(sortedAppointments);
+
+    setFilteredAppointments(filtered);
+  }, [appointments, sortOption, sortOrder, startDate, endDate]);
+
+  useEffect(() => {
+    if (isLogout) {
+      logoutUserAction();
+      localStorage.removeItem("accessToken");
+      setIsLogout(false);
+    }
+  }, [isLogout]);
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -206,6 +244,64 @@ const MainPage = () => {
     setIsModalDeleteOpen(true);
   };
 
+  const sortAppointments = (appointments, sortBy, order) => {
+    if (sortBy === "none") return appointments;
+
+    const sorted = [...appointments].sort((a, b) => {
+      let compareValue = 0;
+
+      if (sortBy === "date") {
+        compareValue = new Date(a.date) - new Date(b.date);
+      } else if (sortBy === "doctor") {
+        compareValue = a.doctor.localeCompare(b.doctor);
+      } else if (sortBy === "name") {
+        compareValue = a.name.localeCompare(b.name);
+      }
+
+      return order === "increasing" ? compareValue : -compareValue;
+    });
+
+    return sorted;
+  };
+
+  const handleSortChange = (selectedOption) => {
+    setSortOption(selectedOption);
+    if (selectedOption === "none") {
+      setSortOrder("increasing");
+    }
+  };
+
+  const handleOrderChange = (selectedOrder) => {
+    setSortOrder(selectedOrder);
+  };
+
+  const filterAppointments = (appointments) => {
+    return appointments.filter((item) => {
+      const itemDate = new Date(item.date);
+      const start = startDate ? new Date(startDate) : null;
+      const end = endDate ? new Date(endDate) : null;
+
+      const isAfterStart = !start || itemDate >= start;
+      const isBeforeEnd = !end || itemDate <= end;
+
+      return isAfterStart && isBeforeEnd;
+    });
+  };
+
+  const applyDateFilter = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+    setIsOpenFilterForm(false);
+  };
+
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
+
   return (
     <div>
       <Snackbar
@@ -217,17 +313,44 @@ const MainPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <Header title="Приемы">
-        <StyledButtonExit>Выход</StyledButtonExit>
-      </Header>
+      <StyledHeader>
+        <Header title="Приемы">
+          <CustomButton
+            classNameButton="main-page__button"
+            handleActionButton={() => setIsLogout(true)}
+          >
+            Выход
+          </CustomButton>
+        </Header>
+      </StyledHeader>
       <AddingAppointmentForm
         handleChangeInput={handleChangeInput}
         appointment={appointment}
         error={inputError}
         handleSubmit={validateAppointments}
       />
+      <StyledModalContainer>
+        <SortingComponent
+          sortOption={sortOption}
+          handleSortChange={handleSortChange}
+          handleOrderChange={handleOrderChange}
+          sortOrder={sortOrder}
+        />
+        {isOpenFilterForm ? (
+          <DataFilterForm
+            closeFilterForm={() => setIsOpenFilterForm(false)}
+            applyFilter={applyDateFilter}
+            startDate={startDate}
+            endDate={endDate}
+            handleStartDateChange={handleStartDateChange}
+            handleEndDateChange={handleEndDateChange}
+          />
+        ) : (
+          <DateFilter openFilterForm={() => setIsOpenFilterForm(true)} />
+        )}
+      </StyledModalContainer>
       <TableAppointment
-        appointments={appointments}
+        appointments={filteredAppointments}
         handleEditAppointment={handleEditAppointment}
         handleDeleteAppointmentId={handleDeleteAppointmentId}
       />

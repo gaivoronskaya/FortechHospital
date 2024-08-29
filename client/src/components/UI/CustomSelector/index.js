@@ -9,8 +9,9 @@ const CustomSelector = ({
   valueOption,
   labelSelector,
   classNameSelector,
+  classNameSelectorContainer,
 }) => (
-  <StyledSelectContainer>
+  <StyledSelectContainer className={classNameSelectorContainer}>
     {labelSelector && (
       <StyledLabel htmlFor={`select_${nameSelector}`}>
         {labelSelector}
