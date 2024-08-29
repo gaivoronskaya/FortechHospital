@@ -28,7 +28,7 @@ const MainPage = () => {
     complaint: "",
   });
 
-  const [editAppointment, setEditAppointment] = useState({
+  const [editedAppointment, setEditedAppointment] = useState({
     name: "",
     doctor: "",
     date: "",
@@ -41,25 +41,25 @@ const MainPage = () => {
 
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
-  const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
+  const [editedAppointmentId, setEditedAppointmentId] = useState(null);
+
+  const [deletedAppointmentId, setDeletedAppointmentId] = useState(null);
 
   const [sortOrder, setSortOrder] = useState("increasing");
 
   const [sortOption, setSortOption] = useState("none");
 
-  const [sortedAppointments, setSortedAppointments] = useState([]);
-
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
 
   const [filteredAppointments, setFilteredAppointments] = useState([]);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const {
     getUserAppointments,
     createAppointments,
-    updateAppointmentAsync,
-    deleteAppointmentAsync,
+    updateAppointmentById,
+    deleteAppointmentById,
   } = useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
@@ -84,8 +84,13 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    const sortedAppointments = sortAppointments(appointments, sortOption, sortOrder);
+    const sortedAppointments = sortAppointments(
+      appointments,
+      sortOption,
+      sortOrder
+    );
     const filtered = filterAppointments(sortedAppointments);
+
     setFilteredAppointments(filtered);
   }, [appointments, sortOption, sortOrder, startDate, endDate]);
 
@@ -133,6 +138,51 @@ const MainPage = () => {
     createAppointments(appointment);
   };
 
+  const validateUpdateAppointment = (event) => {
+    event.preventDefault();
+    const { name, doctor, date, complaint } = appointment;
+    const currentDate = new Date();
+
+    if (!name.trim()) {
+      setInputError({
+        ...inputError,
+        name: "Поле не может быть пустым",
+      });
+
+      return;
+    }
+
+    if (!doctor.trim()) {
+      setInputError({
+        ...inputError,
+        doctor: "Поле не может быть пустым",
+      });
+
+      return;
+    }
+
+    if (!date.trim() || new Date(date) < currentDate) {
+      setInputError({
+        ...inputError,
+        date: "Поле не может быть пустым или содержать прошлое время",
+      });
+
+      return;
+    }
+
+    if (!complaint.trim()) {
+      setInputError({
+        ...inputError,
+        complaint: "Поле не может быть пустым",
+      });
+
+      return;
+    }
+
+    updateAppointmentById(editedAppointmentId, editedAppointment);
+    setIsModalEditOpen(false);
+  };
+
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
 
@@ -142,43 +192,42 @@ const MainPage = () => {
   const handleChangeModalInput = (e) => {
     const { name, value } = e.target;
 
-    setEditAppointment((prevData) => ({ ...prevData, [name]: value }));
+    setEditedAppointment((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleEditAppointment = (id) => {
     const appointmentToEdit = appointments.find(
       (appointment) => appointment._id === id
     );
-    if (appointmentToEdit) {
-      setEditAppointment({
-        name: appointmentToEdit.name,
-        doctor: appointmentToEdit.doctor,
-        date: appointmentToEdit.date,
-        complaint: appointmentToEdit.complaint,
-      });
-      setSelectedAppointmentId(id);
-      setIsModalEditOpen(true);
-    }
-  };
 
-  const handleDeleteAppointmentId = (id) => {
-    const appointmentToEdit = appointments.find(
-      (appointment) => appointment._id === id
-    );
-    if (appointmentToEdit) {
-      setSelectedAppointmentId(id);
-      setIsModalDeleteOpen(true);
+    if (!appointmentToEdit) {
+      return;
     }
-  };
+    setEditedAppointment({
+      name: appointmentToEdit.name,
+      doctor: appointmentToEdit.doctor,
+      date: appointmentToEdit.date,
+      complaint: appointmentToEdit.complaint,
+    });
 
-  const handleSaveChanges = () => {
-    updateAppointmentAsync(selectedAppointmentId, editAppointment);
-    setIsModalEditOpen(false);
+    setEditedAppointmentId(id);
+    setIsModalEditOpen(true);
   };
 
   const handleDeleteAppointment = () => {
-    deleteAppointmentAsync(selectedAppointmentId);
+    deleteAppointmentById(deletedAppointmentId);
     setIsModalDeleteOpen(false);
+  };
+
+  const handleDeleteAppointmentId = (id) => {
+    const appointmentToDelete = appointments.find(
+      (appointment) => appointment._id === id
+    );
+    if (!appointmentToDelete) {
+      return;
+    }
+    setDeletedAppointmentId(id);
+    setIsModalDeleteOpen(true);
   };
 
   const sortAppointments = (appointments, sortBy, order) => {
@@ -228,7 +277,15 @@ const MainPage = () => {
   const applyDateFilter = (start, end) => {
     setStartDate(start);
     setEndDate(end);
-    setIsOpenFilterForm(false); // Закрыть форму фильтрации после применения
+    setIsOpenFilterForm(false);
+  };
+
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
   };
 
   return (
@@ -264,6 +321,8 @@ const MainPage = () => {
             applyFilter={applyDateFilter}
             startDate={startDate}
             endDate={endDate}
+            handleStartDateChange={handleStartDateChange}
+            handleEndDateChange={handleEndDateChange}
           />
         ) : (
           <DateFilter openFilterForm={() => setIsOpenFilterForm(true)} />
@@ -274,24 +333,20 @@ const MainPage = () => {
         handleEditAppointment={handleEditAppointment}
         handleDeleteAppointmentId={handleDeleteAppointmentId}
       />
-      <EditingForm
-        closeModal={() => setIsModalEditOpen(false)}
-        openModal={isModalEditOpen}
-        headerTitile="Изменить прием"
-        editAppointment={editAppointment}
-        handleSaveChanges={handleSaveChanges}
-        handleChangeInput={handleChangeModalInput}
-        modalTitle="Изменить прием"
-        buttonTitle="Сохранить"
-      />
-      <DeletingForm
-        closeModal={() => setIsModalDeleteOpen(false)}
-        openModal={isModalDeleteOpen}
-        modalTitle="Удалить прием"
-        buttonTitle="Удалить"
-        handleDelete={handleDeleteAppointment}
-        handleDeleteAppointment={handleDeleteAppointment}
-      />
+      {isModalEditOpen && (
+        <EditingForm
+          closeModal={() => setIsModalEditOpen(false)}
+          editedAppointment={editedAppointment}
+          handleSubmit={validateUpdateAppointment}
+          handleChangeInput={handleChangeModalInput}
+        />
+      )}
+      {isModalDeleteOpen && (
+        <DeletingForm
+          closeModal={() => setIsModalDeleteOpen(false)}
+          handleDeleteAppointment={handleDeleteAppointment}
+        />
+      )}
     </div>
   );
 };
