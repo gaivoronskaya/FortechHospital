@@ -69,9 +69,7 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    setSortedAppointments(
-      sortArray(appointments, sortOption, sortOrder)
-    );
+    setSortedAppointments(sortArray(appointments, sortOption, sortOrder));
   }, [appointments, sortOption, sortOrder]);
 
   const validateAppointments = (event) => {
@@ -213,14 +211,11 @@ const MainPage = () => {
   const handleSortInputChange = (selectedValue, type) => {
     if (type === "option") {
       setSortOption(selectedValue);
-      if (selectedValue === "none") {
-        setSortOrder("ascending");
-      }
-    } else if (type === "order") {
+      setSortOrder(selectedValue === "none" ? "ascending" : sortOrder);
+    } else {
       setSortOrder(selectedValue);
     }
   };
-
 
   return (
     <div>

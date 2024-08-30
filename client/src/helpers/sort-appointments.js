@@ -1,35 +1,34 @@
-export const sortArray = (items, sortBy, order) => {
-  if (sortBy === "none" || !items || !items.length) return items;
+export const sortArray = (array, sortBy, order) => {
+  if (sortBy === "none" || !array) return array;
 
-  const sorted = [...items].sort((a, b) => {
-    const valueA = a[sortBy];
-    const valueB = b[sortBy];
+  const copyArray = [...array];
 
-    if (valueA === null || valueA === undefined) return 1;
-    if (valueB === null || valueB === undefined) return -1;
+  switch (order) {
+    case "ascending":
+      return copyArray.sort((a, b) => {
+        const valueA = a[sortBy];
+        const valueB = b[sortBy];
 
-    let comparison = 0;
+        if (!valueA || !valueB) {
+          return !valueA ? 1 : -1;
+        }
 
-    switch (true) {
-      case typeof valueA === "string" && typeof valueB === "string":
-        comparison = valueA.localeCompare(valueB);
-        break;
-        
-      case !isNaN(Date.parse(valueA)) && !isNaN(Date.parse(valueB)):
-        comparison = new Date(valueA) - new Date(valueB);
-        break;
-        
-      case typeof valueA === "number" && typeof valueB === "number":
-        comparison = valueA - valueB;
-        break;
-        
-      default:
-        comparison = 0;
-        break;
-    }
+        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+      });
 
-    return order === "ascending" ? comparison : -comparison;
-  });
+    case "descending":
+      return copyArray.sort((a, b) => {
+        const valueA = a[sortBy];
+        const valueB = b[sortBy]; 
 
-  return sorted;
+        if (!valueA || !valueB) {
+          return !valueA ? 1 : -1;
+        }
+
+        return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+      });
+
+    default:
+      return array;
+  }
 };
