@@ -87,7 +87,7 @@ const MainPage = () => {
       : sortedAppointments;
 
     setFilteredAppointments(filtered);
-  }, [appointments, sortOption, sortOrder, shouldApplyFilter, startDate, endDate]);
+  }, [appointments, sortOption, sortOrder, shouldApplyFilter, ]);
 
 
   const validateAppointments = (event) => {
@@ -242,13 +242,13 @@ const MainPage = () => {
     setIsOpenFilterForm(false);
   };
 
-  const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
-  };
+  // const handleStartDateChange = (e) => {
+  //   setStartDate(e.target.value);
+  // };
 
-  const handleEndDateChange = (e) => {
-    setEndDate(e.target.value);
-  };
+  // const handleEndDateChange = (e) => {
+  //   setEndDate(e.target.value);
+  // };
 
   return (
     <div>
@@ -282,8 +282,8 @@ const MainPage = () => {
             applyFilter={applyDateFilter}
             startDate={startDate}
             endDate={endDate}
-            handleStartDateChange={handleStartDateChange}
-            handleEndDateChange={handleEndDateChange}
+            handleStartDateChange={(e) => setStartDate(e.target.value)}
+            handleEndDateChange={(e) => setEndDate(e.target.value)}
           />
         ) : (
           <DateFilter openFilterForm={() => setIsOpenFilterForm(true)} />
