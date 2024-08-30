@@ -1,30 +1,32 @@
 import CustomSelector from "../UI/CustomSelector";
-import { sortedList } from "../../constants";
-import { valueSortedList } from "../../constants";
+import { sortedList, valueSortedList } from "../../constants";
 import { StyledSortedContainer } from "./style";
 
 const SortingComponent = ({
-  sortOption,
-  sortOrder,
-  handleSortChange,
-  handleOrderChange,
-}) => {
+   sortOption,
+   sortOrder, 
+   handleSortInputChange, 
+  }) => {
   return (
     <StyledSortedContainer>
       <CustomSelector
         labelSelector="Сортировать по:"
         options={sortedList}
         valueSelector={sortOption}
-        handleChangeSelector={(e) => handleSortChange(e.target.value)}
-        classNameSelectorContainer="sorting-component__lable-container"
+        handleChangeSelector={(e) =>
+          handleSortInputChange(e.target.value, "option")
+        }
+        classNameSelectorContainer="sorting-appointment__lable-container"
       />
       {sortOption !== "none" && (
         <CustomSelector
-          classNameSelectorContainer="sorting-component__lable-container"
+          classNameSelectorContainer="sorting-appointment__lable-container"
           labelSelector="Направление:"
           options={valueSortedList}
           valueSelector={sortOrder}
-          handleChangeSelector={(e) => handleOrderChange(e.target.value)}
+          handleChangeSelector={(e) =>
+            handleSortInputChange(e.target.value, "order")
+          }
         />
       )}
     </StyledSortedContainer>

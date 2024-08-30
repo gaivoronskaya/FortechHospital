@@ -8,9 +8,10 @@ import AddingAppointmentForm from "../../components/AddingAppointmentForm";
 import TableAppointment from "../../components/TableAppointment";
 import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
-import SortingComponent from "../../components/SortingComponent";
-import DateFilter from "../../components/DateFilter/indes";
+import SortingAppointment from "../../components/SortingAppointment";
+import DateFilter from "../../components/DateFilter";
 import DataFilterForm from "../../components/DataFilterForm";
+import { sortArray } from "../../helpers/sort-appointments";
 import { StyledButtonExit, StyledModalContainer } from "./style";
 
 const MainPage = () => {
@@ -20,37 +21,26 @@ const MainPage = () => {
     date: "",
     complaint: "",
   });
-
   const [inputError, setInputError] = useState({
     name: "",
     doctor: "",
     date: "",
     complaint: "",
   });
-
   const [editedAppointment, setEditedAppointment] = useState({
     name: "",
     doctor: "",
     date: "",
     complaint: "",
   });
-
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
-
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
-
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
-
   const [editedAppointmentId, setEditedAppointmentId] = useState(null);
-
   const [deletedAppointmentId, setDeletedAppointmentId] = useState(null);
-
-  const [sortOrder, setSortOrder] = useState("increasing");
-
+  const [sortOrder, setSortOrder] = useState("ascending");
   const [sortOption, setSortOption] = useState("none");
-
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
-
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -84,7 +74,7 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    const sortedAppointments = sortAppointments(
+    const sortedAppointments = sortArray(
       appointments,
       sortOption,
       sortOrder
@@ -230,35 +220,13 @@ const MainPage = () => {
     setIsModalDeleteOpen(true);
   };
 
-  const sortAppointments = (appointments, sortBy, order) => {
-    if (sortBy === "none") return appointments;
+  const handleSortInputChange = (selectedValue, type) => {
+    if (type === "option") {
+      setSortOption(selectedValue);
+      setSortOrder(selectedValue === "none" ? "ascending" : sortOrder);
+    } 
 
-    const sorted = [...appointments].sort((a, b) => {
-      let compareValue = 0;
-
-      if (sortBy === "date") {
-        compareValue = new Date(a.date) - new Date(b.date);
-      } else if (sortBy === "doctor") {
-        compareValue = a.doctor.localeCompare(b.doctor);
-      } else if (sortBy === "name") {
-        compareValue = a.name.localeCompare(b.name);
-      }
-
-      return order === "increasing" ? compareValue : -compareValue;
-    });
-
-    return sorted;
-  };
-
-  const handleSortChange = (selectedOption) => {
-    setSortOption(selectedOption);
-    if (selectedOption === "none") {
-      setSortOrder("increasing");
-    }
-  };
-
-  const handleOrderChange = (selectedOrder) => {
-    setSortOrder(selectedOrder);
+    setSortOrder(selectedValue);
   };
 
   const filterAppointments = (appointments) => {
@@ -309,10 +277,9 @@ const MainPage = () => {
         handleSubmit={validateAppointments}
       />
       <StyledModalContainer>
-        <SortingComponent
+        <SortingAppointment
           sortOption={sortOption}
-          handleSortChange={handleSortChange}
-          handleOrderChange={handleOrderChange}
+          handleSortInputChange={handleSortInputChange}
           sortOrder={sortOrder}
         />
         {isOpenFilterForm ? (

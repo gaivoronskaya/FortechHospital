@@ -1,4 +1,3 @@
-
 import CustomButton from "../UI/CustomButton";
 import { StyledComponent, StyledTitle } from "./style";
 
