@@ -242,6 +242,12 @@ const MainPage = () => {
     setDateRange((prev) => ({ ...prev, end: e.target.value }));
   };
 
+  const closeFilterForm = () => {
+    setIsOpenFilterForm(false);
+    setDateRange({ start: "", end: "" });
+    setFilteredAppointments(appointments);
+  };
+
   return (
     <div>
       <Snackbar
@@ -270,7 +276,7 @@ const MainPage = () => {
         />
         {isOpenFilterForm ? (
           <DataFilterForm
-            closeFilterForm={() => setIsOpenFilterForm(false)}
+            closeFilterForm={closeFilterForm}
             applyFilter={applyDateFilter}
             dateRange={dateRange}
             handleStartDateChange={handleStartDateChange}
