@@ -1,8 +1,8 @@
-export const filterAppointments = (appointments, startDate, endDate) => {
+export const filterAppointments = (appointments, range) => {
   return appointments.filter((item) => {
     const itemDate = new Date(item.date);
-    const start = startDate ? new Date(startDate) : null;
-    const end = endDate ? new Date(endDate) : null;
+    const start = range.start ? new Date(range.start) : null;
+    const end = range.end ? new Date(range.end) : null;
 
     const isAfterStart = !start || itemDate >= start;
     const isBeforeEnd = !end || itemDate <= end;

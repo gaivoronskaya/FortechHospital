@@ -9,11 +9,10 @@ import {
 
 const DataFilterForm = ({
   closeFilterForm,
-  startDate,
-  endDate,
   applyFilter,
   handleStartDateChange,
   handleEndDateChange,
+  dateRange,
 }) => {
   return (
     <StyledContainer>
@@ -24,7 +23,7 @@ const DataFilterForm = ({
           typeInput="date"
           placeholder="Start Date"
           label="с:"
-          value={startDate} 
+          value={dateRange.start}
           handleChangeInput={handleStartDateChange}
         />
         <CustomInput
@@ -33,7 +32,7 @@ const DataFilterForm = ({
           typeInput="date"
           placeholder="End Date"
           label="по:"
-          value={endDate}
+          value={dateRange.end}
           handleChangeInput={handleEndDateChange}
         />
       </StyledFormFilter>
@@ -41,7 +40,7 @@ const DataFilterForm = ({
         <CustomButton
           className="date-filter__filter-button"
           typeButton="button"
-          handleActionButton={() => applyFilter(startDate, endDate)}
+          handleActionButton={() => applyFilter(dateRange)}
         >
           Фильтровать
         </CustomButton>
@@ -59,5 +58,3 @@ const DataFilterForm = ({
 };
 
 export default DataFilterForm;
-
-

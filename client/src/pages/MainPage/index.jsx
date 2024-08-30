@@ -43,10 +43,10 @@ const MainPage = () => {
   const [sortOption, setSortOption] = useState("none");
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
   const [filteredAppointments, setFilteredAppointments] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [shouldApplyFilter, setShouldApplyFilter] = useState(false);
-
+  const [dateRange, setDateRange] = useState({
+    start: "",
+    end: "",
+  });
 
   const {
     getUserAppointments,
@@ -77,18 +77,10 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    const sortedAppointments = sortArray(
-      appointments,
-      sortOption,
-      sortOrder
-    );
-    const filtered = shouldApplyFilter 
-      ? filterAppointments(sortedAppointments, startDate, endDate)
-      : sortedAppointments;
-
+    const sortedAppointments = sortArray(appointments, sortOption, sortOrder);
+    const filtered = filterAppointments(sortedAppointments, dateRange);
     setFilteredAppointments(filtered);
-  }, [appointments, sortOption, sortOrder, shouldApplyFilter, ]);
-
+  }, [appointments, sortOption, sortOrder]);
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -230,25 +222,25 @@ const MainPage = () => {
     if (type === "option") {
       setSortOption(selectedValue);
       setSortOrder(selectedValue === "none" ? "ascending" : sortOrder);
-    } 
+    }
 
     setSortOrder(selectedValue);
   };
 
-  const applyDateFilter = (start, end) => {
-    setStartDate(start);
-    setEndDate(end);
-    setShouldApplyFilter(true);
-    setIsOpenFilterForm(false);
+  const applyDateFilter = (range) => {
+    setDateRange(range);
+
+    const filtered = filterAppointments(appointments, range);
+    setFilteredAppointments(filtered);
   };
 
-  // const handleStartDateChange = (e) => {
-  //   setStartDate(e.target.value);
-  // };
+  const handleStartDateChange = (e) => {
+    setDateRange((prev) => ({ ...prev, start: e.target.value }));
+  };
 
-  // const handleEndDateChange = (e) => {
-  //   setEndDate(e.target.value);
-  // };
+  const handleEndDateChange = (e) => {
+    setDateRange((prev) => ({ ...prev, end: e.target.value }));
+  };
 
   return (
     <div>
@@ -280,10 +272,9 @@ const MainPage = () => {
           <DataFilterForm
             closeFilterForm={() => setIsOpenFilterForm(false)}
             applyFilter={applyDateFilter}
-            startDate={startDate}
-            endDate={endDate}
-            handleStartDateChange={(e) => setStartDate(e.target.value)}
-            handleEndDateChange={(e) => setEndDate(e.target.value)}
+            dateRange={dateRange}
+            handleStartDateChange={handleStartDateChange}
+            handleEndDateChange={handleEndDateChange}
           />
         ) : (
           <DateFilter openFilterForm={() => setIsOpenFilterForm(true)} />
