@@ -11,6 +11,7 @@ import DeletingForm from "../../components/DeletingForm";
 import SortingAppointment from "../../components/SortingAppointment";
 import DateFilter from "../../components/DateFilter";
 import DataFilterForm from "../../components/DataFilterForm";
+import { filterAppointments } from "../../helpers/filter-appointments";
 import { sortArray } from "../../helpers/sort-appointments";
 import { StyledButtonExit, StyledModalContainer } from "./style";
 
@@ -44,6 +45,8 @@ const MainPage = () => {
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [shouldApplyFilter, setShouldApplyFilter] = useState(false);
+
 
   const {
     getUserAppointments,
@@ -79,10 +82,13 @@ const MainPage = () => {
       sortOption,
       sortOrder
     );
-    const filtered = filterAppointments(sortedAppointments);
+    const filtered = shouldApplyFilter 
+      ? filterAppointments(sortedAppointments, startDate, endDate)
+      : sortedAppointments;
 
     setFilteredAppointments(filtered);
-  }, [appointments, sortOption, sortOrder, startDate, endDate]);
+  }, [appointments, sortOption, sortOrder, shouldApplyFilter, startDate, endDate]);
+
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -229,22 +235,10 @@ const MainPage = () => {
     setSortOrder(selectedValue);
   };
 
-  const filterAppointments = (appointments) => {
-    return appointments.filter((item) => {
-      const itemDate = new Date(item.date);
-      const start = startDate ? new Date(startDate) : null;
-      const end = endDate ? new Date(endDate) : null;
-
-      const isAfterStart = !start || itemDate >= start;
-      const isBeforeEnd = !end || itemDate <= end;
-
-      return isAfterStart && isBeforeEnd;
-    });
-  };
-
   const applyDateFilter = (start, end) => {
     setStartDate(start);
     setEndDate(end);
+    setShouldApplyFilter(true);
     setIsOpenFilterForm(false);
   };
 
