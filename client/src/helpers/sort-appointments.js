@@ -1,25 +1,23 @@
 export const sortArray = (array, sortBy, order) => {
-  if (sortBy === "none" || !array) return array;
+  if (!array.length || sortBy === "none") return array;
 
   const copyArray = [...array];
-  const compareValues = (a, b) => {
+
+  copyArray.sort((a, b) => {
     const valueA = a[sortBy];
     const valueB = b[sortBy];
 
-    if (!valueA || !valueB) {
-      return valueA ? -1 : 1;
+    switch (order) {
+      case "ascending":
+        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+
+      case "descending":
+        return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+
+      default:
+        return 0;
     }
-    return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
-  };
-
-  switch (order) {
-    case "ascending":
-      return copyArray.sort(compareValues);
-
-    case "descending":
-      return copyArray.sort((a, b) => -compareValues(a, b));
-
-    default:
-      return array;
-  }
+  });
+  
+  return copyArray;
 };
