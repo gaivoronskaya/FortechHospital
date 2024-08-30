@@ -1,3 +1,4 @@
+import { useHeaderContext } from "../../provider/index.jsx";
 import {
   StyledHeaderContainer,
   StyledHeaderImage,
@@ -5,14 +6,16 @@ import {
   StyledHeader,
 } from "./style.js";
 
-const Header = ({ title, children }) => {
+const Header = ({ children }) => {
+  const { title } = useHeaderContext();
+
   return (
     <StyledHeader>
       <StyledHeaderContainer>
         <StyledHeaderImage />
         <StyledHeaderTitle>{title}</StyledHeaderTitle>
-        {children}
-      </StyledHeaderContainer>
+          {children}
+        </StyledHeaderContainer>
     </StyledHeader>
   );
 };
