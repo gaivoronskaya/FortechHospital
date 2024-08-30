@@ -212,9 +212,9 @@ const MainPage = () => {
     if (type === "option") {
       setSortOption(selectedValue);
       setSortOrder(selectedValue === "none" ? "ascending" : sortOrder);
-    } else {
-      setSortOrder(selectedValue);
-    }
+    } 
+
+    setSortOrder(selectedValue);
   };
 
   return (
