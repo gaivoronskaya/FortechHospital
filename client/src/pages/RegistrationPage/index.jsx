@@ -7,6 +7,7 @@ import Form from "../../components/Form";
 import { HeaderProvider } from "../../provider";
 import CustomInput from "../../components/UI/CustomInput";
 import useActions from "../../hooks/useActions";
+import useFocus from "../../hooks/autoFocus";
 import { validateString } from "../../helpers/validate-string";
 
 const RegistrationPage = () => {
@@ -22,6 +23,7 @@ const RegistrationPage = () => {
   });
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const { addNewUser } = useActions();
+  const focusInput = useFocus();
   const { error } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -110,6 +112,7 @@ const RegistrationPage = () => {
           valueInput={user.login}
           handleChangeInput={handleChangeInput}
           error={inputError.login}
+          inputRef={focusInput}
         />
         <CustomInput
           label="Пароль:"
