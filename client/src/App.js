@@ -1,34 +1,36 @@
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import RegistrationPage from "./pages/RegistrationPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
+import AuthRedirect from "./hocs/AuthRedirect";
+import ProtectedPage from "./hocs/ProtectedPage";
 
 const App = () => {
-  const token = localStorage.getItem("accessToken");
   const isAuth = useSelector((state) => state.user.isAuth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (token) {
-      return navigate("/main");
-    }
-  }, [isAuth]);
 
   if (isAuth) {
     return (
       <Routes>
-        <Route path="/main" element={<MainPage />} />
-        <Route path="*" element={<Navigate to="/main" />} />
+       <Route
+            path="/main"
+            element={<ProtectedPage wrappedComponent={<MainPage />} />}
+          />
+          <Route path="*" element={<Navigate to="/main" />} />
       </Routes>
     );
   }
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/registration" element={<RegistrationPage />} />
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route
+            path="/login"
+            element={<AuthRedirect wrappedComponent={<LoginPage />} />}
+          />
+          <Route
+            path="/registration"
+            element={<AuthRedirect wrappedComponent={<RegistrationPage />} />}
+          />
+          <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 };

@@ -18,7 +18,7 @@ const HeaderProvider = ({ children }) => {
         setTitle("Приемы");
         break;
       default:
-        setTitle("f");
+        setTitle("HOSPITAL");
     }
   }, [location.pathname]);
 
