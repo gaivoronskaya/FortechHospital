@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import useActions from "../../hooks/useActions";
@@ -49,7 +50,12 @@ const MainPage = () => {
   } = useActions();
 
   const appointments = useSelector((state) => state.appointments.appointments);
-  const { error } = useSelector((state) => state.user);
+  const selectError = createSelector(
+    (state) => state.user,
+    (user) => user.error
+  );
+
+  const error = useSelector(selectError);
 
   useEffect(() => {
     if (error) {
