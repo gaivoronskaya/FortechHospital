@@ -9,6 +9,7 @@ import TableAppointment from "../../components/TableAppointment";
 import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
 import SortingAppointment from "../../components/SortingAppointment";
+import { HeaderProvider } from "../../provider";
 import { sortArray } from "../../helpers/sort-appointments";
 import { StyledButtonExit } from "./style";
 
@@ -69,9 +70,7 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    setSortedAppointments(
-      sortArray(appointments, sortOption, sortOrder)
-    );
+    setSortedAppointments(sortArray(appointments, sortOption, sortOrder));
   }, [appointments, sortOption, sortOrder]);
 
   const validateAppointments = (event) => {
@@ -221,7 +220,6 @@ const MainPage = () => {
     }
   };
 
-
   return (
     <div>
       <Snackbar
@@ -233,9 +231,11 @@ const MainPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <Header title="Приемы">
-        <StyledButtonExit>Выход</StyledButtonExit>
-      </Header>
+      <HeaderProvider>
+        <Header>
+          <StyledButtonExit>Выход</StyledButtonExit>
+        </Header>
+      </HeaderProvider>
       <AddingAppointmentForm
         handleChangeInput={handleChangeInput}
         appointment={appointment}

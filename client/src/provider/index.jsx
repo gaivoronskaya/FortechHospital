@@ -1,26 +1,24 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-
-const HeaderContext = createContext();
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import HeaderContext from "../context";
 
 const HeaderProvider = ({ children }) => {
-  const location = useLocation(); // Получаем текущий путь
-  const [title, setTitle] = useState('Default Header Title');
+  const location = useLocation();
+  const [title, setTitle] = useState("Default Header Title");
 
-  // Обновляем заголовок в зависимости от текущего пути
   useEffect(() => {
     switch (location.pathname) {
-      case '/login':
-        setTitle('Авторизация');
+      case "/login":
+        setTitle("Войти в систему");
         break;
-      case '/registration':
-        setTitle('Регистрация');
+      case "/registration":
+        setTitle("Зарегистрироваться в системе");
         break;
-      case '/main':
-        setTitle('Приемы');
+      case "/main":
+        setTitle("Приемы");
         break;
       default:
-        setTitle('f');
+        setTitle("f");
     }
   }, [location.pathname]);
 

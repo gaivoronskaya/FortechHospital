@@ -4,6 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Header from "../../components/Header";
 import Form from "../../components/Form";
+import { HeaderProvider } from "../../provider";
 import CustomInput from "../../components/UI/CustomInput";
 import useActions from "../../hooks/useActions";
 
@@ -66,7 +67,9 @@ const LoginPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <Header title="Вход в систему" />
+      <HeaderProvider>
+        <Header />
+      </HeaderProvider>
       <Form
         title="Вход"
         handleSubmit={validateLogin}
