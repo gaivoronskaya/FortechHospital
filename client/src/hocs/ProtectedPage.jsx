@@ -9,7 +9,7 @@ const ProtectedPage = ({ wrappedComponent, path }) => {
 
   useEffect(() => {
     if (!token) {
-      return navigate(path);
+      return navigate("/login");
     }
   }, [isAuth]);
 
