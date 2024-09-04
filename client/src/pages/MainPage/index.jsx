@@ -10,7 +10,6 @@ import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
 import SortingAppointment from "../../components/SortingAppointment";
 import DateFilter from "../../components/DateFilter";
-import DataFilterForm from "../../components/DataFilterForm";
 import { filterAppointments } from "../../helpers/filter-appointments";
 import { sortArray } from "../../helpers/sort-appointments";
 import { StyledButtonExit, StyledModalContainer } from "./style";
@@ -47,6 +46,7 @@ const MainPage = () => {
     start: "",
     end: "",
   });
+  const [originalAppointments, setOriginalAppointments] = useState([]);
 
   const {
     getUserAppointments,
@@ -77,9 +77,11 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
+    setOriginalAppointments(appointments);
     const sortedAppointments = sortArray(appointments, sortOption, sortOrder);
-    const filtered = filterAppointments(sortedAppointments, dateRange);
-    setFilteredAppointments(filtered);
+    const filtering = filterAppointments(sortedAppointments, dateRange);
+
+    setFilteredAppointments(filtering);
   }, [appointments, sortOption, sortOrder]);
 
   const validateAppointments = (event) => {
@@ -230,22 +232,23 @@ const MainPage = () => {
   const applyDateFilter = (range) => {
     setDateRange(range);
 
-    const filtered = filterAppointments(appointments, range);
+    const filtered = filterAppointments(originalAppointments, range);
     setFilteredAppointments(filtered);
-  };
-
-  const handleStartDateChange = (e) => {
-    setDateRange((prev) => ({ ...prev, start: e.target.value }));
-  };
-
-  const handleEndDateChange = (e) => {
-    setDateRange((prev) => ({ ...prev, end: e.target.value }));
   };
 
   const closeFilterForm = () => {
     setIsOpenFilterForm(false);
     setDateRange({ start: "", end: "" });
-    setFilteredAppointments(appointments);
+    const sortedAppointments = sortArray(
+      originalAppointments,
+      sortOption,
+      sortOrder
+    );
+    setFilteredAppointments(sortedAppointments);
+  };
+
+  const handleDateChange = (e, field) => {
+    setDateRange((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
   return (
@@ -274,17 +277,14 @@ const MainPage = () => {
           handleSortInputChange={handleSortInputChange}
           sortOrder={sortOrder}
         />
-        {isOpenFilterForm ? (
-          <DataFilterForm
-            closeFilterForm={closeFilterForm}
-            applyFilter={applyDateFilter}
-            dateRange={dateRange}
-            handleStartDateChange={handleStartDateChange}
-            handleEndDateChange={handleEndDateChange}
-          />
-        ) : (
-          <DateFilter openFilterForm={() => setIsOpenFilterForm(true)} />
-        )}
+        <DateFilter
+          isOpenFilterForm={isOpenFilterForm}
+          openFilterForm={() => setIsOpenFilterForm(true)}
+          closeFilterForm={closeFilterForm}
+          applyFilter={applyDateFilter}
+          dateRange={dateRange}
+          handleDateChange={handleDateChange}
+        />
       </StyledModalContainer>
       <TableAppointment
         appointments={filteredAppointments}

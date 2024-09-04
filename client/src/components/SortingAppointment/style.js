@@ -9,7 +9,7 @@ export const StyledSortedContainer = styled.div`
   justify-content: flex-end;
   gap: 20px;
 
-  .sorting-appointment__lable-container {
+  .sorting-appointment__label-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -17,6 +17,3 @@ export const StyledSortedContainer = styled.div`
   }
 `;
 
-export const StyledSelectors = styled.div`
-
-`;
