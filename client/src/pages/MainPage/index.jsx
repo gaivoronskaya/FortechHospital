@@ -9,7 +9,6 @@ import TableAppointment from "../../components/TableAppointment";
 import EditingForm from "../../components/EditingForm";
 import DeletingForm from "../../components/DeletingForm";
 import SortingAppointment from "../../components/SortingAppointment";
-import { HeaderProvider } from "../../provider";
 import { sortArray } from "../../helpers/sort-appointments";
 import { StyledButtonExit } from "./style";
 
@@ -231,11 +230,9 @@ const MainPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <HeaderProvider>
-        <Header>
-          <StyledButtonExit>Выход</StyledButtonExit>
-        </Header>
-      </HeaderProvider>
+      <Header>
+        <StyledButtonExit>Выход</StyledButtonExit>
+      </Header>
       <AddingAppointmentForm
         handleChangeInput={handleChangeInput}
         appointment={appointment}

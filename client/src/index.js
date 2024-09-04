@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import App from "./App";
+import { HeaderProvider } from "./provider/index.jsx";
 import store from "./store/index.js";
 import { GlobalStyle } from "./style";
 
@@ -11,8 +12,10 @@ root.render(
   <React.StrictMode>
     <Router>
       <Provider store={store}>
-        <GlobalStyle />
+        <HeaderProvider>
+          <GlobalStyle />
           <App />
+        </HeaderProvider>
       </Provider>
     </Router>
   </React.StrictMode>

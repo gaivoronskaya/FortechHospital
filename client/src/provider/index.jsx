@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import HeaderContext from "../context";
 
 const HeaderProvider = ({ children }) => {
   const location = useLocation();
-  const [title, setTitle] = useState("Default Header Title");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     switch (location.pathname) {
@@ -18,7 +18,7 @@ const HeaderProvider = ({ children }) => {
         setTitle("Приемы");
         break;
       default:
-        setTitle("f");
+        setTitle("");
     }
   }, [location.pathname]);
 
@@ -29,8 +29,4 @@ const HeaderProvider = ({ children }) => {
   );
 };
 
-const useHeaderContext = () => {
-  return useContext(HeaderContext);
-};
-
-export { HeaderProvider, useHeaderContext };
+export { HeaderProvider };
