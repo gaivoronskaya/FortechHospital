@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import HeaderContext from "../../context/index.jsx";
+import HeaderContext from "../../context/header.js";
 import {
   StyledHeaderContainer,
   StyledHeaderImage,

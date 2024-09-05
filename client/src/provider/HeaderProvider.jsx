@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import HeaderContext from "../context";
+import HeaderContext from "../context/header";
 
 const HeaderProvider = ({ children }) => {
   const location = useLocation();
@@ -23,7 +23,7 @@ const HeaderProvider = ({ children }) => {
   }, [location.pathname]);
 
   return (
-    <HeaderContext.Provider value={{ title }}>
+    <HeaderContext.Provider value={{title}}>
       {children}
     </HeaderContext.Provider>
   );

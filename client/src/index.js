@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import App from "./App";
-import { HeaderProvider } from "./provider/index.jsx";
-import store from "./store/index.js";
+import { HeaderProvider } from "./provider/HeaderProvider";
+import store from "./store/index";
 import { GlobalStyle } from "./style";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
