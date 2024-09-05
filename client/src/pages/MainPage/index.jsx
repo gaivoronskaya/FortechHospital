@@ -41,12 +41,12 @@ const MainPage = () => {
   const [sortOrder, setSortOrder] = useState("ascending");
   const [sortOption, setSortOption] = useState("none");
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
-  const [filteredAppointments, setFilteredAppointments] = useState([]);
+  const [backupAppointments, setFilteredAppointments] = useState([]);
   const [dateRange, setDateRange] = useState({
     start: "",
     end: "",
   });
-  const [originalAppointments, setOriginalAppointments] = useState([]);
+  const [allAppointments, setAllAppointments] = useState([]);
 
   const {
     getUserAppointments,
@@ -77,11 +77,15 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    setOriginalAppointments(appointments);
-    const sortedAppointments = sortArray(appointments, sortOption, sortOrder);
-    const filtering = filterAppointments(sortedAppointments, dateRange);
-
-    setFilteredAppointments(filtering);
+    setAllAppointments(appointments);
+    let updatedAppointments = appointments;
+    if (sortOption !== "none") {
+      updatedAppointments = sortArray(appointments, sortOption, sortOrder);
+    }
+    if (isOpenFilterForm) {
+      updatedAppointments = filterAppointments(updatedAppointments, dateRange);
+    }
+    setFilteredAppointments(updatedAppointments);
   }, [appointments, sortOption, sortOrder]);
 
   const validateAppointments = (event) => {
@@ -229,22 +233,15 @@ const MainPage = () => {
     setSortOrder(selectedValue);
   };
 
-  const applyDateFilter = (range) => {
-    setDateRange(range);
-
-    const filtered = filterAppointments(originalAppointments, range);
-    setFilteredAppointments(filtered);
+  const applyDateFilter = () => {
+    const filteredAppointments = filterAppointments(allAppointments, dateRange);
+    setFilteredAppointments(filteredAppointments);
   };
 
   const closeFilterForm = () => {
     setIsOpenFilterForm(false);
     setDateRange({ start: "", end: "" });
-    const sortedAppointments = sortArray(
-      originalAppointments,
-      sortOption,
-      sortOrder
-    );
-    setFilteredAppointments(sortedAppointments);
+    setFilteredAppointments(allAppointments);
   };
 
   const handleDateChange = (e, field) => {
@@ -287,7 +284,7 @@ const MainPage = () => {
         />
       </StyledModalContainer>
       <TableAppointment
-        appointments={filteredAppointments}
+        appointments={backupAppointments}
         handleEditAppointment={handleEditAppointment}
         handleDeleteAppointmentId={handleDeleteAppointmentId}
       />
