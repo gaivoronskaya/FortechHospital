@@ -11,6 +11,7 @@ export const successGetAppointment = (payload) => {
   return {
     type: appointmentsEnums.GET_APPOINTMENT_SUCCESS,
     payload,
+
   };
 };
 

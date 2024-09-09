@@ -12,7 +12,6 @@ const App = () => {
         path="/main"
         element={<ProtectedPage wrappedComponent={<MainPage />} />}
       />
-      <Route path="*" element={<Navigate to="/main" />} />
       <Route
         path="/login"
         element={<AuthPage wrappedComponent={<LoginPage />} />}
