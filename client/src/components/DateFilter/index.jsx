@@ -43,7 +43,7 @@ const DateFilter = ({
             <CustomButton
               className="date-filter__filter-button"
               typeButton="button"
-              handleActionButton={() => applyFilter()}
+              handleActionButton={applyFilter}
             >
               Фильтровать
             </CustomButton>

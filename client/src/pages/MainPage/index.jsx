@@ -38,10 +38,12 @@ const MainPage = () => {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [editedAppointmentId, setEditedAppointmentId] = useState(null);
   const [deletedAppointmentId, setDeletedAppointmentId] = useState(null);
-  const [sortOrder, setSortOrder] = useState("ascending");
-  const [sortOption, setSortOption] = useState("none");
+  const [sortSettings, setSortSettings] = useState({
+    sortOrder: "ascending",
+    sortOption: "none",
+  });
   const [isOpenFilterForm, setIsOpenFilterForm] = useState(false);
-  const [backupAppointments, setFilteredAppointments] = useState([]);
+  const [backupAppointments, setBackupAppointments] = useState([]);
   const [dateRange, setDateRange] = useState({
     start: "",
     end: "",
@@ -79,14 +81,18 @@ const MainPage = () => {
   useEffect(() => {
     setAllAppointments(appointments);
     let updatedAppointments = appointments;
-    if (sortOption !== "none") {
-      updatedAppointments = sortArray(appointments, sortOption, sortOrder);
+    if (sortSettings.sortOption !== "none") {
+      updatedAppointments = sortArray(
+        appointments,
+        sortSettings.sortOption,
+        sortSettings.sortOrder
+      );
     }
     if (isOpenFilterForm) {
       updatedAppointments = filterAppointments(updatedAppointments, dateRange);
     }
-    setFilteredAppointments(updatedAppointments);
-  }, [appointments, sortOption, sortOrder]);
+    setBackupAppointments(updatedAppointments);
+  }, [appointments, sortSettings]);
 
   const validateAppointments = (event) => {
     event.preventDefault();
@@ -225,23 +231,29 @@ const MainPage = () => {
   };
 
   const handleSortInputChange = (selectedValue, type) => {
-    if (type === "option") {
-      setSortOption(selectedValue);
-      setSortOrder(selectedValue === "none" ? "ascending" : sortOrder);
-    }
+    setSortSettings((prevSettings) => {
+      const newSortSettings = { ...prevSettings };
 
-    setSortOrder(selectedValue);
+      if (type === "option") {
+        newSortSettings.sortOption = selectedValue;
+        newSortSettings.sortOrder =
+          selectedValue === "none" ? "ascending" : prevSettings.sortOrder;
+      }
+      newSortSettings.sortOrder = selectedValue;
+
+      return newSortSettings;
+    });
   };
 
   const applyDateFilter = () => {
     const filteredAppointments = filterAppointments(allAppointments, dateRange);
-    setFilteredAppointments(filteredAppointments);
+    setBackupAppointments(filteredAppointments);
   };
 
   const closeFilterForm = () => {
     setIsOpenFilterForm(false);
     setDateRange({ start: "", end: "" });
-    setFilteredAppointments(allAppointments);
+    setBackupAppointments(allAppointments);
   };
 
   const handleDateChange = (e, field) => {
@@ -270,9 +282,9 @@ const MainPage = () => {
       />
       <StyledModalContainer>
         <SortingAppointment
-          sortOption={sortOption}
+          sortOption={sortSettings.sortOption}
           handleSortInputChange={handleSortInputChange}
-          sortOrder={sortOrder}
+          sortOrder={sortSettings.sortOrder}
         />
         <DateFilter
           isOpenFilterForm={isOpenFilterForm}
