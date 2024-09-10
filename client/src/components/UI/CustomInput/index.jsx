@@ -15,6 +15,7 @@ const CustomInput = ({
   error,
   classNameInput,
   classNameInputContainer,
+  inputRef,
 }) => {
   return (
     <StyledInputContainer className={classNameInputContainer}>
@@ -27,6 +28,7 @@ const CustomInput = ({
         onChange={handleChangeInput}
         id={`input_${nameInput}`}
         className={classNameInput}
+        ref={inputRef}
       />
       {error && <StyledErrorText>{error}</StyledErrorText>}
     </StyledInputContainer>

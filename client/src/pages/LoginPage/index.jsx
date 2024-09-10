@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import Form from "../../components/Form";
 import CustomInput from "../../components/UI/CustomInput";
 import useActions from "../../hooks/useActions";
+import useFocus from "../../hooks/autoFocus";
 
 const LoginPage = () => {
   const [user, setUser] = useState({
@@ -18,6 +19,7 @@ const LoginPage = () => {
   });
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const { error } = useSelector((state) => state.user);
+  const focusInput = useFocus();
   const { loginUserAction } = useActions();
 
   useEffect(() => {
@@ -83,6 +85,7 @@ const LoginPage = () => {
           valueInput={user.login}
           handleChangeInput={handleChangeInput}
           error={inputError.login}
+          inputRef={focusInput}
         />
         <CustomInput
           label="Пароль:"
