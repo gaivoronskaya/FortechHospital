@@ -16,11 +16,11 @@ const SortingComponent = ({
         handleChangeSelector={(e) =>
           handleSortInputChange(e.target.value, "option")
         }
-        classNameSelectorContainer="sorting-appointment__lable-container"
+        classNameSelectorContainer="sorting-appointment__label-container"
       />
       {sortOption !== "none" && (
         <CustomSelector
-          classNameSelectorContainer="sorting-appointment__lable-container"
+          classNameSelectorContainer="sorting-appointment__label-container"
           labelSelector="Направление:"
           options={valueSortedList}
           valueSelector={sortOrder}
