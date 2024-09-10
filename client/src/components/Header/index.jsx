@@ -1,4 +1,5 @@
-import { useHeaderContext } from "../../provider/index.jsx";
+import { useContext } from "react";
+import HeaderContext from "../../context/header";
 import {
   StyledHeaderContainer,
   StyledHeaderImage,
@@ -7,15 +8,15 @@ import {
 } from "./style.js";
 
 const Header = ({ children }) => {
-  const { title } = useHeaderContext();
+  const { title } = useContext(HeaderContext);
 
   return (
     <StyledHeader>
       <StyledHeaderContainer>
         <StyledHeaderImage />
         <StyledHeaderTitle>{title}</StyledHeaderTitle>
-          {children}
-        </StyledHeaderContainer>
+        {children}
+      </StyledHeaderContainer>
     </StyledHeader>
   );
 };
