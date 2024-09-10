@@ -66,7 +66,7 @@ const LoginPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <Header title="Вход в систему" />
+        <Header />
       <Form
         title="Вход"
         handleSubmit={validateLogin}

@@ -90,7 +90,7 @@ const RegistrationPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <Header title="Зарегистрироваться в системе" />
+        <Header/>
       <Form
         title="Регистрация"
         handleSubmit={validateRegistration}

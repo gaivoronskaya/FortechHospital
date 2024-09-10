@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import HeaderContext from "../../context/header";
 import {
   StyledHeaderContainer,
   StyledHeaderImage,
@@ -5,7 +7,9 @@ import {
   StyledHeader,
 } from "./style.js";
 
-const Header = ({ title, children }) => {
+const Header = ({ children }) => {
+  const { title } = useContext(HeaderContext);
+
   return (
     <StyledHeader>
       <StyledHeaderContainer>

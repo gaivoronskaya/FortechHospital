@@ -271,7 +271,7 @@ const MainPage = () => {
           {error}
         </Alert>
       </Snackbar>
-      <Header title="Приемы">
+      <Header>
         <StyledButtonExit>Выход</StyledButtonExit>
       </Header>
       <AddingAppointmentForm
